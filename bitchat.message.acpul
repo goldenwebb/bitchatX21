@@ -1,0 +1,212 @@
+### bitchat.message
+# text
+
+text0 p0;
+
+_ @help.inc1;
+_ @ui0.textview.inc;
+_ @buffer.word.wrap;
+
+_ @sys.llog;
+
+llog.b(BITCHAT.MESSAGE);
+#llog.erase(r0, 0);
+
+maxchars0 0;
+
+textview0 0;
+
+
+buffer.word.wrap1 {
+ # buf,i, width -> buf:lines
+ buf0 _0;
+ index0 _1;
+ width0 _2;
+
+ EOL 10;
+ SPACE 32;
+ 
+ lastpos=0;
+ col=0;
+
+ buf1=buffer.new(u0, 121,1000000);
+ index1 0;
+
+ append.line {
+  buffer.add(u0, buf1, -1,-1);
+  index1+=1;
+ };
+
+ # for each line - todo
+
+ n=buffer.size(u0, buf0,index0);
+
+ i=0;while(i<n) {
+  char=buffer.get(u0, buf0,index0,i);
+
+  buffer.set(u0, buf1,index1,col, char);
+
+  col+=1;
+
+  if (char==SPACE) {
+   lastpos:=i;
+  };
+
+  if (col>width0) {
+
+   # fix last position
+   if (lastpos==0) {
+    lastpos:=i;
+   };
+
+   # strip output size
+   col1 = col + lastpos-i;
+   buffer.strip.size(u0, buf1,index1, col1);
+
+   append.line;
+
+   # reset
+   col:=0;
+
+   i:=lastpos;
+
+   lastpos:=0;
+  };
+
+  i+=1;
+ };
+ buf1;
+# buf0;
+};
+
+create.text {
+ # text, w
+ text0 _0;
+ w _1;
+
+# lines0=buffer.split(u0, text0,0);
+ lines0=text0;
+
+ char.w 10;
+ maxchars w/char.w;
+
+ maxchars0:=maxchars;
+
+ n=buffer.count(u0, lines0);
+
+ y0 0;
+
+ i=0;while(i<n){
+  len=buffer.size(u0, lines0,i);
+
+  lines1 0;
+  if (len>=maxchars) {
+   lines1:=buffer.word.wrap1(lines0,i, maxchars);
+  };
+  if (len<maxchars) {
+   lines1:=buffer.clone(u0, lines0,i);
+  };
+
+  info {
+   _ @ui.value5.up;
+
+   val0=0;ui.value5.start(val0, 300,200+rnd(u0)*500,1, 300,300, nid);
+    ui.value5.v(A.len, len);
+    ui.value5.v(A.maxchars, maxchars);
+  #  ui.value5.v(A.w, w);
+  #  ui.value5.v(A.s, s);
+    ui.value5.v(A.lines1.n, buffer.count(u0, lines1));
+    ui.value5.v(A.www, www);
+  };
+  #info;
+
+  # CHECK SPAM [
+
+  n1=buffer.count(u0, lines1);
+
+  N 4;
+  is.spam {
+   n1>N;
+   #0;
+  };
+
+  is.not.spam is.spam==0;
+
+  # CHECK SPAM ]
+  # NO SPAM [
+
+  if (is.not.spam) {
+   # RENDER TEXT
+   h0 18;
+   h1=max(n1*h0,h0);
+
+   textview0:=new.textview(0,y0,1, w,h1, 0, lines1);
+   node.set.v(textview0, A.LINE.HEIGHT, h0);
+
+   y0+=h1;
+  };
+
+  # NO SPAM ]
+  # SPAM [
+
+  if (is.spam) {
+   # RENDER DATA
+   h1 2;
+   n=buffer.count(u0, lines1);
+   textview0:=new.textview(0,y0,1/n+rnd(u0)*0.2, w,h1, 0, lines1);
+
+   y0+=h1;
+  };
+  
+  # SPAM ]
+
+##  textview0:=new.textview(0,0,1, w,h1, 0, lines0);
+  i+=1;
+ };
+
+ h2=y0;
+
+# llog.pv(A.h2, h2);
+# llog.po(A.text0, 8, text0,-1);
+
+ h:=h2;
+};
+
+if ((textview0==0)*w*h) {
+ create.text(text0, w);
+};
+
+#parent0=node.get.parent(u0, nid);
+#node.set.h(u0, parent0, 100);
+
+llog.e;
+
+# INFO [
+
+info {
+_ @ui.value5.up;
+
+ val0 0;ui.value5.start(val0, 600,200+rnd(u0)*500,1, 300,300, nid);
+  ui.value5.v(A.w, w);
+  ui.value5.v(A.maxchars0, maxchars0);
+#  ui.value5.v(A.text0, text0);
+#  ui.value5.v(text0, text0);
+# ui.value5.v(text0, qqq);
+};
+if (textview0) {
+# info;
+};
+
+# INFO ]
+
+_ @ui0.xstack.common;
+
+#draw.fid(bitchat.message.draw);
+
+
+
+### bitchat.message.draw
+
+color(u0, 0.1,0.1,0.3,1);
+rect(u0, 2, 0,0,w,h);
+

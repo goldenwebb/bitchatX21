@@ -1,0 +1,12 @@
+### bitchat.i18n
+
+#GEOHASH.PRIME 21m;
+GEOHASH.PRIME 9q;
+
+BITCHAT.FORMAT.CHAT.MSG0 <\{0:s0}> \{1:s0};
+BITCHAT.FORMAT.CHAT.MSG1 \{0:s0} <\{1:s0}> \{2:s0};
+
+ABV https://primal.net/p/nprofile1qqswret6sy7z052s6g5aluryhy8vcf7tm0dq8uhr6g2pmgn6gu2ssdsm4qqf8;
+ABV Any iOS users here?;
+
+ABV Ribbit ;

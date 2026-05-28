@@ -1,0 +1,111 @@
+### bitchat.inc
+
+bitchat.setup
+ #
+ io(u0, 502500, 0,0,0,0);
+
+bitchat.send.msg
+ # mode, chat, msg
+ # mode:
+ #  0 - public
+ #  1 - private
+ io(u0, 502501, _0, _1, _2, 0);
+
+bitchat.get.msgs
+ # mode, chat -> msgs
+ io(u0, 502502, _0, _1, 0,0);
+
+bitchat.geohash.select
+ # gh
+ io(u0, 502503, _0, 0,0,0);
+
+# MAIN
+
+new.bitchat.main
+ new.node.common0(_0, _1,_2,_3, _4,_5, NNN(A.bitchat.main), 0);
+
+new.bitchat.main.view
+ new.node.common0(_0, _1,_2,_3, _4,_5, NNN(A.bitchat.main.view), 0);
+
+new.bitchat.messages
+ new.node.common0(_0, _1,_2,_3, _4,_5, NNN(A.bitchat.messages), 0);
+
+new.bitchat.message {
+ # ..text
+ text=buffer.clone(u0, _6,-1);
+ new.node.common0(_0, _1,_2,_3, _4,_5, NNN(A.bitchat.message), text);
+};
+
+bitchat.messages.add.msg {
+ # messages, msg
+ messages0 _0;
+ msg0 _1;
+ events.push(u0, ui.pool,messages0, bitchat.event.add.msg, msg0, 0,0,0);
+};
+
+
+# TEST
+
+bitchat.test
+ new.node.common0(_0, _1,_2,_3, _4,_5, NNN(A.bitchat.test), 0);
+
+
+
+### bitchat.run
+
+_ @help.inc1;
+_ @bitchat.inc;
+
+display.scalled.size(w,h);
+
+w0 10000;
+bitchat0 0;
+w1 min(w0,min(w,h));
+bitchat0.w w1;
+
+if (r0) {
+ bittest0 0;
+# bitchat.test(bittest0, 0,0,1, 500,500);
+# w0 700;
+ new.bitchat.main(bitchat0, 0,200,1, w1,500);
+};
+
+info {
+ _ @ui.value5.up;
+ val0 0;ui.value5.start(val0, 200,200,1, 300,300, nid);
+ ui.value5.node0(nid);
+ ui.value5.v(Bitchat0.w, bitchat0.w0);
+};
+#info;
+
+### bitchat.test
+
+_ @help.inc1;
+_ @bitchat.inc;
+
+if (r0) {
+ bitchat.setup;
+ bitchat.send.msg(0, BITCHAT.AnimationCPU, Hello.World);
+};
+
+qq 0;
+qq+=dt;
+if(qq>5) {
+ qq:=0;
+# bitchat.send.msg(0, BITCHAT.AnimationCPU, MSG_5_SEC);
+ bitchat.send.msg(0, -1, aaMSG_5_SEC);
+};
+
+t+=dt;
+
+msgs0=bitchat.get.msgs(0, BITCHAT.AnimationCPU);
+
+draw.fid(bitchat.test.draw);
+
+### bitchat.test.draw
+
+color(u0, 0.5,0.5,0,0.5);
+rect(u0, 6, 0,0,50,50);
+
+
+

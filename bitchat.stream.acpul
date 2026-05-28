@@ -1,0 +1,117 @@
+### bitchat.stream.inc
+
+new.bitchat.stream
+ # ..type
+ new.node.common0(_0, _1,_2,_3, _4,_5, NNN(A.bitchat.stream), _6);
+
+new.bitchat.stream.user
+ new.bitchat.stream(__, 0);
+
+
+new.bitchat.stream.test
+ # ..type
+ new.node.common0(_0, _1,_2,_3, _4,_5, NNN(A.bitchat.stream.test), _6);
+
+### bitchat.stream.test
+
+_ @help.inc1;
+_ @bitchat.inc;
+_ @bitchat.stream.inc;
+
+bitchat.stream.add.msg {
+ # stream, msg
+ stream0 _0;
+ msg0 _1;
+ events.push(u0, ui.pool,stream0, bitchat.event.add.msg, msg0, 0,0,0);
+};
+
+spam0 0;
+msg0 0;
+
+if (r0) {
+ new.bitchat.stream(spam0, 0,0,1, 200,300, 0);
+ new.bitchat.message(msg0, 0,0,1, 200,100, MSG.STREAM);
+ bitchat.stream.add.msg(spam0, msg0);
+ new.bitchat.message(msg0, 0,0,1, 200,100, MSG.STREAM1);
+ bitchat.stream.add.msg(spam0, msg0);
+# new.bitchat.message(msg0, 0,0,1, 100,100, MSG.STREAM);
+# bitchat.stream.add.msg(spam0, msg0);
+};
+
+# new.bitchat.message(msg0, 0,0+rnd(u0)*10,1, 100,100, MSG.STREAM);
+# bitchat.stream.add.msg(spam0, msg0);
+
+# STREAM USER
+
+# STREAM SPAM
+
+### bitchat.stream
+
+# The concept:
+# name
+# input filter
+# view
+# representation
+
+
+_ @help.inc1;
+_ @bitchat.inc;
+
+#_ @ui0.xstack.inc;
+#_ @ui0.scroll.inc;
+
+#_ @gpt.chat;
+
+#vstack0 0;
+#scroll0 0;
+
+#if ((vstack0==0)*w*h) {
+# scroll0:=new.scroll(0,0,1, w,h, 1);
+# vstack0:=new.vstack(0,0,1, w,h, 1);
+# scroll.add(scroll0, vstack0);
+#
+# msg0=new.gpt.message(0,160,1, 300,10, HELLO.WORLD, sys0, 0,0);
+# hstack0:=xstack.add.hstack(vstack0, 0,0,1, 100,h2, 1);
+# xstack.add(vstack0, msg0);
+#};
+
+#node.set.v(nid, VSTACK0, vstack0);
+
+# INIT [
+
+messages0 0;
+
+if ((messages0==0)*w*h) {
+ new.bitchat.messages(messages0, 0,0,1, w,h);
+ node.set.v(nid, MESSAGES0, messages0);
+};
+
+# INIT ]
+# PROCESS EVENTS [
+
+_ @sys.events;
+
+stream.ev {
+ # ev, o0... - event
+ if (_0==bitchat.event.add.msg) {
+  msg0=o0;
+  bitchat.messages.add.msg(messages0, msg0);
+ };
+};
+
+ui.event.process4(ui.pool,nid, stream.ev);
+
+# PROCESS EVENTS ]
+
+draw.fid(bitchat.stream.draw);
+
+_ @sys.llog;
+
+llog.b(BITCHAT.STREAM);
+#llog.erase(r0, 0);
+llog.e;
+
+### bitchat.stream.draw
+
+color(u0, 0.5,0.0,0.5,1);
+rect(u0, 0, 0,0,w,h);

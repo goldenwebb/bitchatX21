@@ -1,0 +1,345 @@
+### bitchat.main
+
+_ @help.inc1;
+_ @bitchat.inc;
+
+view0 0;
+
+if ((view0==0)*w*h) {
+ new.bitchat.main.view(view0, 0,0,1, w,h);
+
+ # create render texture
+ rtex0 0;
+ new.node.common0(rtex0, 0,0,1, w,h, NNN(rt0.texture.node.multisize), 0);
+ node.change.parent(u0, rtex0, view0);
+};
+
+TOUCH_POS_X TOUCH_POS_X.bitchat.main;
+TOUCH_POS_Y TOUCH_POS_Y.bitchat.main;
+TOUCH_POS_S TOUCH_POS_S.bitchat.main;
+_ @touch.tool.default.move0.store;
+
+
+### bitchat.main.view
+
+_ @help.inc1;
+_ @bitchat.inc;
+
+_ @ui0.xstack.inc;
+
+_ @chat;
+
+_ @dma.std;
+
+
+if (r0) {
+ _ @util.i18n;
+ i18n.load(NNN(A.bitchat.i18n));
+
+ bitchat.setup;
+ bitchat.geohash.select(GEOHASH.PRIME);
+};
+
+_ @sys.cpu;
+_ @sys.cpu.future;
+
+show.streams=cpu.is.ipad;
+
+
+bar0 0;
+sn0 0;
+messages0 0;
+messages0.w 0;
+
+init=0;
+
+if ((bar0==0)*w*h) {
+ h1 70; # input
+ h2 h-h0-h1; # messages
+
+ new.ui.shader.node3(sn0, 0,0,1, w,h, 70014,29376); # chat.bg76
+ q 4;
+# new.ui.shader.node3(sn0, 0,0,1*q, w/q,h/q, 70014,29377); # starfall77
+
+ w2 200; # left
+ w1=w-w2;
+
+ if (show.streams==0) {
+  w1:=w;
+ };
+
+ messages0.w:=w1;
+
+ new.bitchat.messages(messages0, 0,h1,1, w1,h2);
+
+ h0 70; # header
+ new.ui.shader.node3(sn0, 0,h-h0,1, w,h0, 70014,29353); # X3
+
+ tl0 0;
+ new.text.label(tl0, 20,h-h0+25,1, A.bitchat, 20, 1001,8,1, 5352,15878, 0);
+
+ # INPUT
+ bar0:=new.chat.bar(0,0,1, w,70, 1); # chat.input.bar
+ node.set.v(bar0, NO.BG, 1);
+
+
+ if (show.streams) {
+  _ @bitchat.stream.inc;
+  test0 0;
+  new.bitchat.stream.test(test0, w-w2,h1,1, w2,h2);
+ };
+
+ init:=1;
+};
+
+# TOAD BN [
+
+llog.b(BITCHAT.TOAD);
+llog.erase(r0, 0);
+
+_ @sys.dsp;
+
+_ @touch.tool2.inc;
+
+toad.bn0 0;
+
+if (init) {
+ new.node.touch.tool2.click0(toad.bn0, 0,0,1, 70,70);
+};
+
+#clicked=node.get.v(toad.bn0, PRESSED);
+clicked=node.get.v(toad.bn0, CLICKED);
+if (clicked==1) {
+# toad.bn0:=-1;
+# lt:=0.1;
+ x+=rnd(u0);
+# events.push(u0, ui.pool,nid, ui.event.toad.clicked, nid,1,0,0);
+ events.push(u0, ui.pool,nid, ui.event.toad.clicked, nid,1,0,0);
+
+ _ @I.buffer.from.dma;
+ l11;
+ dma.off(u0, 0);
+ str.dma(u0, 0, ABV);
+# dma.set4(u0, 0,0, 65,65,65,0); # AAA\0
+ buf0=buffer.from.dma0;
+ 
+ # ADD TEXT
+# events.push(u0, ui.pool,bar0, ui.event.text.append, AAA, 0,0,0);
+ events.push(u0, ui.pool,0, ui.event.text.append, buf0, 0,0,0);
+
+ quant=rnd(u0)>0.5;
+ if (quant) {
+  audio.sample.play(u0, 21,1,2);
+ };
+ if (quant==0) {
+  audio.sample.play(u0, 21,1,3);
+ };
+
+# llog.po(DMA0, 0, 0,-1);
+# llog.pv(BUF0, buf0);
+# llog.po(BUF0, 0, buf0,-1);
+
+};
+
+llog.e;
+
+# TOAD BN ]
+
+_ @gpt.chat;
+
+vstack0=node.get.v(messages0, VSTACK0);
+
+startup 1;
+if ((vstack0>0)*startup) {
+# startup:=0;
+ startup:=if(startup>0,startup-0.1,0);
+ add.msg.text(GEOHASH.PRIME);
+
+};
+
+prev0 0;
+msg0 0;
+
+msg0.index 0;
+
+total.msgs 0;
+
+
+add.msg.text {
+ text0 _0;
+ h0 100;
+ new.bitchat.message(msg0, 0,0,1, messages0.w,h0, text0);
+
+# add.msg(msg0);
+ xstack.add(vstack0, msg0);
+
+ total.msgs+=1;
+
+ info {
+  _ @ui.value5.up;
+
+  val0=0;ui.value5.start(val0, 200,200+total.msgs*25,1, 300,300, msg0);
+#  ui.value5.v(A.w, w);
+#  ui.value5.v(A.messages0.w, messages0.w);
+
+#  ui.value5.v(A.text0, text0);
+#  ui.value5.v(text0, text0);
+ };
+# info;
+
+ info {
+  _ @ui.value5.up;
+  val0 0;ui.value5.start(val0, 200,200,1, 300,300, nid);
+  ui.value5.v(A.msg0, msg0);
+  ui.value5.v(A.vstack0, vstack0);
+  ui.value5.v(A.h0, h0);
+  ui.value5.v(A.w, w);
+  ui.value5.v(A.text0, text0);
+  ui.value5.v(text0, text0);
+ };
+# info;
+
+};
+
+add.msg { _;
+ # msg
+ msg0 _0;
+  xstack.add(vstack0, msg0);
+
+  total.msgs+=1;
+
+  msg0.index-=1;
+  node.prop.z.order.s(u0, msg0, msg0.index);
+#  node.z.to.back(u0, msg0,0);
+#  node.z.to.back(u0, msg0,msg0.index);
+  node.prop.z.order.s(u0, bar0,msg0.index-1);
+};
+
+# EVENTS BAR [
+
+my.ev {
+ # ev, o0... - event
+ if (_0==ui.event.message) {
+  # text
+  text0=o0;
+
+  bitchat.send.msg(0, -1, text0);
+
+#  h0 100;
+  new.bitchat.message(msg0, 0,0,1, messages0.w,h0, text0);
+  xstack.add(vstack0, msg0);
+#  add.msg(msg0);
+ };
+};
+
+_ @os.util2;
+
+ui.event.process4(ui.pool,bar0, my.ev);
+
+# EVENTS BAR ]
+# PROCESS NEW MESSAGES [
+
+_ @sys.llog;
+
+llog.b(BITCHAT.MESSAGE1);
+llog.erase(r0, 0);
+
+MSG.MODE 0;
+
+added0 0;
+
+process.messages {
+ msgs0=bitchat.get.msgs(0, BITCHAT.AnimationCPU);
+
+ added0:=0;
+
+ n=buffer.count(u0, msgs0);
+ if (n>=4) {
+
+#  llog.po(A.msgs0, 8, msgs0,-1);
+
+  n/=4;
+  i=0;while(i<n){
+   offs=i*4;
+   id=buffer.clone(u0, msgs0,offs+0);
+   user=buffer.clone(u0, msgs0,offs+1);
+   msg=buffer.clone(u0, msgs0,offs+2);
+   time=buffer.clone(u0, msgs0,offs+3);
+
+   buf0 0;
+   if (MSG.MODE==0) {
+    dma.print1.v3(buf0, BITCHAT.FORMAT.CHAT.MSG0, user, msg);
+   };
+   if (MSG.MODE==1) {
+    dma.print1.v3(buf0, BITCHAT.FORMAT.CHAT.MSG1, time, user, msg);
+   };
+#llog.pv(TIME, time);
+#llog.po(TIME, 8, time,-1);
+#llog.po(msgs0.TIME, 8, msgs0,3);
+#   add.msg.text(AAAA);
+   add.msg.text(buf0);
+#   add.msg.text(time);
+#   add.msg.text(user);
+#   add.msg.text(msg);
+   i+=1;
+
+   added0+=1;
+
+  };
+ };
+
+ obj.delete(u0, msgs0);
+};
+
+if (startup==0) {
+ process.messages;
+};
+
+tadded 0;
+tadded.prev 0;
+tadded+=dt;
+
+if (added0>0) {
+ tadded.prev:=tadded;
+ tadded:=0;
+};
+
+llog.e;
+
+# PROCESS NEW MESSAGES ]
+# INFO [
+
+info {
+ _ @ui.value5.up;
+ val0 0;ui.value5.start(val0, 800,400,1, 300,140, nid);
+ ui.value5.v(A.vstack0, vstack0);
+ ui.value5.v(A.msg0, msg0);
+# n=process.messages.n;
+# ui.value5.graph.diff(A.msgs0, process.messages.n);
+# ui.value5.graph.diff(A.msgs0, buffer.count(u0, msgs0));
+ ui.value5.graph(A.added0, added0);
+ ui.value5.graph.diff(A.tadded, floor(tadded));
+# ui.value5.v(A.msgs0a, msgs0);
+# ui.value5.v(A.msgs0a, buffer.count(u0, msgs0));
+ ui.value5.v(A.total, total.msgs);
+ ui.value5.v(A.bar0, bar0);
+# ui.value5.graph.diff(A.n, n);
+
+};
+info;
+
+# INFO ]
+
+draw.fid(bitchat.main.draw);
+
+#TOUCH_POS_X TOUCH_POS_X.bitchat.main;
+#TOUCH_POS_Y TOUCH_POS_Y.bitchat.main;
+#TOUCH_POS_S TOUCH_POS_S.bitchat.main;
+#_ @touch.tool.default.move0.store;
+#_ @touch.tool.default.scale0.store;
+
+### bitchat.main.draw
+
+color(u0, 1,1,0,0.5);
+rect(u0, 6, 0,0,w,h);
+

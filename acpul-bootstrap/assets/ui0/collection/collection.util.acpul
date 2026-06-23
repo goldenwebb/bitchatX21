@@ -1,0 +1,178 @@
+### ul.ui.collection.util
+
+# buffer.std [
+
+  buffer.resize {
+   # u0, dma, id,i, size, default.value
+   en0 _0;
+   dma0 _1;
+   size _4;
+   default.value _5;
+
+   buffer.dma(en0, dma0, _2,_3);
+   csize dma.size(en0, dma0);
+   if (csize > size) {
+    dma.strip.size(en0, _1, size);
+   };
+   if (csize < size) {
+    dma.fill(en0, dma0, csize, size-csize, default.value);
+   };
+  };
+
+  buffer.set.count {
+   # u0, dma, id, count, row.size,row.size.max, default.value
+   en0 _0;
+   dma0 _1;
+   id _2;
+   count _3;
+   row.size _4;
+   row.size.max _5;
+   default.value _6;
+
+   m buffer.count(u0, id);
+   while (count>m) {
+    buffer.add(en0, id, row.size,row.size.max);
+    buffer.dma(u0, dma0, id,m);
+    dma.fill(u0, dma0, 0, row.size, default.value);
+   };
+   if (count<m) {
+#    buffer.remove(u0, items, count, m);
+    buffer.remove(u0, items, m-1);
+   };
+  };
+
+# buffer.std ]
+
+### ul.ui.collection.mat2d
+
+ui.collection.options.obj {
+ _;
+ _ @ul.ui.collection.util;
+ 
+ resize.mat2d {
+  # width,height
+  # common: dma0, d0-d4
+
+  width _0; height _1;
+  i d0; j d1;
+  n d2; m d3;
+  items d4;
+
+  n:=cols.g;
+  m:=rows.g;
+
+  items:=cells.g;
+
+  if (width!=n) {
+   # buffer.resize.all(en0, dma0, items, width, default.value);
+   j:=0; while(j<m) {
+    buffer.resize(u0, dma0, items,j, width, 0);
+    j+=1;
+   };
+   cols.s(width);
+  };
+
+  if (height!=m) {
+   buffer.set.count(u0, dma0, items, height, width,1000000, 0);
+   rows.s(width);
+  };
+
+  dma.off(u0, dma0);
+ };
+
+ set.cell.mat2d {
+  # i,j, cell::ui.collection.cell.obj
+ };
+};
+
+
+
+### ul.ui.collection.vec1d
+
+# todo: fix bug _; with isavar and remove it from old code
+ui.collection.options.obj.isavar 0; 
+ui.collection.options.obj {
+ _;
+ _ @os.util0;
+
+ clear.vec1d {
+  buffer.set.size(u0, cells.g,0, 0);
+ };
+};
+
+
+
+### ul.ui.collection.mat3d
+
+ui.collection.options.obj.isavar 0;
+ui.collection.options.obj {
+ _;
+
+ resize.mat3d {
+  # width,height,depth
+ };
+
+ set.cell.mat3d {
+  # i,j,k, cell::ui.collection.cell.obj
+ };
+};
+
+
+
+### ul.ui.collection.dump
+
+ui.collection.options.obj.isavar 0;
+ui.collection.options.obj {
+ _;
+
+ dump.ll {
+  info ui.collection.default.options.info;
+
+  llog.printv(u0, S.ui.collection.options.obj, isavar);
+
+  llog.printv(u0, S.ui.cl0.type, type.g);
+  llog.printv(u0, S.ui.cl0.width, width.g);
+  llog.printv(u0, S.ui.cl0.height, height.g);
+  llog.printv(u0, S.ui.cl0.cols, cols.g);
+  llog.printv(u0, S.ui.cl0.rows, rows.g);
+  llog.printv(u0, S.ui.cl0.scroll.direction, scroll.direction.g);
+  llog.printv(u0, S.ui.cl0.cell.view.fid, cell.view.fid.g);
+  llog.printv(u0, S.ui.cl0.cells.updated, cells.updated.g);
+  llog.printv(u0, S.ui.cl0.node.scroll, node.scroll.g);
+  llog.printv(u0, S.ui.cl0.grid.width, grid.width.g);
+  llog.printv(u0, S.ui.cl0.grid.height, grid.height.g);
+
+  llog.printo(u0, S.ui.cl0.obj, 0, isavar,-1);
+  llog.printo(u0, S.ui.cl0.cells, 0, cells.g,-1);
+
+  dump.cells.vec1d {
+   i d0;
+   cell0 d1;
+   i:=0; while(i<buffer.size(u0, cells.g,0)) {
+    cell0:=buffer.get(u0, cells.g,0, i);
+    llog.printv(u0, S.ui.cl0.cellI.index, i);
+    llog.printo(u0, S.ui.cl0.cellI, 0, cell0,-1);
+    i+=1;
+   };
+  };
+
+  dump.cells.mat2d {
+   llog.printv(u0, S.ui.dump.cells.mat2d.is.TODO, -1);
+  };
+  dump.cells.mat3d {
+   llog.printv(u0, S.ui.dump.cells.mat3d.is.TODO, -1);
+  };
+
+#  type.s(info.t.mat3d);
+
+  if (type.g==info.t.vec1d) {
+   dump.cells.vec1d;
+  };
+  if (type.g==info.t.mat2d) {
+   dump.cells.mat2d;
+  };
+  if (type.g==info.t.mat3d) {
+   dump.cells.mat3d;
+  };
+ };
+};

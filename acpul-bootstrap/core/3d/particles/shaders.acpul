@@ -1,0 +1,42 @@
+### 178000:S particle0.vsh
+
+#define a_pstart a0
+#define a_pend a1
+#define a_texCoord a2
+
+#define progress p1
+
+attribute vec4 a_pstart;
+attribute vec4 a_pend;
+attribute vec2 a_texCoord;
+
+varying mediump vec2 v_texCoord;
+
+uniform float progress;
+ 
+void main()
+{
+  vec4 p = a_pend - a_pstart;
+  p *= progress;
+
+  gl_Position = CC_MVPMatrix * (a_pstart + p);
+  v_texCoord = a_texCoord;
+}
+
+
+
+### 178100:S particle0.fsh
+
+#define tex0 p0
+
+varying vec2 v_texCoord;
+
+uniform sampler2D tex0;
+
+void main()
+{
+  vec4 c = texture2D(tex0, v_texCoord);
+  gl_FragColor = c;
+//  gl_FragColor = vec4(0.5);
+}
+

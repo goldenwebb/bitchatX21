@@ -1,0 +1,266 @@
+### buffer.word.wrap
+
+
+# BUFFER WORD WRAP BY WIDTH [
+
+_ @buffer.up;
+
+# LIB [
+
+buffer.strip.size {
+ # u0, buf,i, size
+ u0 _0;
+ buf0 _1;
+ line0 _2;
+ size _3;
+ dma00 0;
+ buffer.dma(u0, dma00, buf0,line0);
+ dma.strip.size(u0, dma00, size);
+ dma.off(u0, dma00);
+};
+
+# LIB ]
+
+www 0;
+
+buffer.word.wrap1 {
+ # buf,i, width -> buf:lines
+ buf0 _0;
+ index0 _1;
+ width0 _2;
+
+ EOL 10;
+ SPACE 32;
+ 
+ lastpos=0;
+ col=0;
+
+ buf1=buffer.new(u0, 121,1000000);
+ index1 0;
+
+ append.line {
+  buffer.add(u0, buf1, -1,-1);
+  index1+=1;
+ };
+
+ # for each line - todo
+
+ n=buffer.size(u0, buf0,index0);
+
+ i=0;while(i<n) {
+  char=buffer.get(u0, buf0,index0,i);
+
+  buffer.set(u0, buf1,index1,col, char);
+
+  col+=1;
+
+  if (char==SPACE) {
+   lastpos:=i;
+  };
+
+  if (col>width0) {
+
+   # fix last position
+   if (lastpos==0) {
+    lastpos:=i;
+   };
+
+   # strip output size
+   col1 = col + lastpos-i;
+   buffer.strip.size(u0, buf1,index1, col1);
+
+   append.line;
+
+   # reset
+   col:=0;
+
+   i:=lastpos;
+
+   lastpos:=0;
+  };
+
+  i+=1;
+ };
+ buf1;
+# buf0;
+};
+
+buffer.word.wrap1x {
+ # buf,i, width -> buf:lines
+ buf0 _0;
+ index0 _1;
+ width0 _2;
+
+ EOL 10;
+ SPACE 32;
+ 
+ lastpos=0;
+ col=0;
+
+ buf1=buffer.new(u0, 121,1000000);
+ index1 0;
+
+ append.line {
+  buffer.add(u0, buf1, -1,-1);
+  index1+=1;
+ };
+
+ # for each line - todo
+
+ n=buffer.size(u0, buf0,index0);
+
+ i=0;while(i<n) {
+  char=buffer.get(u0, buf0,index0,i);
+
+  buffer.set(u0, buf1,index1,col, char);
+
+  col+=1;
+
+  if (char==SPACE) {
+   lastpos:=i;
+  };
+
+  if (col>width0) {
+   # strip
+   col1 = col + i-lastpos;
+   buffer.strip.size(u0, buf1,index1, col1);
+
+   append.line;
+
+   # reset
+   col:=0;
+   i:=lastpos;
+  };
+
+  i+=1;
+ };
+ buf1;
+};
+
+# not works
+buffer.word.wrap0xxx {
+ # buf,i, width -> buf:lines
+ buffer.dma(u0, 0, _0,_1);
+ dma.word.wrap0(0, _2);
+};
+
+# not works
+dma.word.wrap0xxx {
+ # dma, width -> buf:lines
+ dma0 _0;
+ width0 _1;
+ dma1 1;
+
+ buf1=buffer.new(u0, 121,1000000);
+# buf1=buffer.new(u0, 121,1000000);
+
+ EOL 10;
+
+ index=0;
+ col=0;
+ n=dma.size(u0, dma0);
+#www:=123;
+#www:=width0;
+
+ llog.po(DMA0a, 0+8, dma0,-1);
+
+ i=0;while(i<n) {
+  char=dma.get(u0, dma0,i);
+
+  col+=1;
+  
+  append.line {
+   buffer.add(u0, buf1, -1,-1);
+   index+=1;
+  };
+
+  skip=0;
+#www:=col;
+#www:=width0;
+
+  # EOL
+  if (char==EOL) {
+   append.line;
+   col:=0;
+   skip:=1;
+  };
+  #a {
+  if (col==width0) {
+   append.line;
+
+www:=col;
+
+   llog.pv(I, i);
+   llog.pv(COL, col);
+
+   start0=dma.wrap.scan.back(dma0, i);
+#www:=start0;
+
+   llog.pv(START0, start0);
+   
+   j = i-start0;
+
+   llog.pv(J, j);
+
+   found = (j>0)*(j<col);
+   if (found) {
+    len=i-start0;
+
+    
+    llog.pv(LEN, len);
+
+    buffer.dma(u0, dma1, buf1,index);
+    dma.copy(u0, dma1,0, dma0,start0+1, len);
+   llog.po(DMA1, 0+8, dma1,-1);
+    col:=len;
+
+    dma2 2;
+
+    size=width0-len;
+    buffer.dma(u0, dma2, buf1,index-1);
+    dma.strip.size(en0, dma2, size);
+
+    skip:=1;
+   };
+   if (found==0) {
+    col:=0;
+    skip:=0;
+   }; 
+
+   llog.pv(FOUND, found);
+   llog.pv(COL.new, col);
+   llog.pv(SKIP, skip);
+  };
+  
+  if (skip==0) {
+   buffer.push(u0, buf1,index, char);
+  };
+  #};
+  i+=1;
+ };
+ buf1;
+};
+
+SPACE 32;
+
+dma.wrap.scan.back {
+ # dma,i
+ dma0 _0;
+ i=_1;
+
+ llog.pv(WRAP.I, i);
+
+ res 0;
+ while(i>=0) {
+  res:=i;
+  char=dma.get(u0, dma0,i);
+  if (char==SPACE) {
+   i:=0; # break
+   res;
+  };
+  i-=1;
+ };
+ res;
+};
+
+# BUFFER WORD WRAP BY WIDTH ]

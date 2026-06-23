@@ -1,0 +1,7 @@
+### 1104 map.std
+
+it.key.new.dma {
+ # u0, map,it, id, dma
+ it.key.new(_0, _1,_2, _3);
+ it.dma(_0, _4, _1,_2);
+};

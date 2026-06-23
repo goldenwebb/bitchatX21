@@ -1,0 +1,59 @@
+### 900580 os.treeX.tests
+
+r0:=k==0;
+
+draw(r0, 900581);
+
+# 1. tree0 self node
+
+_ @1010;
+_ @sys.node;
+_ @sys.os;
+_ @os.basic;
+_ @os.tree0.inc;
+
+os.tree0.new.node(r0, os.tree0.test.node, 0, 0,0,0, 0,0,0,0);
+
+# 2. tree node
+
+#tree1.new.node(r0, os.tree1.test.node, 0,0,0,0, 0,0,0);
+
+w:=250;
+h:=250;
+
+t+=dt;
+
+k:=1;
+
+### 900581 os.tree.tests.draw
+
+color(u0, sin(t/5), sin(t/2), sin(t), 0.5);
+rect(u0, 6, 0,0,w,h);
+rect(u0, 6, w/2-50,h/2-50,100,100);
+rect(u0, 6, w/2-10,0,20,h/2-50);
+
+
+color(u0, sin(t*15), 1, 0, 0.7);
+
+_ @1010;
+_ @sys.os;
+_ @os.basic;
+
+_ @twobin.font.inc;
+
+twobin.font.scale 5; #l3
+twobin.font.cursor.x l0;
+twobin.font.cursor.y l1;
+#twobin.font.cursor.y l1+110*sin((cursor.x+t*100)*0.01);
+#twobin.font.gap 10+5*rnd(u0);
+#twobin.font.gap 10+5*sin(sin(t*10)+cursor.x);
+twobin.font.gap 10;
+
+twobin.font.def8x4.txt0 {
+ begin;
+ cy:=200;
+ T;R;E;E;
+ T;E;S;T;
+};
+twobin.font.def8x4.txt0;
+

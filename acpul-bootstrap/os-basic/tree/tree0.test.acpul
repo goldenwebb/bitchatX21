@@ -1,0 +1,160 @@
+### 900584 os.tree0.test.node
+# depth
+
+r0:=k==0;
+
+draw(r0, 900585);
+
+_ @1010;
+_ @sys.node;
+_ @sys.os;
+_ @os.basic;
+_ @os.util0;
+
+_ @os.tree0.inc;
+
+#llog.b(S.os.tree0.test.node);
+#llog.erase(r0, 0);
+#llog.e;
+
+llog 0;
+
+llog.b(S.os.tree0.test.node);
+llog.erase(r0, 0);
+
+depth p0;
+
+if (r0) {
+ llog.pv(S.depth, depth);
+
+# x:=20;
+# y:=20;
+ w:=20;
+ h:=10;
+};
+#s:=0.5;
+offs.child.x 50;
+
+tn0 r1;
+
+new.child {
+ # index, dy
+ ni0 _0;
+ dy _1;
+
+ llog.pv(S.new.child, ni0);
+
+ tn0:=os.tree0.new.node(r0, os.tree0.test.node, depth+1, ni0, 0,0, 0,0,0,0);
+# node.prop.x.s(r0, tn0, ni0*25);
+ node.prop.x.s(r0, tn0, offs.child.x);
+# node.prop.y.s(r0, tn0, ni0*25+dy);
+ node.prop.y.s(r0, tn0, dy);
+ node.get.bounding.box(u0, tn0, 0);
+ dy:=o3+o1; # h
+ llog.pv(S.dy, dy);
+};
+
+if (r0) {
+ if (depth<5) {
+  l1:=0;
+  i:=0; while(i<2) {
+   new.child(i, l1);
+   i+=1;
+  };
+ };
+};
+
+nid0 r2;
+nid0:=nid;
+
+
+#_ @os.basic;
+#_ @os.basic.ui;
+#sn0 r5;
+#if (r0) {
+# new.ui.shader.node(sn0, 0,0,0.2, 100,100, 1, 70014,75404);
+#};
+#HL.olymp.hero1 10009010;
+#node.new.this.ex4(r0, HL.olymp.hero1, 0,0,0.2, 0);
+
+# test children bbox [
+
+#_ @sys.llog;
+
+dump.children.bbox {
+ llog.b(S.dump.children.bbox);
+
+ llog.pv(THIS, nid0);
+
+ n:=node.get.children.count(u0, nid0);
+
+ llog.pv(S.node.get.children.count, n);
+ node.get.bounding.box(u0, -1, 1);
+# llog.pv4(X0.Y0.X1.Y1, o0, o1, o2, o3);
+
+ i:=0; while(i<n) {
+  cid l0;
+  cid:=node.get.child.at(u0, nid0, i);
+  node.get.bounding.box(u0, cid, 1);
+#  llog.pv(CHILD, cid);
+#  llog.pv4(X0.Y0.X1.Y1, o0, o1, o2, o3);
+  i+=1;
+ };
+
+ llog.e;
+};
+
+if (r0) {
+# dump.children.bbox;
+};
+
+# test children bbox ]
+#w:=20;
+#h:=10;
+#if (r0) {
+node.get.bounding.box(u0, -1, 0);
+#x:=o0;
+#y:=o1;
+w:=o2;
+h:=o3;
+#};
+
+#w:=100;
+#h:=100;
+
+#anchor.point.s(nid, x,y);
+
+llog.e;
+
+t+=dt;
+
+x+=sin(t*y*0.1)*5;
+
+k:=1;
+
+### 900585 os.tree0.test.node.draw
+
+#color(u0, sin(t/5), sin(t/2), sin(t), 0.5);
+r l8;
+g l9;
+b l10;
+if (r0) {
+r:=rnd(u0);
+g:=rnd(u0);
+b:=rnd(u0);
+};
+render {
+#r:=sin(t)*0.5+0.5;
+#g:=sin(t*5)*0.5+0.5;
+#b:=sin(t/2)*0.5+0.5;
+color(u0, r,g,b,0.5);
+rect(u0, 4, 0,0,w,h);
+
+color(u0, 1,1,0,1);
+rect(u0, 2, 0,0,w,h);
+psize(u0, 1);
+color(u0, 1,1,0,1);
+rect(u0, 2, 0,0,10,10);
+rect(u0, 2, 2,2,6,6);
+};
+render;

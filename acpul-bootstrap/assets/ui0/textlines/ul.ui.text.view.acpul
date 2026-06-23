@@ -1,0 +1,91 @@
+### 70172 ul.ui.text.view
+# lines0
+
+r0:=k==0;
+
+draw(r0, 70173);
+
+_ @1010;
+_ @sys.media;
+_ @sys.obj;
+_ @sys.llog;
+_ @sys.ul.ui;
+_ @ui.textlines;
+
+lines0 p0;
+
+# state [
+
+state {
+ view {
+  start.x r4;
+  start.y r5;
+  rows r6;
+  cols r7;
+#  start.row u49; #150;
+ };
+};
+
+# state ]
+# font [
+
+font0 r3;
+
+fnt.load {
+ font0:=media.ft.load.font(u0, 0, 1000,0,0);
+};
+
+# font ]
+
+lvec0 r2;
+
+llog.begin(u0, S.ul.ui.text.view);
+llog.erase(r0, 0);
+
+lines.vec ui.textlines.lines.vec;
+
+if (r0) {
+ fnt.load;
+
+ state.view.rows:=20;
+ state.view.cols:=50;
+
+ lvec0:=lines.vec.new;
+# lines.vec.fill(lvec0, state.view.rows, font0,50, TXT.VIEW.TXT.VIEW.TXT.VIEW);
+
+ lines.vec.update(lvec0, state.view.rows, lines0, 0, font0,15);
+# llog.printo(r0, S.lines0, 0, lines0,-1);
+};
+
+llog.end(u0);
+
+t+=dt;
+k:=1;
+
+
+### 70173 ul.ui.text.view.draw
+
+
+color(u0, 0.5,0.5,0.1,0.5);
+rect(u0, 6, 0,0,250,250);
+
+_ @1010;
+_ @sys.media;
+_ @sys.obj;
+_ @sys.node;
+_ @sys.llog;
+_ @sys.ul.ui;
+_ @ui.textlines;
+
+q @70172;
+state q.state;
+lvec0 q.lvec0;
+lines q.lines;
+
+llog.begin(u0, S.ul.ui.text.view);
+
+opts0 ui.textlines.options.info;
+ui.textlines.render.draw.all(lvec0, state.view.rows, 0, opts0);
+
+llog.end(u0);
+

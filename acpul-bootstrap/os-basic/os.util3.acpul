@@ -1,0 +1,30 @@
+### 90230 os.util3
+
+_ @1100;
+_ @ul.ui;
+
+new.text.label0.v0 {
+ # tl0, txt0, format, value
+ tl0 _0;
+ txt0 _1;
+ format _2;
+ p0 _3;
+ _ @util.dma.std;
+ dma.print0.v(txt0, format, p0);
+ new.text.label(tl0, 0,0,1, txt0, 10, 0,0,0, 5352,10170202, 0); 
+};
+
+new.text.label0.v1 {
+ # tl0, x,y,s, txt0, format, value
+ tl0 _0;
+ x _1;
+ y _2;
+ s _3;
+ txt0 _4;
+ format _5;
+ p0 _6;
+ _ @util.dma.std;
+ dma.print0.v(txt0, format, p0);
+ new.text.label(tl0, x,y,s, txt0, 10, 0,0,0, 5352,10170202, 0); 
+};
+

@@ -1,0 +1,73 @@
+### ul.ui.collection2
+
+# goals:
+# 1. collection2
+# +2. ## <auto> id 
+# +2.1 - acpu-server
+# 2.2 - ide apply
+# +3. @import; # short _ @1010;
+# 4. @import.file 
+# 4.1 @import.file .function 
+# 5. ; - remove
+# 6. keys
+
+_ @struct.def;
+
+collection2.class {
+ _ struct;
+
+ t {
+  vec1d 1;
+  mat2d 2;
+  mat3d 3;
+  default vec1d;
+ };
+ type t.default;
+ width 200;
+ height 200;
+ cols 1;
+ rows 5;
+ sd {
+  vertical 0;
+  horizontal 1;
+  both 2;
+ };
+ scroll.direction sd.vertical;
+ cell.view.fid 0;
+
+ grid.width 200/5;
+ grid.height 200/5;
+
+ draw.cell.fid 70127;
+ draw.view.fid 70123;
+
+ # serialize
+ pack pack8(type, width,height, cols,rows, scroll.direction, cell.view.fid, grid.width, grid.height, draw.cell.fid, draw.view.fid);
+ unpack unpack8(_0, type, width,height, cols,rows, scroll.direction, cell.view.fid, grid.width, grid.height, draw.cell.fid, draw.view.fid);
+};
+
+# redirect
+collection collection2.class;
+
+
+
+### 9219 test.collection2
+
+# 9 - mother call bell
+
+_ @ul.ui.collection2;
+
+self collection;
+
+c2.data=self.pack;
+
+collection.width;
+
+_ @1010;
+_ @sys.obj;
+
+_ @struct.def;
+
+#_ @struct.point;
+
+    

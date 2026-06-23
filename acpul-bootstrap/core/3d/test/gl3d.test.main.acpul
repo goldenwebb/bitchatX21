@@ -1,0 +1,55 @@
+### 10172000 gl3d.test.main
+
+# NETWORKING [
+
+_ @1010;
+_ @sys.net;
+_ @sys.llog;
+#net.host(192,168,0,101, 8077);
+#llog.host(u0, 192,168,0,101, 8995);
+llog.enable(u0, 1);
+
+# NETWORKING ]
+
+r0:=k==0;
+
+draw(r0, 10172001);
+
+_ @1010;
+_ @sys.node;
+_ @1100;
+_ @core.stars3d;
+
+
+r0:=k==0;
+
+#l0:=node.new.this.ex(r0, stars3d.radial, 0);
+#l0:=node.new.this.ex(r0, stars3d.default, 0);
+
+gl3d.test0 10172100;
+
+#l0:=node.new.this.ex(r0, gl3d.test0, 0);
+
+_ @core.wallet;
+
+
+particles.test0 10178100;
+#l0:=node.new.this.ex(r0, particles.test0, 0);
+
+l0:=node.new.this.ex(r0, wallet.eth, 0);
+
+hud.test0 10179100;
+#l0:=node.new.this.ex(r0, hud.test0, 0);
+
+#r+=1;
+
+k:=1;
+
+### 10172001 gl3d.test.main
+
+
+c rnd(u0);
+color(u0, c,c,c,c);
+rect(u0, 6, 0,0,100,100);
+color(u0, c,c,c,c);
+rect(u0, 6, 25,25,50,50);

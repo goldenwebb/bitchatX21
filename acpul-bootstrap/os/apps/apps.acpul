@@ -1,0 +1,284 @@
+### 91000 os.apps
+
+os.apps.run 91200;
+
+os.apps.run.logo 91210;
+
+os.apps.box 91220;
+
+os.apps.list 91250;
+
+neo.ui 7800;
+
+app.photographer 700000;
+
+# card sticker #1
+#
+# acpu : obj-c : shaders 
+# : llog errors
+# : llog sources
+# 
+
+# card sticker #2
+#
+# acpul : os.apps : tasks list
+# : collection
+# : new
+# : delete
+#
+
+# card sticker #3
+#
+# acpul : neo : frames
+# : collection
+# : unlimited scroll 
+#
+
+# card sticker #4
+#
+# acpul : ide : errors
+# : formula/shader
+# : error
+#
+
+### 91200 os.apps.run
+
+r0:=k==0;
+
+draw(r0, 91201);
+
+_ @1010;
+_ @sys.node;
+_ @sys.os;
+_ @os.basic;
+_ @os.util0;
+_ @os.apps;
+_ @neo.ui;
+
+_ @91000;
+_ @twobin.font.inc;
+
+
+r1+=1;
+#node.new.this.ex(r1<100, os.apps.run.logo, 0);
+
+# VALENTINE APP 14.02.2020 [
+
+if (r0) {
+ sn0 0;
+# new.ui.shader.node(sn0, 0,0,1.8, 768/1.8,1024/2, 1, 70014,28594); # 
+
+ valentine.app {
+  new.ui.shader.node(sn0, 0,0,1, 768,1024, 1, 70014,28595); # valentine2022
+
+  _ @nodes.inc.node2;
+
+  i=0; while(i<5) {
+   w 768-200; 
+   h 1024-300;
+   w1 768; 
+   h1 1024;
+#   x rnd(u0)*w;
+#   y rnd(u0)*h;
+    a=3.14*2*rnd(u0);
+    r=400*(rnd(u0)*0.1+0.5);   
+    x=r*sin(a)+w1/2;
+    y=r*cos(a)+h1/2;
+   ss=(rnd(u0)*1+0.5)/1;
+   ss1=ss;
+   ss2=ss*2;
+#   ss2=ss*1.2;
+    w1=100*ss1;
+    h1=100*ss1;
+
+   sn0=0;
+#   new.node2(sn0, x-w1/2,y-h1/2,ss2,w1,h1, 1, 70014,150021); # heart1.node1
+   new.node2(sn0, x-w1/2,y-h1/2,ss2,w1,h1, 1, 70014,150010); # 
+#   new.node2(sn0, x,y,ss,50,50, 1, 70014,150021); # heart1.node1
+   i+=1;
+  };
+
+  HIPSTER.BANNER 10025000;
+  node.new.this.ex(r0, HIPSTER.BANNER, 0);
+ };
+# valentine.app;
+};
+
+# VALENTINE APP 14.02.2020 ]
+
+os.apps.box.run0
+ # r0, mode, app, p0
+ node.new.this.ex4(_0, os.apps.box, _1, _2, _3, 0);
+
+#os.apps.box.run0(r0, 0, twobin.font.test, 0);
+
+_ @os.graph0.inc;
+#os.apps.box.run0(r0, 0, os.graph0.test, 0);
+
+_ @os.tree0.inc;
+#os.apps.box.run0(r0, 0, os.treeX.tests, 0);
+
+_ @app.photographer;
+#os.apps.box.run0(r0, 0, photographer.window, 0);
+
+_ @neo.ui;
+#os.apps.box.run0(r0, 0, neo.ui.main, 0);
+
+_ @os.basic.paint;
+#os.apps.box.run0(r0, 0, os.test.forest, 0);
+
+_ @os.basic.ray3d;
+#os.apps.box.run0(r0, 0, ray3d.view, 0);
+
+DEMO.UA 9000;
+#node.new.this.object(r0, DEMO.UA, 0);
+
+new.nodes.app {
+ _ @os.nodes;
+ os.apps.box.run0(r0, 0, nodes.app, 0);
+};
+#new.nodes.app;
+
+_ @os.basic.ui;
+#os.apps.box.run0(r0, 0, basic.ui.tests, 0);
+#os.apps.box.run0(r0, 0, basic.ui.tests.node2, 0);
+
+
+
+VG {
+ _ @core.vg;
+ #node.new.this.ex(r0, core.vg.node.test0, 0);
+ #node.new.this.ex(r0, core.vg.node.test1, 0);
+ #node.new.this.ex(r0, core.vg.node.test2, 0);
+ l0:=node.new.this.ex(r0, core.vg.node.test3, 0);
+ node.set.x(u0, l0, 1000);
+
+ SNAKE 10150000;
+ #node.new.this.ex(r0, SNAKE, 0); 
+
+ PAINT 10160000;
+ l0:=node.new.this.ex(r0, PAINT, 0);
+ node.set.x(u0, l0, 1000);
+# node.set.y(u0, l0, 700);
+};
+
+#VG;
+#_ @os.basic.ui;
+
+# DOTA APP [
+
+# DOTA APP ]
+
+if (r0) {
+ sn0 0;
+# new.ui.shader.node(sn0, 0,0,4, 768/4,1024/4, 1, 70014,28593); # 
+# new.ui.shader.node(sn0, 0,0,1.8, 768/1.8,1024/2, 1, 70014,28594); # 
+# new.ui.shader.node(sn0, 0,50,1.2, 700,400, 1, 70014,28592); # blobs2
+# new.ui.shader.node(sn0, 50,0,1, 700,300, 1, 70014,28591); # blobs1
+# new.ui.shader.node(sn0, 50,0,1, 768,1024, 1, 70014,28595); # 
+
+# new.ui.shader.node(sn0, 50,0,1, 768,1024, 1, 70014,28599); #  
+# new.ui.shader.node(sn0, 0,0,4, 768/4,1024/4, 1, 70014,28556); # hearts
+# new.ui.shader.node(sn0, 0,0,2, 768/2,1024/2, 1, 70014,28600); # hb
+# new.ui.shader.node(sn0, 0,0,2, 768/2,1024/2, 1, 70014,28601); # art.ua
+# new.ui.shader.node(sn0, 0,0,4, 768/4,1024/4, 1, 70014,28602); # atom1
+# new.ui.shader.node(sn0, 0,0,2, 768/2,1024/2, 1, 70014,28603); # atom2
+# new.ui.shader.node(sn0, 0,0,2, 768/2,1024/2, 1, 70014,28604); # atom4
+
+# new.ui.shader.node(sn0, 0,0,2, 768/2,1024/2, 1, 70014,28605); # 
+# new.ui.shader.node(sn0, 0,0,4, 768/4,1024/4, 1, 70014,28605); # football
+# new.ui.shader.node(sn0, 0,0,2, 768/2,1024/2, 1, 70014,28606); # sunsky
+# new.ui.shader.node(sn0, 0,0,2, 768/2,1024/2, 1, 70014,28607); # magic.ball
+# new.ui.shader.node(sn0, 0,0,2, 768/2,1024/2, 1, 70014,28608); # galaxy608
+# new.ui.shader.node(sn0, 0,0,2, 768/2,1024/2, 1, 70014,28609); # fractcube.good
+# new.ui.shader.node(sn0, 0,0,2, 768/2,1024/2, 1, 70014,28700); # fractcube.good1
+# new.ui.shader.node(sn0, 0,0,2, 768/2,1024/2, 1, 70014,28701); # fractcube.good2
+# new.ui.shader.node(sn0, 0,0,4, 768/4,1024/4, 1, 70014,28702); # fractcube.good3d
+# new.ui.shader.node(sn0, 0,0,1, 768/1,1024/1, 1, 70014,28703); # bg703.cool
+# new.ui.shader.node(sn0, 0,0,1, 768/1,1024/1, 1, 70014,28704); # eye.of.phi.cool
+# new.ui.shader.node(sn0, 0,0,2, 768/2,1024/2, 1, 70014,28705); # beams05
+# new.ui.shader.node(sn0, 0,0,2, 768/2,1024/2, 1, 70014,28706); # space.game.amazing
+
+# new.ui.shader.node(sn0, 0,0,2, 768/2,1024/2, 1, 70014,28707); # cube.blocks
+# new.ui.shader.node(sn0, 0,-200,1, 1024/1,1024/1, 1, 70014,28707); # cube.blocks
+
+# new.ui.shader.node(sn0, 0,0,2, 768/2,1024/2, 1, 70014,28708); # 
+# new.ui.shader.node(sn0, 0,-200,4, 768/2,1024/2, 1, 70014,28708); # ruben
+# new.ui.shader.node(sn0, 0,-200,2, 768,1024, 1, 70014,28708); # 
+
+# new.ui.shader.node(sn0, 0,-200,4, 768/2,1024/2, 1, 70014,28712); # heart.maman
+# new.ui.shader.node(sn0, 0,-200,4, 768/2,1024/2, 1, 70014,28710); # happybirthday.cake
+
+ #new.ui.shader.node(sn0, 0,-200,4, 768/2,1024/2, 1, 70014,28711); # hb.smile
+# new.ui.shader.node(sn0, 0,-00,2, 768/2,1024/2, 1, 70014,28713); # disco.balls
+
+ new.ui.shader.node(sn0, 0,-00,2, 768/2,1024/2, 1, 70014,28714); # rainbow.spectrum
+
+# new.ui.shader.node(sn0, 0,-00,2, 768/2,1024/2, 1, 70014,28715); # ui.demo15
+
+# new.ui.shader.node(sn0, 0,-00,2, 768/2,1024/2, 1, 70014,28718); # valentine2023b
+# new.ui.shader.node(sn0, 0,-00,2, 768/2,1024/2, 1, 70014,28716); # valentine2023
+# new.ui.shader.node(sn0, 0,-00,2, 768/2,1024/2, 1, 70014,28717); # valentine2023a
+
+# new.ui.shader.node(sn0, 000,0,2, 768/2,1024/2., 1, 70014,28510); # partylights10
+ HIPSTER.BANNER 10025000;
+# node.new.this.ex(r0, HIPSTER.BANNER, 0);
+ 
+
+
+};
+
+
+
+k:=1;
+
+
+### 91201 os.apps.run.draw
+
+circle(u0, 2, 50,50, 10, 0, 18, 0);
+
+
+
+
+### 91210 os.apps.run.logo
+
+r0:=k==0;
+
+draw(r0, 91211);
+
+_ @1010;_ @sys.os;_ @os.basic;_ @os.util0;
+
+screen.size0;
+#center.up;
+
+center.always;
+
+x+=sin(t*2)*10;
+y+=sin(t*5)*10;
+
+t+=dt*rnd(u0);
+
+r+=5*rnd(u0);
+x+=0.05*rnd(u0);
+
+#s:=5;
+s:=2;
+
+k:=1;
+
+### 91211 os.apps.run.logo.draw
+
+t:=t*0.1;
+s 0.2;
+r t;
+color(u0, 0.5+sin(t*24)*0.5,0.2,0.5+cos(t*2.7)*0.4,0.2);
+#psize(u0, 5);
+#psize(u0, 7);
+psize(u0, 1);
+circle(u0, 0, 0,0, s*150, r, 20, 0);
+circle(u0, 0, 0,0, s*120, 0-r, 9, 0);
+circle(u0, 0, 0,0, s*90, 0+r*5, 18, 0);
+
+
+
+

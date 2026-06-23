@@ -1,0 +1,98 @@
+### ui0.textview.inc
+
+new.textview {
+ # x,y,s, w,h, mode, lines -> hid
+ _ @basic.ui;
+ hid0 0;
+ new.node.common8(hid0, _0,_1,_2, _3,_4, NNN(ui0.textview), _5, _6, 0,0, 0,0,0,0);
+ hid0;
+};
+
+### ui0.textview
+# mode, lines
+
+mode0 p0;
+lines0 p1;
+
+_ @easy.start.new;
+_ @4;
+
+_ @sys.events;
+_ @sys.llog;
+
+_ @ui0.xstack.inc;
+
+TEXTVIEW.DBG 0;
+
+LINE.HEIGHT=node.get.v(A.LINE.HEIGHT);
+
+LINE.HEIGHT:=if(LINE.HEIGHT>0,LINE.HEIGHT,16);
+
+# Flags
+sync.height 1;
+
+vstack0 0;
+
+load.lines {
+ n=buffer.count(u0, lines0);
+
+# lbl0 0; val0 0; ui.value4(lbl0,val0,0,40,1*2, lines0, n);
+
+ i=0;while(i<n){
+  y0=80+i*LINE.HEIGHT;
+  line0=buffer.clone(u0, lines0,n-i-1);
+
+#  line0:=if (rnd(u0)>0.5,line0,AAA);
+  tl0 0;
+  # STYLE-0
+  new.text.label(tl0, 0,0,1, line0, LINE.HEIGHT, 1001,1,1, 5352,15877, 0); 
+#  new.text.label(tl0, 0,0,1, line0, LINE.HEIGHT, 1001,1,1, 5352,15877, 0); 
+#  new.text.label(tl0, 0,0,1, line0, LINE.HEIGHT, 1001,8,8, 5352,15877, 0); 
+#  node.set.h(u0, tl0,20);
+#  new.text.label(tl0, 0,0,1, line0, 18, 1001,1,1, 5352,10170202, 0); 
+#  new.text.label(tl0, 0,0,1, line0, 18, 1001,1,1, 5352,10018021, 0); 
+
+# new.text.label0(tl0, 0,0,1, line0, 20);
+#  new.text.label(tl0, 0,y0,1, line0, 16, 1001,4,5, 0,10170203, 0);
+  #node.set.h(u0, tl0, 116);
+#  new.ui.label(tl0, 0,y0,1, 100,120, 0, 0, line0);
+  xstack.add(vstack0, tl0);
+
+  i+=1;
+ };
+ node.set.v(vstack0, GAP.Y, 5);
+ node.set.v(vstack0, DIRECTION.Y, 0);
+};
+
+_ @dma.std;
+
+if (r0) {
+# txt0 0;
+# dma.print1.v2(txt0, S.format.ide.formula.id.name, fid, name0);
+# lines0:=txt0;
+
+ vstack0:=new.vstack(0,0,1, 100,500, 1);
+ load.lines(lines0);
+};
+
+# Sync vstack width to width
+node.set.w(u0, vstack0, w);
+
+# Sync height to vstack height
+if (sync.height) {
+ h:=node.get.h(u0, vstack0);
+# h+=10;
+# h:=1000;
+};
+
+#lbl0 0; val0 0; ui.value4(lbl0,val0,0,20,1, TextView.w, w);
+#lbl0 0; val0 0; ui.value4(lbl0,val0,0,0,1, TextView.h, h);
+
+if (TEXTVIEW.DBG) {
+ draw.fid(ui0.textview.draw);
+};
+
+### ui0.textview.draw
+
+color(u0, 0.5,0.5,0.9,0.9);
+rect(u0, 2, 0,0,w,h);

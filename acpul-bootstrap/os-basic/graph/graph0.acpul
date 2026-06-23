@@ -1,0 +1,340 @@
+### 90300 os.graph0.inc
+
+os.graph0.view 90320;
+os.graph0.test 90380;
+os.graph0.test.include 90390;
+os.graph0.test.inc os.graph0.test.include; # todo: remove
+
+os.graph0.mode {
+ line2d 0;
+};
+
+os.graph0.style {
+ default 0;
+ no.name 1;
+};
+
+os.graph.obj2d { _;
+
+ # isavar;
+ # values0
+
+ # object [
+
+ a {
+  min {
+   x 1;
+   y 2;
+  };
+  max {
+   x 3;
+   y 4;
+  };
+  grid {
+   cw 5;
+   ch 6;
+  };
+ };
+ vg buffer.get(u0, isavar,0, _0);
+ vs buffer.set(u0, isavar,0, _0, _1);
+
+ min.x.g vg(a.min.x); min.x.s vs(a.min.x, _0);
+ min.y.g vg(a.min.y); min.y.s vs(a.min.y, _0);
+ max.x.g vg(a.max.x); max.x.s vs(a.max.x, _0);
+ max.y.g vg(a.max.y); max.y.s vs(a.max.y, _0);
+
+ # object ]
+
+ # values [
+
+ values.n {
+  buffer.count(u0, values0);
+ };
+ values.m {
+  # j
+  buffer.size(u0, values0,_0);
+ };
+ values.g {
+  # i,j
+  buffer.get(u0, values0,_0,_1);
+ };
+ values.s {
+  # i,j, v
+  buffer.set(u0, values0,_0,_1, v);
+ };
+
+ # values ]
+
+ new {
+  # size
+  size0 _0;
+  if (values0==0) {
+   values0:=buffer.new(u0, size0+1, size0+1);
+   values.init(size0);
+  };
+  isavar:=buffer.new(u0, 100,100);
+  make.xy.points(size0);
+ };
+
+ values.init {
+  # size
+  size0 _0;
+  dma0 0;
+  buffer.dma(u0, dma0, values0,0);
+  dma.fill(u0, dma0, 0, size0, 0);
+ };
+ 
+
+
+ make.xy.points {
+  # size
+  size0 _0;
+  buffer.add(u0, isavar, size0*2,100000*2);
+  i:=0; while (i<size0) {
+   buffer.set2(u0, isavar,1, i*2, i,0);
+   i+=1;
+  };
+ };
+
+ update.minmax1d {
+  # i
+  i0 _0;
+  ly d0; gy d1;
+  ly:=values.g(i0,0);
+  gy:=ly;
+  j:=0; while(j<values.m(i0)) {
+   v l0;
+   v:=values.g(i0,j);
+   ly:=if(v<ly,v,ly);
+   gy:=if(v>gy,v,gy);
+   j+=1;
+  };
+  min.x.s(0);
+  max.x.s(values.m(i0));
+  min.y.s(ly);
+  max.y.s(gy);
+ };
+
+ update.minmax2d {
+  # ix,iy
+  lx d0; ly d1;
+  gx d2; gy d3;
+  ix _0;
+  iy _1;
+  lx:=values.g(ix,0);
+  gx:=lx;
+  ly:=values.g(iy,0);
+  gy:=ly;
+  j:=0; while(j<values.m(ix)) {
+   v l0;
+   v:=values.g(ix,j);
+   lx:=if(v<lx,v,lx);
+   gx:=if(v>gx,v,gx);
+   j+=1;
+  };
+  j:=0; while(j<values.m(iy)) {
+   v l0;
+   v:=values.g(iy,j);
+   ly:=if(v<ly,v,ly);
+   gy:=if(v>gy,v,gy);
+   j+=1;
+  };
+  min.x.s(lx);
+  min.y.s(ly);
+  max.x.s(gx);
+  max.y.s(gy);
+ };
+};
+
+os.graph.line2d { _;
+
+ draw {
+  # isavar, values,i, w,h, min.x,max.x, min.y,max.y
+  isavar _0;
+  values0 _1;
+  i0 _2;
+  w _3;
+  h _4;
+  min.x _5;
+  max.x _6;
+  min.y _7;
+  max.y _8;
+
+  size0 d0;
+  size0:=buffer.size(u0, values0,i0);
+#  llog.printv(r0, S.draw.size0, size0);
+
+  vsh.a0.pos 90350;#15215;
+  fsh.fill0 90351;#15216;
+#  fsh.fill0 90352;#15216;
+
+  dma0 0;
+  dma1 1;
+
+  gl.shader.use(vsh.a0.pos, fsh.fill0);
+  gl.shader.attribute.buffer0(0, dma0, isavar,1, 2,size0,0);
+  gl.shader.attribute.buffer0(1, dma1, values0,0, 1,size0,0);
+  #gl.shader.attribute.buffer0(1, 2, points,1, 2,4,0);
+  #gl.shader.uniform.texture(0, texD, 0);
+
+  param.scale0 0;
+  param.center0 1;
+
+  sw w/size0;
+  sh 0+h/(max.y-min.y); #1;
+  gl.shader.uniform.f4(param.scale0, sw,sh,1,1); 
+  gl.shader.uniform.f4(param.center0, min.x,min.y,0,0); 
+
+
+#  gl.blend(5,1);
+
+  #gl.draw(6, 4);
+#   gl.draw(0, size0);
+#  gl.draw(5, size0);
+  gl.draw(3, size0);
+#  gl.draw(6, size0);
+ };
+};
+
+os.graph.bar2d { _;
+
+
+};
+
+os.graph3d { _;
+ 
+};
+
+os.graph.pie {
+ 
+};
+
+### 90390 os.graph0.test.include
+
+r0:=k==0;
+
+draw(r0, 90391);
+
+_ @1010;
+_ @sys.obj;
+_ @sys.os;
+_ @os.basic;
+_ @os.graph0.inc;
+
+values0 r2;
+
+os.graph.obj2d.isavar r1;
+os.graph.obj2d.values0 r2;
+
+if (r0) {
+ os.graph.obj2d.new(100);
+};
+
+values.update {
+ n:=100;
+ i:=0; while(i<n) {
+#  buffer.set(u0, values0,0,i, sin(t+i*0.1)*100+10*rnd(u0));
+  buffer.set(u0, values0,0,i, sin(t+i*0.1)*100+sin(t*2)*550*sin(t+i*0.5)-50);
+#  buffer.set(u0, values0,0,i, sin(t+i*0.1)*00+50*sin(t+i*0.5)-50);
+#  buffer.set(u0, values0,0,i, sin(t+i*0.1)*100+0*sin(t+i*0.5)-50);
+  i+=1;
+ };
+};
+#if (r0) {
+values.update;
+#};
+
+os.graph.obj2d.update.minmax1d(0);
+
+#os.graph.obj2d.update.minmax2d(0,1);
+
+
+
+x:=100;
+y:=100;
+
+w:=200+sin(t)*100;
+h:=200+sin(t*2.1)*50;
+
+t+=dt;
+
+k:=1;
+
+### 90391 os.graph0.test.include.draw
+
+_ @1010;
+_ @sys.os;
+_ @os.basic;
+_ @sys.llog;
+
+llog.begin(r0, S.graph0.test);
+llog.erase(r0, 0);
+
+#qq rnd(u0);
+color(u0, 1.5,0.5,0.5,0.5);
+#color(u0, qq*1,qq*2,qq*3,qq*4);
+rect(u0, 6, 0,0, w,h);
+
+color(u0, 0.5,0.2,1,0.5);
+rect(u0, 6, 20,50, 20,20);
+rect(u0, 6, 0,70, 20,20);
+
+psize(u0, 3);
+
+color(u0, 1,1+sin(t),0+sin(t*1.5)+1,0.5);
+
+_ @twobin.font.inc;
+
+twobin.font.scale 5; #l3
+twobin.font.cursor.x l0;
+twobin.font.cursor.y l1;
+#twobin.font.cursor.y l1+110*sin((cursor.x+t*100)*0.01);
+#twobin.font.gap 10+5*rnd(u0);
+#twobin.font.gap 10+5*sin(sin(t*10)+cursor.x);
+twobin.font.gap 10;
+
+twobin.font.def8x4.txt0 {
+ begin;
+ scale:=3;
+
+ G;R;A;P;H;
+# T;E;S;T;
+# I;N;C;
+ D;A;V;I;N;C;I;
+# V;I;K;A;
+};
+twobin.font.def8x4.txt0;
+
+_ @1100;
+_ @util.gl.std;
+
+_ @sys.node;
+_ @sys.obj;
+_ @os.basic;
+_ @os.graph0.inc;
+
+os.graph.obj2d.isavar r1;
+os.graph.obj2d.values0 r2;
+
+#psize(u0, 1);
+#rect(u0, 3, 0,0,100,100);
+
+draw.graph {
+ _ os.graph.obj2d; 
+ os.graph.line2d.draw(isavar, values0,0, w,h, min.x.g,max.x.g, min.y.g,max.y.g);
+};
+draw.graph;
+
+llog.print(r0, GRAPH0);
+os.graph.obj2d.log { 
+ llog.printo(r0, S.values0, 0, values0,-1);
+ llog.printo(r0, S.isavar, 0, isavar,-1);
+ llog.printv2(r0, S.min.max.x, min.x.g, max.x.g);
+ llog.printv2(r0, S.min.max.y, min.y.g, max.y.g);
+};
+os.graph.obj2d.log;
+
+llog.end(r0);
+
+
+

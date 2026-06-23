@@ -1,0 +1,67 @@
+### ui0.xstack.inc
+
+new.vstack {
+ # x,y,s, w,h, mode -> hid
+ _ @basic.ui;
+ hid0 0;
+ new.node.common0(hid0, _0,_1,_2, _3,_4, NNN(ui0.vstack), _5);
+ hid0;
+};
+
+new.hstack {
+ # x,y,s, w,h, mode -> hid
+ _ @basic.ui;
+ hid0 0;
+ new.node.common0(hid0, _0,_1,_2, _3,_4, NNN(ui0.hstack), _5);
+ hid0;
+};
+
+xstack.add {
+ # stack, node
+ node.change.parent(u0, _0, _1);
+ owner0=node.get.v(_0, VIEW.OWNER);
+ node.set.v(_1, VIEW.OWNER, owner0);
+};
+
+# DIV CONTAINER
+
+new.div {
+ # w,h, mode -> hid
+ hid0 0;
+ new.node.common0(hid0, 0,0,1, _0,_1, NNN(ui0.div), _2);
+ hid0;
+};
+
+div.add
+ # div, node
+ node.change.parent(u0, _0, _1);
+
+# EXTRA
+
+xstack.add.div0 {
+ # stack, view, div:w:h
+ stack0 _0;
+ sn0 _1;
+ w _2; h _3;
+ div0=new.div(w,h, 0);
+ div.add(div0, sn0);
+ xstack.add(stack0, div0);
+ div0;
+};
+
+xstack.add.hstack {
+ # stack, x:y:s:w:h, mode
+ stack0 _0;
+ hstack0=new.hstack(_1, _2,_3,_4, _5,_6, _7);
+ xstack.add(stack0, hstack0);
+ hstack0;
+};
+
+xstack.add.entry0 {
+ # hstack0, entry0
+ hstack0 _0;
+ entry0 _1;
+
+ xstack.add(hstack0, entry0);
+ node.set.v(entry0, TOUCH.OWNER, vstack0);
+};

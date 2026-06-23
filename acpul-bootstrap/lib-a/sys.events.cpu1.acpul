@@ -1,0 +1,19 @@
+### sys.events.cpu1
+
+_ @sys.cpu;
+_ @sys.events;
+
+cpu.e.formula.compiled 1;
+cpu.e.formula.updated 2;
+cpu.e.shader.updated 3;
+cpu.e.shader.compiled 4;
+cpu.e.formula.deleted 5;
+cpu.e.shader.deleted 6;
+cpu.e.formula.new 7;
+cpu.e.shader.new 8;
+cpu.e.formula.name.changed 9;
+cpu.e.shader.name.changed 10;
+
+cpu.e.texture.created 11;
+cpu.e.texture.deleted 12;
+

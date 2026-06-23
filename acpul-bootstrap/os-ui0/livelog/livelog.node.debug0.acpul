@@ -1,0 +1,90 @@
+### livelog.node.debug0
+
+_ @4;
+#lbl0 0; val0 0; ui.value4(lbl0,val0,0,0-20,1, N, create.child.nodes.n);
+#lbl0 0; val0 0; ui.value4(lbl0,val0,0+20,0,0.5, N, qq);
+#lbl0 0; val0 0; ui.value4(lbl0,val0,100+20,0,0.5, X, x);
+#lbl0 0; val0 0; ui.value4(lbl0,val0,200+20,0,0.5, Y, y);
+#lbl0 0; val0 0; ui.value4(lbl0,val0,0,0-20,1, N, u9);
+if (depth==0) {
+# lbl0 0; val0 0; ui.value4(lbl0,val0,0,0-20,1, N, u9);
+};
+
+# INFO0: O, X,Y,W,H, layout [
+
+px=0; pw 170;
+py=40; ph 20;
+#fp px+=pw;
+fp py+=ph;
+
+dbg_xy {
+ lbl0 0; val0 0; ui.value4(lbl0,val0,px,py,1, Y, y); fp;
+ lbl0 0; val0 0; ui.value4(lbl0,val0,px,py,1, X, x); fp;
+};
+#dbg_xy;
+
+#lbl0 0; val0 0; ui.value4(lbl0,val0,px,py,1, O, opts0); fp;
+#lbl0 0; val0 0; ui.value4(lbl0,val0,px,py,1, WW, ww); fp;
+
+px:=pw;
+py:=0;
+#lbl0 0; val0 0; ui.value4(lbl0,val0,px,py,1, W, w); fp;
+#lbl0 0; val0 0; ui.value4(lbl0,val0,px,py,1, H, h); fp;
+
+# layout
+dbg_layout {
+ lo layout.options;
+ px:=pw*2;
+ py:=0;
+ lbl0 0; val0 0; ui.value4(lbl0,val0,px,py,1, Margin.x, lo.margin.x); fp;
+ lbl0 0; val0 0; ui.value4(lbl0,val0,px,py,1, Margin.y, lo.margin.y); fp;
+ lbl0 0; val0 0; ui.value4(lbl0,val0,px,py,1, lo.align, lo.align); fp;
+ lbl0 0; val0 0; ui.value4(lbl0,val0,px,py,1, Layout, layout0); fp;
+};
+#dbg_layout;
+
+#lbl0 0; val0 0; ui.value4(lbl0,val0,px,py,1, DDD, l11); fp;
+
+# lbl0 0; val0 0; ui.value4(lbl0,val0,px,py+20,1, Layout, layout0); fp;
+# lbl0 0; val0 0; ui.value4(lbl0,val0,px,py+20,1, NID, nid); fp;
+
+# lbl0 0; val0 0; ui.value4(lbl0,val0,px,py+20,1, VISIBLE, visible); fp;
+
+# INFO0: O, X,Y,W,H, layout ]
+
+# DEBUG ]
+
+### livelog.node.debug1
+
+# tl0 0; txt0 0; new.text.label1b(tl0, 3,3+i*20,1, A, 20);
+# llog.printv(ll0, OPTS, child0);
+# llog.printo(ll0, LAYOUT, 0, layout0,-1);
+#  node.prop.x.s(u0, node1, 20);
+#  node.prop.y.s(u0, node1, 0+20*(i)+20);
+#  node.prop.y.s(u0, node1, 0-20*(i-start)-20);
+
+#  llog.begin(ll0, L0);
+#  llog.printv(ll0, I0, i);
+#  llog.printv(ll0, LAYOUT0, layout0);
+
+#  if (i==0) {
+#   llog.printo(ll0, LAYOUT00, 0, layout00,-1);
+#   llog.pv(OPTS, child0);
+#  };
+
+#  llog.printv(ll0, LAYOUT00.XX, layout00);
+
+#  llog.end(ll0);
+
+# llog.printv(ll0, NODES, n);
+# llog.printv(ll0, T, t);
+# llog.printv(ll0, NID, nid);
+
+#
+
+# llog.pv(OPTS, opts0);
+# llog.po(NODE, 0, opts0,-1);
+# llog.pv(Node.info, obj1);
+# llog.po(Node.Info, 0, obj1,-1);
+
+

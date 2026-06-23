@@ -1,0 +1,19 @@
+### 91250 os.apps.list
+
+r0:=k==0;
+
+draw(r0, 91251);
+
+k:=1;
+
+### 91251 os.apps.list.draw
+
+h 5;
+y:=-h;
+y0pp y+=h;
+rect(u0, 0, 0,y0pp, 5,10);
+rect(u0, 0, 0,y0pp, 5,10);
+rect(u0, 0, 0,y0pp, 5,10);
+rect(u0, 0, 0,y0pp, 5,10);
+rect(u0, 0, 0,y0pp, 5,10);
+

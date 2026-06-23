@@ -1,0 +1,164 @@
+### 70100 ul.ui
+
+_ @1010;
+_ @sys.node;
+_ @sys.events;
+
+ui.button 70102;
+ui.slider 70104;
+ui.text.label 70106;
+ui.vg.button 70108;
+ui.collection 70120;
+ui.textlines 70170;
+
+ui.windows 70300;
+
+ui.views 70400;
+
+ui.pool 70100;
+ui.pool2 70101;
+
+ui.event {
+ # hid
+ events.pop(u0, ui.pool,_0);
+ # u0, pool,handle -> type, o0-o3
+};
+
+new.button {
+ # hid, x,y,s, w,h, type
+ _0:=node.new.this.ex4(u0, ui.button, _4,_5, _6, 0);
+ node.prop.x.s(u0, _0, _1);
+ node.prop.y.s(u0, _0, _2);
+ node.prop.s.s(u0, _0, _3);
+};
+
+new.button.custom {
+ # hid, x,y,s, w,h, node,param, debug
+ _0:=node.new.this.ex8(u0, ui.button, _4,_5, 10000, _6, _7, _8);
+ node.prop.x.s(u0, _0, _1);
+ node.prop.y.s(u0, _0, _2);
+ node.prop.s.s(u0, _0, _3);
+};
+
+new.slider {
+ # hid, x,y,s, w,h, type
+ _0:=node.new.this.ex4(u0, ui.slider, _4,_5, _6, 0);
+ node.prop.x.s(u0, _0, _1);
+ node.prop.y.s(u0, _0, _2);
+ node.prop.s.s(u0, _0, _3);
+};
+
+new.text.label {
+ # hid, x,y,s, text, size, font(pool,id,i), vsh,fsh, extra
+ _0:=node.new.this.ex8(u0, ui.text.label, _4, _5, _6,_7,_8, _9,_10, _11);
+ node.prop.x.s(u0, _0, _1);
+ node.prop.y.s(u0, _0, _2);
+ node.prop.s.s(u0, _0, _3);
+};
+
+new.text.label0
+ # hid, x,y,s, text, size
+ new.text.label(_0, _1,_2,_3, _4, _5, 0,0,0, 0,0, 0);
+
+# extra.vg [
+
+new.vg.button {
+ # hid, x,y,s, w,h, type, param
+ _0:=node.new.this.ex4(u0, ui.vg.button, _4,_5, _6, _7);
+ node.prop.x.s(u0, _0, _1);
+ node.prop.y.s(u0, _0, _2);
+ node.prop.s.s(u0, _0, _3);
+};
+
+# extra.vg ]
+# collection [
+
+ui.uic @ui.collection;
+new.collection ui.uic.new.collection(__);
+
+# collection ]
+# textlines [
+
+ui.uitxt @ui.textlines;
+new.text.view ui.uitxt.new.text.view(__);
+new.memory.view ui.uitxt.new.memory.view(__);
+
+# textlines ]
+
+bn @ui.button;
+ui.event.button bn.ui.event.button;
+sl @ui.slider;
+ui.event.slider sl.ui.event.slider;
+
+ui.event.text.update 1888;
+
+# ui.event.button.* [
+
+ui.event.button.ev {
+ push {
+  # id
+ };
+ pop {
+  # id
+ };
+ click { # extra
+  # id
+ };
+ double.click { # extra
+  # id
+ };
+};
+
+ui.event.button.process {
+ # b0, id, ev
+ b0 _0;
+ bn0 _1;
+
+ b0:=1;
+ while(b0) {
+  b0:=ui.event(bn0);
+  if (b0==ui.event.button.push) {
+   _2.push(b0);
+  };
+  if (b0==ui.event.button.pop) {
+   _2.pop(b0);
+  };
+ };
+};
+
+
+ui.event.button.process2 {
+ # b0, pool,id, ev
+ b0 _0;
+ pool0 _1;
+ id0 _2;
+
+ b0:=1;
+ while(b0) {
+  b0:=events.pop(u0, pool0,id0);
+  if (b0==ui.event.button.push) {
+   _3.push(b0);
+  };
+  if (b0==ui.event.button.pop) {
+   _3.pop(b0);
+  };
+  if (b0==ui.event.button.click) {
+   _3.click(b0);
+  };
+ };
+};
+
+ui.event.process3 {
+ # b0, pool,id, fn
+ b0 _0;
+ pool0 _1;
+ id0 _2;
+
+ b0:=1;
+ while(b0) {
+  b0:=events.pop(u0, pool0,id0);
+  _3(_0);
+ };
+};
+
+# ui.event.button.* ]

@@ -1,0 +1,305 @@
+### 179000:S grid-tex-lines.fsh
+
+#define scale p0
+#define color p1
+#define multipler p2
+
+varying mediump vec2 v_texCoord;
+
+uniform vec2 scale;
+uniform vec4 color;
+uniform float multipler;
+
+void main()
+{
+  vec2 center = vec2(0.5,0.5);
+
+//  gl_FragColor = vec4(0.5,0.2,0.0,0.5);
+//  gl_FragColor.b = v_texCoord.x;
+
+  float c = length((v_texCoord-center)*scale);
+  gl_FragColor = color*(1.-c)*multipler;
+}  
+
+
+
+### 179001:S grid-tex-lines-lines.fsh
+
+#define scale p0
+#define color p1
+#define multipler p2
+
+varying mediump vec2 v_texCoord;
+
+uniform vec2 scale;
+uniform vec4 color;
+uniform float multipler;
+
+void main()
+{
+//  vec2 center = vec2(0.5+sin(CC_Time[3]*(2.+multipler+1.))*0.2,0.5);
+  vec2 center = vec2(0.5+sin(CC_Time[3]*0.5*(2.+multipler+1.))*0.2,0.5+sin(CC_Time[3]*(1.+multipler*0.1))*0.2);
+//  vec2 center = vec2(0.5,0.5);
+
+  gl_FragColor = vec4(0.5,0.2,0.0,0.5);
+//  gl_FragColor.b = v_texCoord.x;
+
+  float c = length((v_texCoord-center)*scale);
+  gl_FragColor = color*(1.-c)*multipler;
+//  gl_FragColor.r = gl_FragColor.b*(0.2+0.2*sin((v_texCoord.y)*200.+200.*CC_Time[3]));
+//  gl_FragColor.rgb = gl_FragColor.rgb*vec3((0.9+0.1*sin((v_texCoord.y)*200.+200.*CC_Time[3]))*1.);
+//  gl_FragColor.rgb = gl_FragColor.rgb*vec3((0.9+0.1*sin((v_texCoord.y)*200.+200.*CC_Time[3]))*1.);
+  gl_FragColor.rgb = gl_FragColor.rgb*vec3((0.9+0.1*sin((v_texCoord.y+0.1*CC_Time[3])*200.+10.*CC_Time[3]))*1.);
+}
+
+
+
+### 179002:S grid-checkers.fsh
+
+#define size p0
+#define dxdy p1
+#define ratio p2
+#define color p3
+
+uniform vec2 size;
+uniform vec2 dxdy;
+uniform vec4 color;
+uniform vec2 ratio;
+
+varying mediump vec2 v_texCoord;
+
+float checkers( in vec2 p, in vec2 dpdx, in vec2 dpdy )
+{
+    vec2 w = max(abs(dpdx), abs(dpdy));
+    vec2 i = 2.0*(abs(fract((p-0.5*w)*ratio.x)-ratio.x)-
+                  abs(fract((p+0.5*w)*ratio.y)-ratio.y))/w;
+    return 0.5 - 0.5*i.x*i.y;                  
+}
+
+void main()
+{
+//  gl_FragColor = vec4(checkers(v_texCoord.xy*10., vec2(.1), vec2(.2)));
+  gl_FragColor = vec4(checkers(v_texCoord.xy*size, dxdy, dxdy)) * color;
+}
+
+
+
+### 179012:S grid-checkers-i.fsh
+
+#define size p0
+#define dxdy p1
+#define ratio p2
+#define color p3
+
+uniform vec2 size;
+uniform vec2 dxdy;
+uniform vec4 color;
+uniform vec2 ratio;
+
+varying mediump vec2 v_texCoord;
+
+float checkers( in vec2 p, in vec2 dpdx, in vec2 dpdy )
+{
+    vec2 w = max(abs(dpdx), abs(dpdy));
+    vec2 i = 2.0*(abs(fract((p-0.5*w)*0.5)-0.5)-
+                  abs(fract((p+0.5*w)*0.5)-0.5))/w;
+    return 0.5 - 0.5*i.x*i.y;                  
+}
+
+void main()
+{
+//  gl_FragColor = vec4(checkers(v_texCoord.xy*10., vec2(.1), vec2(.2)));
+  gl_FragColor = vec4(1.)-vec4(checkers(v_texCoord.xy*size, dxdy, dxdy)) * color;
+}
+
+
+
+
+
+### 179003:S grid-grid.fsh
+
+#define size p0
+#define dxdy p1
+#define ratio p2
+#define color p3
+
+uniform vec2 size;
+uniform vec2 dxdy;
+uniform vec4 color;
+uniform vec2 ratio;
+
+varying mediump vec2 v_texCoord;
+
+float grid( in vec2 p, in vec2 dpdx, in vec2 dpdy )
+{
+    const float N = 10.0; // grid ratio
+    vec2 w = max(abs(dpdx), abs(dpdy));
+    vec2 a = p + 0.5*w;                        
+    vec2 b = p - 0.5*w;           
+    vec2 i = (floor(a)+min(fract(a)*ratio.x,1.0)-
+              floor(b)-min(fract(b)*ratio.y,1.0))/(N*w);
+    return (1.0-i.x)*(1.0-i.y);
+}
+
+void main()
+{
+//  gl_FragColor = vec4(grid(v_texCoord.xy*10., vec2(.1), vec2(.2)));
+  gl_FragColor = vec4(grid(v_texCoord.xy*size, dxdy, dxdy)) * color;
+}
+
+### 179013:S grid-grid-i.fsh
+
+#define size p0
+#define dxdy p1
+#define ratio p2
+#define color p3
+
+uniform vec2 size;
+uniform vec2 dxdy;
+uniform vec4 color;
+uniform vec2 ratio;
+
+varying mediump vec2 v_texCoord;
+
+float grid( in vec2 p, in vec2 dpdx, in vec2 dpdy )
+{
+    const float N = 10.0; // grid ratio
+    vec2 w = max(abs(dpdx), abs(dpdy));
+    vec2 a = p + 0.5*w;                        
+    vec2 b = p - 0.5*w;           
+    vec2 i = (floor(a)+min(fract(a)*ratio.x,1.0)-
+              floor(b)-min(fract(b)*ratio.y,1.0))/(N*w);
+    return (1.0-i.x)*(1.0-i.y);
+}
+
+void main()
+{
+//  gl_FragColor = vec4(grid(v_texCoord.xy*10., vec2(.1), vec2(.2)));
+  gl_FragColor = vec4(1.)-vec4(grid(v_texCoord.xy*size, dxdy, dxdy)) * color;
+}
+
+
+
+
+### 179004:S grid-squaresid.fsh
+
+
+#define size p0
+#define dxdy p1
+#define ratio p2
+#define color p3
+
+uniform vec2 size;
+uniform vec2 dxdy;
+uniform vec4 color;
+uniform vec2 ratio;
+
+varying mediump vec2 v_texCoord;
+
+float squaresid( in vec2 p, in vec2 dpdx, in vec2 dpdy )
+{
+    const float N = 3.0;
+    vec2 w = max(abs(dpdx), abs(dpdy));
+    vec2 a = p + 0.5*w;                        
+    vec2 b = p - 0.5*w;           
+    vec2 i = (floor(a)+min(fract(a)*N,1.0)-
+              floor(b)-min(fract(b)*N,1.0))/(N*w);
+    return 1.0-i.x*i.y;
+}
+
+void main()
+{
+  gl_FragColor = vec4(squaresid(v_texCoord.xy*20., vec2(.0), vec2(.2)));
+//  gl_FragColor = vec4(checkers(v_texCoord.xy*size, gscale.x, gscale.y)) * color;
+}
+
+
+
+### 179005:S grid-crosses.fsh
+
+#define size p0
+#define dxdy p1
+#define ratio p2
+#define color p3
+
+uniform vec2 size;
+uniform vec2 dxdy;
+uniform vec4 color;
+uniform vec2 ratio;
+
+varying mediump vec2 v_texCoord;
+
+float crosses( in vec2 p, in vec2 dpdx, in vec2 dpdy )
+{
+    const float N = 3.0;
+    vec2 w = max(abs(dpdx), abs(dpdy));
+    vec2 a = p + 0.5*w;                        
+    vec2 b = p - 0.5*w;           
+    vec2 i = (floor(a)+min(fract(a)*N,1.0)-
+              floor(b)-min(fract(b)*N,1.0))/(N*w);
+    return 1.0-i.x-i.y+2.0*i.x*i.y;
+}
+
+void main()
+{
+  gl_FragColor = vec4(crosses(v_texCoord.xy*20., vec2(.0), vec2(.2)));
+//  gl_FragColor = vec4(checkers(v_texCoord.xy*size, gscale.x, gscale.y)) * color;
+}
+
+
+
+### 179010:S backlight.fsh
+
+### 179020:S contour.fsh
+
+### 179030:S blur-box.fsh
+
+
+#ifdef GL_ES
+precision mediump float;
+#endif
+
+varying vec2 v_texCoord;
+
+#define tex0 p0
+#define blurSize p1
+#define viewXY p2
+#define viewWH p3
+#define mul p4
+
+
+uniform sampler2D tex0;
+
+uniform vec2 blurSize;
+
+uniform vec2 viewXY;
+uniform vec2 viewWH;
+
+uniform vec4 mul;
+
+void main() {
+   vec4 sum = vec4(0.0);
+   vec2 p = v_texCoord * viewWH;
+
+   p += viewXY;
+
+   sum += texture2D(tex0, p - 4.0 * blurSize) * 0.05;
+   sum += texture2D(tex0, p - 3.0 * blurSize) * 0.09;
+   sum += texture2D(tex0, p - 2.0 * blurSize) * 0.12;
+   sum += texture2D(tex0, p - 1.0 * blurSize) * 0.15;
+   sum += texture2D(tex0, p                ) * 0.16;
+   sum += texture2D(tex0, p + 1.0 * blurSize) * 0.15;
+   sum += texture2D(tex0, p + 2.0 * blurSize) * 0.12;
+   sum += texture2D(tex0, p + 3.0 * blurSize) * 0.09;
+   sum += texture2D(tex0, p + 4.0 * blurSize) * 0.05;
+ 
+   gl_FragColor = sum*mul;
+
+//varying vec4 v_fragmentColor;
+//#define substract p1
+//uniform vec4 substract;
+    //vec4(sum.rg, v_texCoord.x, sum.a);
+    //texture2D(CC_Texture0, v_texCoord+vec2(0, ));sum;
+    //(sum - substract) *vec4(100.0, 6.4,9.0, 50.0);//* v_fragmentColor;
+}
+

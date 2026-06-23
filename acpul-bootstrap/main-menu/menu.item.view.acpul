@@ -1,0 +1,139 @@
+### acpu.menu.item.view
+# llog,lnode
+
+mll0 p0;
+lnode0 p1;
+
+_ @1111;
+
+_ @sys.dsp;
+
+#w:=200;
+w:=125;
+h:=50;
+
+draw(r0, NNN(acpu.menu.item.view.draw));
+
+new.menu.button {
+ # bn0, x,y,s, w,h, type
+ new.button.custom(_0, _1,_2,_3, _4,_5, node.fid.by.name(u0, panel.button0), _6, _7);
+ node.anchor.point.s1(u0, _0, 0,0);
+};
+
+item0 {
+ id 0;
+ fid 0;
+
+ update {
+  id:=llog2.get.attribute.v(u0, mll0, lnode0, MENU.ID);
+  fid:=llog2.get.attribute.v(u0, mll0, lnode0, MENU.FID);
+ };
+};
+
+item0.update;
+
+tl0 0;
+bn0 0;
+
+# INIT
+
+if (r0) {
+ # RELOAD BUTTON
+ w0 h; h0 h-1;
+ x0 w-w0; y0 0; 
+ new.menu.button(bn0, x0+0,y0+0,1, w0,h0, 0, MORE);
+
+ # NAME (not used by llog, future)
+ x2 0;
+ y2 h-20+2;
+# name0 = llog2.get.attribute.v(u0, mll0, lnode0, A.menu.item.name);
+# new.text.label(tl0, x2,y2,1, name0, 20, 0,0,0, 0,10170202, 1);
+
+# _ @dota.dialog.inc;
+# view.w 100;
+# view.h 100;
+# sn0 0;
+# new.dialog.hero(sn0, 0,0,1, view.w,view.h);
+};
+
+# EVENTS
+
+boot.pool 420042;
+
+tb0=1; while(tb0) { tb0:=ui.event(bn0);
+ if (tb0==ui.event.button.push) {
+  id item0.id;
+  if (id==ID.reset) {
+   _ @sys.cpu;
+   cpu.reset(u0, 1000, 0);
+  };
+  if (id==ID.close) {
+   events.push(u0, boot.pool,0, boot.close.apps, 0,0,0,0);
+  };
+  if (id==ID.dota) {
+   events.push(u0, boot.pool,0, boot.close.apps, 0,0,0,0);
+   events.push(u0, boot.pool,0, boot.run.dota, 0,0,0,0);
+  };
+  if (id==ID.dota.test) {
+   events.push(u0, boot.pool,0, boot.toggle.dota.test, 0,0,0,0);
+  };
+  if (id==ID.MAGAZINE) {
+   events.push(u0, boot.pool,0, boot.toggle.magazine, 0,0,0,0);
+  };
+  if (id==ID.files) {
+   events.push(u0, boot.pool,0, boot.toggle.files, 0,0,0,0);
+  };
+  if (id==ID.player) {
+   events.push(u0, boot.pool,0, boot.toggle.player, 0,0,0,0);
+  };
+  if (id==ID.chat) {
+   events.push(u0, boot.pool,0, boot.toggle.ai.chat, 0,0,0,0);
+  };
+#  if (id==ID.paint) {
+#   events.push(u0, boot.pool,0, boot.run.paint, 0,0,0,0);
+#  };
+  if (id==ID.hackernews) {
+   events.push(u0, boot.pool,0, boot.event.toggle.hn, 0,0,0,0);
+  };
+  if (id==ID.hero) {
+   events.push(u0, boot.pool,0, boot.run.hero, 0,0,0,0);
+  };
+  if (id==ID.wallet) {
+   events.push(u0, boot.pool,0, boot.run.wallet, 0,0,0,0);
+  };
+  if (id==ID.video) {
+   events.push(u0, boot.pool,0, boot.run.video, 0,0,0,0);
+  };
+  if (id==ID.stars) {
+   events.push(u0, boot.pool,0, boot.toggle.stars, 0,0,0,0);
+  };
+  if (id==ID.bootloader) {
+   events.push(u0, boot.pool,0, boot.event.open.bootloader, 0,0,0,0);
+  };
+  if (id==ID.intro) {
+   events.push(u0, boot.pool,0, boot.event.intro, 0,0,0,0);
+  };
+  if (id==ID.hipster) {
+   events.push(u0, boot.pool,0, boot.event.hipster, 0,0,0,0);
+  };
+  if (id==ID.winamp) {
+   events.push(u0, boot.pool,0, boot.event.winamp, 0,0,0,0);
+  };
+#  if (id==ID.resume) {
+#   events.push(u0, boot.pool,0, boot.event.resume, 0,0,0,0);
+#  };
+  if (id==ID.APP) {
+#   events.push(u0, boot.pool,0, boot.event.winamp, 0,0,0,0);
+#   events.push(u0, boot.pool,0, boot.event.run.app, fid, 0,0,0);
+   events.push(u0, boot.pool,0, boot.event.run.app, item0.fid, 0,0,0);
+#   events.push(u0, boot.pool,0, boot.event.run.app, NNN(paint), 0,0,0);
+  };
+ }; 
+};
+
+
+
+### acpu.menu.item.view.draw
+
+color(u0, 1,1,0,1);
+rect(u0, 2, 0,0, w,h);

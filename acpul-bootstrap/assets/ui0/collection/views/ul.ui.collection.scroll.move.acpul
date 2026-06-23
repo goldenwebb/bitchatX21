@@ -1,0 +1,100 @@
+### ul.ui.collection.scroll.move
+
+# SCROLL MOVE [
+
+if (scrolling==0) {
+# x+=lx*t0/max.t0*0.1;
+# y+=ly*t0/max.t0*0.1;
+ xx 
+  x+=lx*0.1;
+ yy
+  y+=ly*0.1;
+ if (scroll.direction==options.sd.horizontal) { xx; };
+ if (scroll.direction==options.sd.vertical) { yy; };
+ if (scroll.direction==options.sd.both) { xx; yy; };
+};
+
+# SCROLL MOVE ]
+# BOUNCE [
+
+cell.height grid.h;
+content.height cell.height*cells.count;
+
+# todo: join to bottom
+glue.to.bottom 1;
+
+min.y 0;
+max.y 0;
+max.y = content.height-height;
+
+if (max.y<0) {
+# max.y := content.height;#0;# height;
+
+ if (glue.to.bottom==0) {
+  max.y := 0;
+ };
+ if (glue.to.bottom==1) {
+  if (scrolling==0) {
+   y:=max.y;
+  };
+ };
+};
+
+
+
+bounce 0;
+
+dir.x = ((scroll.direction==options.sd.horizontal)+(scroll.direction==options.sd.both));
+dir.y = ((scroll.direction==options.sd.vertical)+(scroll.direction==options.sd.both));
+
+if (scrolling==0) {
+ if (dir.y) {
+  if (bounce==0) {
+  if (y<min.y) {
+   ly:=0;
+   bounce:=1;
+  };
+  if (y>max.y) {
+   ly:=0;
+   bounce:=2;
+  };
+  };
+ };
+ if (dir.x) {
+  if (x<min.x) {
+   lx:=0;
+#   bounce:=3;
+  };
+  if (x>max.x) {
+   lx:=0;
+#   bounce:=4;
+  };
+ };
+};
+
+#if (h<content.height) {
+# bounce:=0;
+#};
+#lbl0 0; val0 0; ui.value4(lbl0,val0,0,0,2, Bounce, bounce);
+
+if (bounce==1) {
+ ly+=(min.y-y);
+ ly:=max(ly,70);
+ if (y>=min.y) {
+  y:=min.y;
+  ly:=0;
+  bounce:=0;
+ };
+};
+
+if (bounce==2) {
+ ly-=(y-max.y);
+ ly:=min(ly,-70);
+ if (y<=max.y) {
+  y:=max.y;
+  ly:=0;
+  bounce:=0;
+ };
+};
+
+# BOUNCE ]

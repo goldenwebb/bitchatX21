@@ -1,0 +1,27 @@
+### 900500 os.tree0.inc
+
+os.tree0.view 900520;
+
+os.tree1.node 900524;
+
+os.treeX.tests 900580;
+
+os.tree0.test.node 900584;
+
+os.tree1.test.node 900588;
+
+os.tree0 { _;
+ new.node {
+  # r0, fid, p0,p1,p2,p3, p4,p5,p6,p7
+  node.new.this.ex8(_0, _1, _2,_3,_4,_5);
+ };
+};
+
+os.tree1 { _;
+ new.node {
+  # r0, fid, p0,p1,p2,p3, p4,p5,p6
+  node.new.this.ex8(_0, os.tree1.node, _1, _2,_3,_4, _5,_6,_7,_8);
+ };
+};
+
+

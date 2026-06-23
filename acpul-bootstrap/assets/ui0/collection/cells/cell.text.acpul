@@ -1,0 +1,61 @@
+### 70152 ul.ui.collection.cell.text0
+# w,h, cell0, collection0
+
+r0:=k==0;
+
+draw(r0, 70153);
+
+w:=p0;
+h:=p1;
+
+_ @1010;
+_ @1100;
+_ @sys.node;
+#_ @sys.touch;
+#_ @sys.events;
+_ @sys.obj;
+_ @sys.llog;
+_ @ul.ui;
+_ @ui.collection;
+_ @util.dma.std;
+
+# cell.text0 [
+
+cell0 p2;
+
+ui.collection.cell.obj.isavar cell0;
+cell0opts ui.collection.cell.obj.type0.text;
+
+text cell0opts.text.g;
+
+# cell.text0 ]
+
+txt0 r1;
+tl0 r2;
+
+if (r0) {
+# dma.print0.v(txt0, S.format.cell.text0.empty, p0);
+# new.text.label(tl0, 0-40,0-20,1, txt0, 14, 0,0,0, 0,10170202, 0); 
+#@ new.text.label(tl0, 0-40,0-20,1, text, 14, 0,0,0, 0,10170202, 0); 
+# new.text.label(tl0, 0,0,1, text, 14, 0,0,0, 0,10170202, 0); 
+};
+
+#_ @os.util2;
+
+#node.set.wh(u0, tl0, 100,100);
+
+
+k:=1;
+
+### 70153 ul.ui.collection.cell.text0.draw
+
+#rr rect(u0, 6, _0,_1, _0*10,_1*10);
+q 10; #rnd()*10;
+x0 q;
+y0 q;
+w0 q;
+h0 q;
+
+color(u0, 0.5,0.5,0.5,0.5);
+#rect(u0, 6, x0,y0, x0+w0,y0+h0);
+rect(u0, 6, 0,0, w,h);

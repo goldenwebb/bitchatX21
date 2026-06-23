@@ -1,0 +1,17 @@
+### livelog2.store
+
+# LIVELOG2 SAVE/LOAD [
+
+livelog2 { _;
+ encode
+  # u0, lid, mode -> buf
+  io(_0, a+15, _1, _2, 0,0);
+
+ decode
+  # u0, buf -> lid
+  io(_0, a+16, _1, _2, 0,0);
+};
+
+llog2 livelog2;
+
+# LIVELOG2 SAVE/LOAD ]

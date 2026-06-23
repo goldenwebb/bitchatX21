@@ -1,0 +1,334 @@
+### 15884 livelog.node
+# depth, view, livelog0,pathnode, opts, layout
+# (0) - type
+
+depth p0;
+view0 p1;
+livelog0 p2;
+pathnode p3;
+opts0 p4;
+layout0 p5;
+
+_ @1010;
+_ @sys.node;
+_ @sys.os;
+_ @os.basic;
+_ @os.basic.ui;
+_ @basic.shaders1;
+_ @os.util0;
+_ @os.tree0.inc;
+_ @ide.common;
+_ @os.util2;
+_ @sys.cpu1;
+_ @ide.debugger;
+_ @sys.llog;
+_ @sys.livelog2;
+
+draw(r0, 15885);
+
+# UTIL [
+
+shaders1.text0.vsh 29000;
+
+new.text.label1b
+ # hid, x,y,s, text, size
+#  new.text.label(_0, _1,_2,_3, _4, _5, 0,0,0, shaders1.text0.vsh,29011, 0);
+#  new.text.label(_0, _1,_2,_3, _4, _5, 1001,3,9, shaders1.text0.vsh,29011, 0);
+# new.text.label(_0, _1,_2,_3, _4, _5, 1001,1,1, shaders1.text0.vsh,29011, 0);
+ new.text.label(_0, _1,_2,_3, _4, _5, 1001,1,1, shaders1.text0.vsh,29012, 0);
+
+# UTIL ]
+
+ll0 0+(livelog2.core!=livelog0); # ll0 - enable log to llog 
+
+llog.begin(ll0, S.livelog2.node);
+#llog.erase(r0, 0);
+
+nid0 0; # optimize speed
+
+lineheight0 32;
+lineheight1 20;
+
+min.width 32;
+
+if (r0) {
+ nid0:=nid; 
+ w:=min.width;
+ h:=lineheight0;
+};
+
+_ @livelog.common;
+_ @game.node.layout.options;
+
+qq 0;
+ww 0;
+#  qq:=u9;
+
+layout00 0;
+
+margin00.y 10;
+
+first.node.set.margin.y {
+ # margin.y
+  prev = layout.options.buf;
+  layout.options.unpack(layout00);
+  layout.options.margin.y := _0;
+  layout.options.buf0 := layout00;
+  layout.options.pack();
+  layout.options.buf := prev;
+  # restore
+  layout.options.unpack(layout0);
+};
+
+# CREATE CHILD NODES [
+
+add.child {
+ # child
+ child0 _0;
+
+ # layout
+ layout.options.new(20,1*if(i==0,margin00.y,0), align.type.by.prev, TOP);
+#   layout.options.new(20,20*4, align.type.by.prev, BOTTOM);
+ layout0 = layout.options.pack;
+
+ node1=new.livelog.node1(depth+1, view0, livelog0,child0, opts0, layout0);
+};
+
+create.child.nodes {
+
+ lname0 = livelog2.get.name(u0, livelog0,lnode0, lname0);
+ llog.begin(ll0, lname0);
+
+ nodes0 = llog2.get.children(u0, livelog0, pathnode, nodes0, 0);
+
+ n = buffer.size(u0, nodes0,0);
+
+ i:=0; while(i<n) {
+  child0 buffer.get(u0, nodes0,0,i);
+
+  # layout
+  layout.options.new(20,1*if(i==0,margin00.y,0), align.type.by.prev, TOP);
+#   layout.options.new(20,20*4, align.type.by.prev, BOTTOM);
+  layout0 = layout.options.pack;
+
+  if (i==0) {
+   layout00 := layout0;
+  };
+
+  node1=new.livelog.node1(depth+1, view0, livelog0,child0, opts0, layout0);
+
+  i+=1;
+ };
+
+  llog.end(ll0);
+};
+
+# CREATE CHILD NODES ]
+# INFO NODE [
+
+_ @basic.ui.ex;
+_ @os.util3;
+
+lnode0 0;
+
+create.info.node {
+
+ lname0 = livelog2.get.name(u0, livelog0,lnode0, lname0);
+
+# tl0 0; txt0 0; new.text.label0.v1(tl0, 0,0,2, lname0a, 0, 0);
+ tl0 0; txt0 0; new.text.label1b(tl0, 3,3,1, lname0, 20);
+};
+
+notify.parents.resize {
+ 
+};
+
+update {
+ layout.updated:=1;
+ notify.parents.resize;
+};
+
+txtmsg0 0;
+
+data.visible 0;
+
+data.messages.show {
+ if (data.visible==0) {
+  h0 buffer.count(u0, lines0)*lineheight1;
+  h1 h0; #min(h0, lineheight1*3);
+  lines0 = livelog2.get.msg(u0, livelog0,lnode0, lines0);
+  new.text.view3(txtmsg0, 15,lineheight0,1, 100, h1, lines0);
+# todo: text update event
+#  if (txtmsg0==0) {
+#  new.text.view3(txtmsg0, 50,15,1, 100, h1, lines0);
+#  };
+#  node.prop.z.s(u0, txtmsg0, -1);
+
+#  first.node.set.margin.y(margin00.y+h1);
+
+  node.prop.visible.s(u0, txtmsg0, 1);
+  data.visible:=1;
+  update;
+ };
+};
+ee 0;
+
+data.messages.hide {
+ node.prop.visible.s(u0, txtmsg0, 0);
+ node.prop.lt.s(u0, txtmsg0, 0.001);
+# h:=lineheight0;
+# first.node.set.margin.y(margin00.y);
+ data.visible:=0;
+ update;
+};
+
+
+data.messages.toggle {
+ if (data.visible, hide, show);
+};
+
+# ATTR SUBNODE [
+
+create.subnode {
+ subnode0 = llog2.get.attribute.v(u0, livelog0,lnode0, SUBNODE);
+ if (subnode0>0) {
+  node.new.p4(u0, subnode0, livelog0,lnode0, view0, opts0);
+ };
+};
+
+# ATTR SUBNODE ]
+# ATTR FID NAME [
+
+attrnode0 0;
+attrnode0.height 0;
+
+create.attrnode {
+ attr0.fid = llog2.get.attribute.v(u0, livelog0,lnode0, LLOG.ATTR.FID);
+ if (attr0.fid>0) {
+  attr0.name = llog2.get.attribute.v(u0, livelog0,lnode0, LLOG.ATTR.NAME);
+  attrnode0 := node.new.p4(u0, attr0.fid, livelog0,lnode0, attr0.name);
+ };
+};
+
+# ATTR FID NAME ]
+
+if (visible) {
+ attrnode0.height := node.prop.h.g(u0, attrnode0);
+};
+
+ w:=min.width;
+ h:=lineheight0+attrnode0.height;
+
+# INFO NODE ]
+
+if (r0) {
+
+ lnode0:=livelog2.get.node(u0, livelog0,pathnode);
+
+ create.info.node;
+
+ create.subnode;
+
+ create.attrnode;
+
+ if (depth < 100) {
+  create.child.nodes();
+ };
+
+ if (llog2.get.attribute.v(u0, livelog0,lnode0, EXPAND)==1) {
+  data.messages.show;
+ };
+
+#  index0 = node.get.index(u0, nid0);
+#  if (index0==1) {
+#   data.messages.toggle;
+#  };
+};
+
+_ @livelog.node.layout;
+
+_ @livelog.node.touch;
+
+# LLOG2 PROCESS EVENTS [
+
+llog2.process.events {
+ ev0=1; while(ev0>0) {
+  ev0 := events.pop(u0, llog2.pool,lnode0);
+  eindex0 = o0;
+  subnode0 = o1;
+
+  # EVENTS NODE [
+
+  if (ev0==llog2.ev.add.node) {
+   add.child(subnode0);
+  };
+
+  if (ev0==llog2.ev.remove.node) {
+   if (node0==lnode0) {
+    lt:=0;
+   };
+   childnode0 = llog2.get.attribute(MAP.LNODE.CHILD.NID, node0);
+   if (childnode0>0) {
+    # children removed;
+    llog2.del.attribute(MAP.LNODE.CHILD.NID, node0);
+   };
+  };
+  
+  if (ev0==llog2.ev.update.node) {
+   # update text
+  };
+
+  # EVENTS NODE ]
+  # EVENTS PATH [
+
+  if (ev0==llog2.ev.put) {
+   # path, text
+
+  };
+  if (ev0==llog2.ev.replace) {
+   # path, text
+
+  };
+  if (ev0==llog2.ev.erase) {
+   # path
+
+  };
+  
+  # EVENTS PATH ]
+ };
+};
+
+llog2.process.events;
+
+# LLOG2 PROCESS EVENTS ]
+
+_ @livelog.node.debu0;
+
+# DEBUG [
+
+
+t+=dt;
+
+llog.end(ll0);
+
+
+### 15885 livelog.node.draw
+
+pressed r3;
+psize(u0, 1);
+#if (pressed, 
+# color(u0, 0.5,0,0,0.5),
+# color(u0, 0.5,0.5,0.5,0.5));
+ color(u0, 0.0,0.0,0.2,0.2);
+# color(u0, 0.0,0.0,0.2,0.8);
+  rect(u0, 6, 0,0,w,h);
+if (pressed, 
+ color(u0, 0,0.5,0.5,0.5),
+ color(u0, 0.1,0.5,0.0,0.1));
+rect(u0, 2, 0,0,w,h);
+if (pressed, 
+  rect(u0, 6, 0,0,w,h), 
+  0);
+
+
+

@@ -1,0 +1,23 @@
+### 10178100 particles.test0
+
+r0:=k==0;
+
+draw(r0, 10178101);
+
+_ @1010;
+_ @sys.node;
+_ @sys.obj;
+_ @sys.llog;
+_ @1100;
+_ @core.particles;
+
+l0:=node.new.this.ex4(r0, core.particles.view, 0,0,0,0);
+
+t+=dt;
+
+k:=1;
+
+### 10178101 particles.test0.draw
+
+color(u0, 0,1,0.5,1);
+circle(u0, 6, 0,0+sin(t)*50, 40, 0, 20, 0);

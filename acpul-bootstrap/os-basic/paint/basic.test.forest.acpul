@@ -1,0 +1,36 @@
+### 90850 test.forest
+
+r0:=k==0;
+
+draw(r0, 90851);
+
+
+_ @1010;
+_ @sys.node;
+_ @sys.os;
+_ @os.basic;
+_ @os.util0;
+_ @os.apps;
+_ @neo.ui;
+
+_ @91000;
+_ @twobin.font.inc;
+
+_ @os.basic.paint;
+
+
+
+plant0 r1;
+
+if (r0) {
+# new.plant.tree(plant0, 350,300,1, 25,75, 0, 0);
+};
+
+w:=768;
+h:=70;
+
+k:=1;
+
+### 90851 test.forest.draw
+
+rect(u0, 3, 0,0,w,h);

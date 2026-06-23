@@ -1,0 +1,222 @@
+### 10172100 gl3d.test0
+
+r0:=k==0;
+
+draw(r0, 10172101);
+
+_ @1010;
+_ @sys.node;
+_ @sys.obj;
+_ @sys.llog;
+_ @1100;
+_ @core.gl3d;
+
+mcylinder0 l15;
+cylinder0 r7;
+
+#slices 5;
+#stacks 2;
+slices 6;
+stacks 50;
+if (r0) {
+# mcylinder0:=gl3d.p3d.new.cylinder(slices, stacks);
+# mcylinder0:=gl3d.p3d.new.sphere(slices, stacks);
+# mcylinder0:=gl3d.p3d.new.plane(slices, stacks);
+# mcylinder0:=gl3d.p3d.new.torus(slices, stacks, 0.5);
+# mcylinder0:=gl3d.p3d.new.subdivided.sphere(3);
+# mcylinder0:=gl3d.p3d.new.klein.bottle(slices, stacks); #!sz
+# mcylinder0:=gl3d.p3d.new.trefoil.knot(slices, stacks, 0.5);
+# mcylinder0:=gl3d.p3d.new.hemisphere(slices, stacks);
+# mcylinder0:=gl3d.p3d.new.icosahedron();
+# mcylinder0:=gl3d.p3d.new.dodecahedron();
+# mcylinder0:=gl3d.p3d.new.octahedron(); #!
+# mcylinder0:=gl3d.p3d.new.tetrahedron();
+# mcylinder0:=gl3d.p3d.new.cube();
+ seed 1251;
+# nsubdivisions 10;
+ nsubdivisions 3;
+ mcylinder0:=gl3d.p3d.new.rock(seed, nsubdivisions);
+
+ 
+# gl3d.p3d.mesh.rotate(mcylinder0, 180/180, 10,0,0);
+
+ cylinder0:=gl3d.p3d.mesh.get(mcylinder0);
+
+ llog.b(A.GL3D.test0);
+ llog.erase(u0, 0);
+# llog.printo(u0, S.cylinder0, 0, cylinder0,-1);
+ llog.e();
+};
+
+# gl3d.p3d.mesh.rotate(mcylinder0, 1/180, 10,0,0);
+# gl3d.p3d.mesh.rotate(mcylinder0, 0.05/pi, 0,1,0);
+ gl3d.p3d.mesh.rotate(mcylinder0, 0.05/pi, 1,0,0);
+
+ obj.delete(u0, cylinder0);
+ cylinder0:=gl3d.p3d.mesh.get(mcylinder0);
+
+t+=dt*0.1;
+
+x:=400;
+y:=400;
+s:=1;
+
+
+k:=1;
+
+### 10172101 gl3d.test0.draw
+
+
+color(u0, 1,1,0,1);
+q 5;
+triangle(u0, 6, 0,5*q, 10*q,15*q, 20*q,5*q);
+triangle(u0, 6, 0,0, 10*q,-10*q, 20*q,0*q);
+#rect(u0, 6, 0,0,1000,1000);
+
+vsh 10172110;
+fsh 10172111;
+gl.shader.use(vsh, fsh);
+
+_ @1010;
+_ @sys.node;
+_ @sys.obj;
+_ @sys.llog;
+_ @1100;
+_ @util.gl.std;
+
+cylinder0 r7;
+
+attr.position 0;
+attr.color 1;
+attr.normal 2;
+dma0 0;
+dma1 1;
+dma2 2;
+dma3 3;
+stride 0;
+count dma.size(u0, dma0)/3;
+
+buffer.dma(u0, dma0, cylinder0,0); # points
+#buffer.dma(u0, dma0, cylinder0,1); # colors?
+gl.shader.attribute.dma(attr.position, dma0,0, 3,stride,count, 0,0);
+#gl.shader.attribute.dma(attr.color, dma0,4, 4,stride,count, 0,0);
+#node.ex.gl.draw(u0, 0, count);
+#node.ex.gl.draw(u0, 3, count);
+
+buffer.dma(u0, dma3, cylinder0,1); # normals
+gl.shader.attribute.dma(attr.normal, dma3,0, 3,stride,count, 0,0);
+
+buffer.dma(u0, dma2, cylinder0,3);
+# r0, dma, count -> ibuf::object
+l0:=node.ex.shader.indices.dma(u0, dma2, dma.size(u0, dma2));
+# r0, type, ibuf
+node.ex.gl.draw.elements(u0, 2, l0);
+obj.delete(u0, l0);
+
+# stars
+#vsh 200100;
+fsh 200101;
+#vsh 201100;
+#fsh 201101;
+gl.shader.use(vsh, fsh);
+gl.shader.attribute.dma(attr.position, dma0,0, 3,stride,count, 0,0);
+gl.shader.attribute.dma(attr.color, dma0,0, 4,stride,count-10, 0,0);
+node.ex.gl.draw(u0, 0, count);
+
+#buffer.dma(u0, dma0, cylinder0,1);
+#gl.shader.attribute.dma(attr.position, dma0,0, 3,stride,count, 0,0);
+#node.ex.gl.draw(u0, 0, count);
+
+if (r0) {
+ llog.b(A.GL3D.test0);
+ llog.erase(u0, 0);
+ llog.printo(u0, S.cylinder0.draw, 0, cylinder0,-1);
+ llog.e();
+}
+
+dma.off(u0, 0);
+dma.off(u0, 1);
+
+### 10172110:S 3d.a.vsh
+
+#define a_position a0
+//#define a_color a1
+#define a_normal a2
+
+attribute vec4 a_position;
+//attribute vec4 a_color;
+
+attribute vec3 a_normal;
+
+varying vec4 color;
+
+varying float lightIntensity;
+
+#define timer CC_Time[3]*0.5
+
+void main()
+{
+  mat4 m = CC_MVPMatrix;
+  
+  vec4 pos = a_position;
+
+//  vec3 light_dir = vec3(2.9,0.8,-3.0);
+//  vec3 light_dir = vec3(0.,0.,0.0);
+  vec3 light_dir = vec3(0.9+5.*sin(timer*2.),0.8,-3.0);
+  vec4 newNormal = CC_MVMatrix * vec4(a_normal,0.0);
+  lightIntensity = min(1., max(0.0, dot(newNormal.xyz, light_dir)));
+//  lightIntensity = max(5., dot(newNormal.xyz, light_dir));
+//  lightIntensity = dot(newNormal.xyz, light_dir);
+
+//  pos = vec4(a_normal,1.);
+//  pos = vec4(newNormal.xyz,1.);
+//  pos.y -= a_normal.y;
+  
+//  pos.xy = vec2(pos.x, pos.y);
+//  pos.xy = vec2(pos.x, 0.);
+
+  pos.xy *= 200.;
+//  pos.y *= 10.;
+//  pos.x *= pos.z;
+//  pos.y *= pos.z;
+
+  gl_Position = m * pos;
+//  gl_Position = vec4(0.);
+//  gl_Position = vec4(0.,0.,0.,0.0001);
+//  pointSize = 500.*a_position.z;
+//  gl_PointSize = pointSize;
+//  color = a_color;
+
+  float r = 0.5;//sin(pos.x*pos.y+timer)*0.5+0.5;
+  float g = (sin(pos.x/pos.y+timer*2.)*0.5+0.5)*2.;
+  float b = 0.5;//sin((pos.x-pos.y)*sin(timer*2.))*0.5+0.5;
+  color = vec4(r/g,g,b/g, 1.0);
+
+  gl_PointSize = 5.;
+
+  float SCALE_FACTOR = 2.;
+}
+
+### 10172111:S 3d.a.fsh
+
+precision highp float;
+
+varying vec4 color;
+varying float lightIntensity;
+
+//varying vec2 v_texCoord;
+
+//uniform sampler2D CC_Texture0;
+
+void main() {
+//  gl_FragColor = vec4(0.5,0.1,0.5,0.5);
+  gl_FragColor = vec4(0.5,0.1,0.9,1.);
+//  gl_FragColor = vec4(0.5);
+//  gl_FragColor = vec4(0.5);
+//  gl_FragColor = color;
+//  gl_FragColor.a = 0.1;
+
+//  gl_FragColor *= lightIntensity;
+  gl_FragColor.gr *= lightIntensity+.1;
+}
+

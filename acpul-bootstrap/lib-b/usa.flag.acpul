@@ -1,0 +1,33 @@
+### USA.FLAG
+
+_ @1010;
+_ @sys.obj;
+_ @sys.node;
+_ @sys.events;
+_ @dma.std;
+_ @util.i18n;
+_ @os.util0;
+
+_ @gpt.chat;
+
+_ @http.request;
+
+_ @ui0.xstack.inc;
+
+_ @chat;
+_ @basic.ui;
+_ @basic.ui.shader.node3.inc;
+
+if (r0) {
+ l11;
+ sn0 0;
+# new.ui.shader.node3(sn0, 500,0,1, 500,300, 70014,29120); # US.FLAG
+ new.ui.shader.node3(sn0, 0,0,1, 500,500, 70014,29121); # US.FLAG.A
+};
+
+TOUCH_POS_X TOUCH_POS_X.USA.FLAG;
+TOUCH_POS_Y TOUCH_POS_Y.USA.FLAG;
+TOUCH_POS_S TOUCH_POS_S.USA.FLAG;
+_ @touch.tool.default.scale0.store;
+#s:=2;
+

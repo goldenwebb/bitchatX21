@@ -1,0 +1,300 @@
+### 70126 ul.ui.collection.cell
+# cid, col,row, w,h, options, owner.id, collection.obj
+# options[0] = basic
+#? options[1] = view(...params)
+
+r0:=k==0;
+
+cell.mode {
+ select.by.index.event 0;
+ no.selectable 1; # no touch lock (for subtables)
+};
+
+_ @1010;
+_ @1100;
+_ @sys.node;
+_ @sys.touch;
+_ @sys.events;
+_ @sys.obj;
+_ @sys.llog;
+_ @ul.ui;
+_ @ui.collection;
+_ @util.dma.std;
+
+llog.b(S.ul.collection);
+#llog.erase(r0, 0);
+
+# collection.obj [
+
+collection0 p7;
+
+ui.collection 70120;
+_ @ui.collection;
+
+info ui.collection.default.options.info;
+
+ui.collection.options.obj.isavar collection0;
+o ui.collection.options.obj; #ui.collection.default.options.info;
+
+if (o.draw.cell.fid.g!=0) {
+# draw(r0, 70127);
+ draw(r0, o.draw.cell.fid.g);
+};
+
+type0 o.type.g;
+width0 o.width.g;
+height0 o.height.g;
+
+ncount o.cells.count;
+
+cell.height h;
+view.height cell.height*ncount;
+
+
+#cols o.cols.g;
+#rows o.rows.g;
+scroll.direction o.scroll.direction.g;
+scroll.offset.x o.scroll.offset.x.g;
+scroll.offset.y o.scroll.offset.y.g;
+
+# collection.obj ]
+# cell.obj [
+
+cell0 p5;
+
+ui.collection.cell.obj.isavar cell0;
+cell0opts ui.collection.cell.obj.type0;
+
+fid cell0opts.fid.g;
+
+# cell.obj ]
+
+dma0 0;
+dma1 1;
+tl0 r7;
+txt0 r6;
+
+w:=p3;
+h:=p4;
+
+if (r0) {
+#y:=0;
+# new.text.label(tl0, 0,0,1, S.cell.id.print.in.progress, 14, 0,0,0, 0,10170202, 0);
+
+ # print [
+
+# txt0:=buffer.new(u0, 1000,10000);
+# buffer.dma(u0, dma0, txt0,0);
+# dma.off(u0, dma1);
+# dma.set(u0, dma1,0, p0+1);
+# dma.print(u0, dma0, S.format.cell0000, dma1);
+
+# llog.printo(u0, S.cell0.format, 0, S.format.cell0000,-1);
+# llog.printo(u0, S.cell0.args, 0, dma1,-1);
+# llog.printo(u0, S.cell0.out, 0, dma0,-1);
+
+# dma.print1.v(txt0, S.format.cell0000, p0);
+# new.text.label(tl0, 0,0,1, txt0, 14, 0,0,0, 0,10170202, 0); 
+
+ # print ]
+
+ l0:=node.new.this.ex4(r0, fid, w,h, cell0, collection0);
+};
+#watch(tl0);
+
+clock.skin0 10170010;
+#clock.skin1 10170020;
+#l0:=node.new.this.ex4(r0, clock.skin0, 200,200);
+#l0:=node.new.this.ex4(r0, clock.skin1, 800,h);
+#node.prop.s.s(u0, l0, 0.2);
+
+node.z.order.s(u0, -1);
+
+destroy.cell {
+ lt:=0.001;
+ cell0opts.show.s(0);
+
+#  events.push(u0, ui.pool,owner.id, ui.event.collection.cell.hided, nid,0, 0,0);
+#  events.push(u0, ui.pool,owner.id, ui.event.collection.cell.destroyed, nid,0, 0,0);
+};
+
+if (lt==0.001) {
+ events.push(u0, ui.pool,owner.id, ui.event.button.pop, nid,0, 0,0);
+};
+
+
+_ @4;
+#ui.value1(l12,110,110,0.5,view.height);
+#ui.value1(l12,0,0,0.5,fid);
+
+
+# layout [
+
+# second turn r0==0 due random y init and bug
+
+if (type0==info.t.vec1d*(r0==0)) { 
+ if (scroll.direction==info.sd.vertical) {
+  top scroll.offset.y+y;
+
+  head.y d0;
+  tail.y d1;
+
+  # min 
+  d0=top-h;
+  # max
+  d1=height0-top-h;
+
+#ui.value1(l12,0,20,0.5,top);
+#ui.value1(l13,100,20,0.5,height0);
+
+#ui.value1(l12,0,20,0.5,d0);
+#ui.value1(l13,100,20,0.5,d1);
+
+#  d0:=(top<h)+((height0-top)<h);
+#  d5:=(d0<0)+(d1<0);
+#  d5:=d0;
+
+  v0=d0<(0-h*2);
+  v1=d1<(0-h);
+#ui.value1(l14,500,20,0.5,d1);
+#ui.value1(l14,500,20,0.5,d1);
+#ui.value1(l14,500,20,0.5,top);
+#ui.value1(l14,500,20,0.5,scroll.offset.y);
+#ui.value1(l14,500,20,0.5,height0-top-h);
+
+
+#ui.value1(l12,0,20,0.5,v0);
+#ui.value1(l13,100,20,0.5,v1);
+
+  #view.height
+  if (v0+v1) {
+   if (pressed==0) {
+#ui.value1(l12,0,20,0.5,top);
+#ui.value1(l13,100,20,0.5,-h);
+#ui.value1(l13,100,20,0.5,y);
+#ui.value1(l13,100,20,0.5,scroll.offset.y);
+    destroy.cell;
+   };
+  };
+  s:=1;
+  if (d0+h<0) {
+   s:=max(1+(d0+h)/h,0);
+  };
+  if (d1<0) {
+   s:=max(1+(d1)/h,0);
+  };
+  d5:=s;
+#s:=1;
+  x:=(1-s)*w/2;
+
+#  dma.print1.v2(txt0, S.format.cell0000, d5);
+#  events.push(u0, ui.pool,tl0, ui.event.text.update, txt0,0,0,0);
+ };
+};
+
+# layout ]
+
+screen {
+ width 768;
+ height 1024;
+};
+
+owner.id p6;
+
+nid node.ex.this.id(u0);
+
+# touch [
+
+x0 l10;
+y0 l11;
+xs l4;
+ys l5; 
+clicked l3;
+dx.max 5;
+dy.max 5;
+
+pressed r3;
+
+touch.id l8;
+touch.b0 l9;
+
+touch.ev {
+ began {
+  # x,y, gx,gy
+  x0:=_2;
+  y0:=_3;
+  xs:=x0;
+  ys:=y0;
+  pressed:=1;
+  clicked:=1;
+  node.z.order.s(u0, 10000);
+  events.push(u0, ui.pool,owner.id, ui.event.button.push, nid,cell0, _2-x0,_3-y0);
+
+  events.push(u0, ui.pool2,cell0, ui.event.button.push, nid,cell0, x0,y0);
+ };
+ moved {
+  # x,y, gx,gy
+#  llog.printv3(u0, S.cell.moved.id.x.y, nid,_2,_3);
+  events.push(u0, ui.pool,owner.id, ui.event.collection.cell.moved, nid,cell0, _2-x0,_3-y0);
+  x0:=_2;
+  y0:=_3;
+
+  # check clicked
+#  if (scroll.direction==info.sd.vertical) {
+   if (abs(y0-ys)>dy.max) {
+    clicked:=0;
+   };
+#  };
+#   if (abs(x0-xs)>dx.max) {
+#    clicked:=0;
+#   };
+ };
+ ended {
+  # x,y, gx,gy
+  pressed:=0;
+  events.push(u0, ui.pool,owner.id, ui.event.button.pop, nid,cell0, _2-x0,_3-y0);
+
+  events.push(u0, ui.pool2,cell0, ui.event.button.pop, nid,cell0, x0,y0);
+  
+  if (clicked) {
+   events.push(u0, ui.pool2,cell0, ui.event.button.click, nid,cell0, x0,y0);
+  };
+
+  node.z.order.s(u0, 0);
+ };
+};
+
+#_ @4;
+#ui.value1(l14,250,110,0.5,owner.id);
+#ui.value1(l12,110,110,0.5,cell0);
+
+#touch.rect(touch.id, 0-w/2,0-h/2,w,h);
+#if (pressed,
+# touch.rect.screen(touch.id, 0,0,screen.width,screen.height),
+# touch.rect(touch.id, 0,0,w,h));
+touch.rect2.lock(touch.id, 0,0,w,h);
+
+_ @sys.touch.ev.process.once;
+touch.b0:=1;
+touch.ev.process.multi;
+
+# touch ]
+
+llog.e();
+
+k:=1;
+
+### 70127 ul.ui.collection.cell.draw
+
+pressed r3;
+
+color(u0, 0,0.1,1,0.1);
+if (pressed) {
+ color(u0, 0,0.1,1,1);
+};
+rect(u0, 6, 0,0, w,h);
+#color(u0, 1,0.1,1,0.1);
+#rect(u0, 2, 0,0, w,h);
+color(u0, 1,0.1,1,1);
+rect(u0, 2, 0,0, w,h);
+

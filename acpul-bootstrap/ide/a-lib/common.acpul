@@ -1,0 +1,91 @@
+### 15510 ide.common
+
+_ @1010;
+_ @1100;
+_ @sys.node;
+_ @sys.obj;
+_ @ul.ui;
+
+ide {
+ toolbar 15600;
+ search.bar 15650;
+ source.list 15700;
+ debugger 15900;
+};
+
+ide.editor 15800;
+
+ide.pool 15500;
+
+ui.pool3.input 892990;
+
+
+util.wh.set.bbox {
+ node.get.bounding.box(u0, -1, 0);
+ w:=o2;
+ h:=o3;
+};
+
+# COMMON [
+
+nid node.ex.this.id(u0); # DUP!
+
+# COMMON ]
+
+# ul.ui [
+
+ul.ui.text.view2 15850;
+
+new.text.view2 {
+ # hid, x,y,s, lines :: buffer, fid, font(pool,id,i)
+ _0:=node.new.this.ex8(u0, ul.ui.text.view2, _4, _5, _6,_7,_8, 0,0,0);
+ node.prop.x.s(u0, _0, _1);
+ node.prop.y.s(u0, _0, _2);
+ node.prop.s.s(u0, _0, _3);
+};
+
+ul.ui.text.view3 15860;
+
+new.text.view3 {
+ # hid, x,y,s, w,h, lines :: buffer, fid
+ _0:=node.new.this.ex4(u0, ul.ui.text.view3, _6, _7, 0,0);
+ node.prop.x.s(u0, _0, _1);
+ node.prop.y.s(u0, _0, _2);
+ node.prop.s.s(u0, _0, _3);
+ node.prop.w.s(u0, _0, _4);
+ node.prop.h.s(u0, _0, _5);
+};
+
+# livelog2 - todo: review ul.ui.livelog link [
+
+ul.ui.livelog.view 15880;
+ul.ui.livelog.node 15884;
+
+ul.ui.livelog.test 15889;
+
+new.livelog.view {
+ # hid, x,y,s, w,h, livelog.obj
+ _0:=node.new.this.ex4(u0, ul.ui.livelog.view, _6, 0, 0,0);
+ node.prop.x.s(u0, _0, _1);
+ node.prop.y.s(u0, _0, _2);
+ node.prop.s.s(u0, _0, _3);
+ node.prop.w.s(u0, _0, _4);
+ node.prop.h.s(u0, _0, _5);
+};
+
+# livelog2 - todo: review ul.ui.livelog link ]
+
+# ul.ui ]
+
+# UI0 UTIL [
+
+ui0.focus {
+ # input
+ vol5 0;
+ volatile.num4.set(u0, TEXT_EDIT_FOCUS,0,0,0, vol5,_0);
+};
+
+
+
+# UI0 UTIL ]
+

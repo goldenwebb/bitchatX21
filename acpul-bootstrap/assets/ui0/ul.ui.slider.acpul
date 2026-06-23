@@ -1,0 +1,141 @@
+### 70104 ul.ui.slider
+# w,h, type
+
+r0:=k==0;
+
+draw(r0, 70105);
+
+ui.pool 70100;
+
+ui.event.slider.push 1;
+ui.event.slider.pop 2;
+ui.event.slider.value.change 3;
+
+id r7;
+if (r0) {
+ id:=node.ex.this.id(u0);
+};
+
+slider.size 50;
+
+value r6;
+
+w:=p0;
+h:=p1;
+
+_ @1010;
+_ @sys.events;
+_ @sys.touch;
+
+# touch [
+
+slider.moved0 {
+ # x
+ offset _0;
+ min slider.size/2;
+ max w-slider.size/2;
+ length max-min;
+ offset1 if(offset<min, min, if(offset>max, max, offset));
+ v 0+(offset1-min)/length;
+# v1 _0;
+# watch(v1);
+# watch(_0);
+# watch(v);
+ value:=v;
+};
+
+slider.moved {
+ # x
+ moved0(_0);
+ events.push(u0, ui.pool,id, ui.event.slider.value.change, value, 0,0,0);
+};
+
+pressed r3;
+touch.ev {
+ 
+ began {
+  # x,y 
+  slider.moved(_0);
+
+  pressed:=1;
+  events.push(u0, ui.pool,id, ui.event.slider.push, 0,0,0,0);
+ };
+ moved {
+  # x,y
+  slider.moved(_0);
+ };
+ ended {
+  # x,y
+  pressed:=0;
+  events.push(u0, ui.pool,id, ui.event.slider.pop, 0,0,0,0);
+ };
+};
+#s+=if(pressed, if(s<1.5, 0.01, 0), if(s>1, 0-0.01, 0));
+
+touch.id r1;
+touch.b0 r2;
+
+#touch.rect(touch.id, 0-w/2,0-h/2,w,h);
+touch.rect2.lock(touch.id, 0-w/2,0-h/2,w,h);
+
+_ @sys.touch.ev.process.once;
+touch.b0:=1;
+while(touch.b0) {touch.ev.process.once(touch.id, touch.b0);};
+
+# touch ]
+
+# events process [
+
+slider.evs {
+ # ev, o0... - event
+ if (_0==ui.event.slider.value.change) {
+  # slider.moved1
+  v=o0;
+#  v=rnd(u0);o0;
+#  min slider.size/2;
+#  max w-slider.size/2;
+#  length max-min;
+#  slider.moved0((min + v)* length);
+ value:=v;
+
+  _ @4;
+#ui.value1(l12,0,0,0.5,v);
+
+ };
+};
+
+ui.event.process4(ui.pool,nid, slider.evs);
+
+# events process ]
+
+_ @sys.node;
+node.anchor.point.s(r0, 0.5,0.5);
+
+if (r0) {
+ x+=w/2;
+ y+=h/2;
+};
+
+k:=1;
+
+### 70105 ul.ui.slider.draw
+
+slider.size 50;
+
+value r6;
+
+pressed r3;
+if(pressed, 
+ color(u0, 1,0.5,0,1), 
+ color(u0, 0.2,0.5,1,1));
+rect(u0, 6, 0,0,w,h);
+
+min slider.size/2;
+max w-slider.size/2;
+length max-min;
+
+color(u0, 1,1,0,1);
+rect(u0, 6, value*length,0,slider.size,h);
+
+color(u0, 0,0,0,1);
+rect(u0, 3, 0,0,w,h);

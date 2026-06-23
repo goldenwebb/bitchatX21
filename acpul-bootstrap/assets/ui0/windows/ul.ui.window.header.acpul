@@ -1,0 +1,183 @@
+### 70302 ul.ui.window.header
+# oid, wctx
+
+_ @1010;
+_ @sys.ul.ui;
+_ @ui.windows;
+
+oid p0;
+wctx0 p1;
+
+ui.window.context.isavar wctx0;
+wctx ui.window.context;
+
+vw wctx.w.g;
+vh wctx.h.g;
+
+r0:=k==0;
+
+draw(r0, 70303);
+
+w:=vw;
+h:=44;
+
+x:=0;
+y:=vh;
+
+gap 5;
+
+bn0.move r7;
+bn1 r6;
+
+if (r0) {
+ new.button.custom(bn0.move, 0,0,1, h,h, ul.ui.windows.bn0,0, 1);
+ new.button.custom(bn1, h+gap,0,1, h,h, ul.ui.windows.bn0,1, 1);
+};
+
+id node.ex.this.id(u0);
+
+wctrl0 l10;
+
+mode r5;
+
+mt {
+ normal 0;
+ edit 1;
+
+ changed {
+  if (mode==mt.edit) {
+   wctrl0:=node.new.this.ex4(u0, ul.ui.windows.wnd.control0, id, wctx0, 0,0);
+#   node.prop.y.s(u0, wctrl0, -vh);
+  };
+  if (mode==mt.normal) {
+   wctrl.off {
+    node.prop.lt.s(u0, wctrl0, 0.001);
+   };
+   wctrl.off;
+  };
+ };
+};
+
+#if (r0) {
+#  mode:=mt.edit;
+#  mt.changed;
+#};
+
+# events [
+
+tb0 l7; 
+
+# bn0.move [
+
+tb0:=1; while(tb0) { tb0:=ui.event(bn0.move);
+ if (tb0==ui.event.button.push) {
+  mode:=if(mode==mt.normal, mt.edit, mt.normal);
+  mt.changed;
+ };
+ if (tb0==ui.event.button.pop) {
+ };
+};
+
+# bn0.move ]
+
+# events ]
+# touch [
+
+_ @sys.touch;
+
+pressed r3;
+prev.x l5;
+prev.y l6;
+
+touch.ev {
+ began {
+  # x,y, gx,gy
+  
+  pressed:=1;
+  
+  prev.x:=_2;
+  prev.y:=_3;
+
+  window.bring.to.front {
+   wid node.get.parent(u0, id);
+   node.z.to.front(u0, wid, 0);
+  };
+
+  window.bring.to.front;
+
+#  events.push(u0, ui.pool,id, ui.event.windows.move, _0,_1,0,0);
+#  watch(x);
+ };
+ moved {
+  # x,y
+#  watch(_2);
+#  events.push(u0, ui.pool,id, ui.event.windows.move, _2-prev.x,_3-prev.y,0,0);
+  dx _2-prev.x;
+  dy _3-prev.y;
+  wctx.x.s(wctx.x.g+dx);
+  wctx.y.s(wctx.y.g+dy);
+  prev.x:=_2;
+  prev.y:=_3;
+ };
+ ended {
+  # x,y
+  pressed:=0;
+#  events.push(u0, ui.pool,id, ui.event.button.pop, 0,0,0,0);
+ };
+};
+#s+=if(pressed, if(s<1.5, 0.01, 0), if(s>1, 0-0.01, 0));
+
+touch.id r8;
+touch.b0 l7;
+
+_ @sys.touch.ev.process.once;
+
+#touch.rect(touch.id, 0-w/2,0-h/2,w,h);
+
+screen {
+ width 768;
+ height 1024;
+};
+
+if (pressed==0) { 
+ if (mode==mt.edit,
+  touch.rect(touch.id, 0,-vh,w,vh),
+  touch.rect(touch.id, 0,0,w,h));
+};
+if (pressed==1) {
+# touch.rect.screen(touch.id, 0,0,screen.width,screen.height)
+ touch.rect2.lock(touch.id, 0,0,screen.width,screen.height);
+};
+
+touch.b0:=1;
+touch.ev.process.multi;
+
+# touch ]
+
+
+k:=1;
+
+### 70303 ul.ui.window.header.draw
+
+vw p0;
+vh p1;
+
+q @70302;
+mode q.mode;
+mt q.mt;
+
+color(u0, 0.5,0.5,0.9,0.5);
+
+pressed r3;
+if (pressed) {
+ color(u0, 0.0,0.9,0.5,0.5);
+};
+
+
+rect(u0, 6, 0,0,w,h);
+
+#if (mode==mt.edit) {
+# rect(u0, 6, 0,-vh,vw,vh);
+#};
+
+

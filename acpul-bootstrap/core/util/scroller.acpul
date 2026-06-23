@@ -1,0 +1,115 @@
+### 1108 scroller
+
+scroller {
+ a {
+  size {
+   width 0;
+   height 1;
+  };
+  view {
+   x 2;
+   y 3;
+   width 4;
+   height 5;
+  };
+  target {
+   x 6;
+   y 7;
+  };
+  velocity {
+   x 10;
+   y 11;
+  };
+  acceleration {
+   x 12;
+   y 13;
+  };
+  bounce {
+
+  };
+  speed 14;
+
+  max 100;
+ };
+
+ vg buffer.get(u0, isavar,0, _0);
+ vg2 buffer.get2(u0, isavar,0, _0);
+ vs buffer.set(u0, isavar,0, _0, _1);
+ vs2 buffer.set2(u0, isavar,0, _0, _1,_2);
+
+# size.width {_ a.size; g vg(width); s vs(width, _0)};
+# size.width {_ a.size; w width; g vg(w); s vs(w, _0)};
+
+ size.width.g vg(a.size.width); size.width.s vs(a.size.width, _0);
+ size.height.g vg(a.size.height); size.height.s vs(a.size.height, _0);
+
+ view.x.g vg(a.view.x); view.x.s vs(a.view.x, _0);
+ view.y.g vg(a.view.y); view.y.s vs(a.view.y, _0);
+ view.width.g vg(a.view.width); view.width.s vs(a.view.width, _0);
+ view.height.g vg(a.view.height); view.height.s vs(a.view.height, _0);
+
+ target.x.g vg(a.target.x); target.x.s vs(a.target.x, _0);
+ target.y.g vg(a.target.y); target.y.s vs(a.target.y, _0);
+
+ acceleration.x.g vg(a.acceleration.x); acceleration.x.s vs(a.acceleration.x, _0);
+ acceleration.y.g vg(a.acceleration.y); acceleration.y.s vs(a.acceleration.y, _0);
+
+ new {
+  isavar:=buffer.new(u0, a.max,a.max);
+ };
+
+ scroll.by {
+  # dx,dy, acceleration(x,y)
+  to(target.x.g+_0, target.y.g+_1, _2,_3);
+ };
+ scroll.to {
+  # x,y, acceleration(x,y)
+  tx _0;
+  ty _1;
+  acc.x _2;
+  acc.y _2;
+  
+  target.x.s(tx);
+  target.y.s(ty);
+
+  dx view.x.g-tx;
+  dy view.y.g-ty;
+
+  dir.x 1;
+  dir.y 1;
+
+  acceleration.x.s(acceleration.x.g+acc.x*dir.x);
+  acceleration.y.s(acceleration.y.g+acc.y*dir.y);
+ };
+ step {
+  # dt
+  dt _0;
+
+  velocity.x.s(velocity.x.g+acceleration.x.g*dt);
+  velocity.y.s(velocity.y.g+acceleration.y.g*dt);
+
+  q 0.5;
+  acceleration.x.s(acceleration.x.g*q*dt);
+  acceleration.y.s(acceleration.x.g*q*dt);
+
+  view.x.s(view.x.g+velocity.x.g);
+  view.y.s(view.y.g+velocity.y.g);
+
+  min.x 0;
+  min.y 0;
+  max.x size.width.g;
+  max.y size.height.g;
+
+  view.x.s(if(view.x.g < min.x, min.x, view.x.g));
+  view.y.s(if(view.y.g < min.y, min.y, view.y.g));
+  view.x.s(if(view.x.g > max.x, max.x, view.x.g));
+  view.y.s(if(view.y.g > max.x, max.x, view.y.g));
+ };
+};
+
+scroller.test {
+ if (r0) {
+  scroller.new;
+ };
+ scroller.step(dt);
+};

@@ -1,0 +1,148 @@
+### 79000 core.hud
+
+core.hud.block0 79100;
+core.hud.text0 79200;
+core.hud.button0 79300;
+
+core.hud.cell.text0 79400;
+core.hud.rt0 79500;
+
+
+# block [
+
+new.hud.block0 {
+ # hid, x,y,w,h
+  _0:=node.new.this.ex4(u0, core.hud.block0, _3,_4, 0,0);
+ node.prop.x.s(u0, _0, _1);
+ node.prop.y.s(u0, _0, _2);
+# node.prop.w.s(u0, _0, _2);
+# node.prop.h.s(u0, _0, _2);
+};
+
+new.hud.block1 {
+ # hid, x,y,w,h, form, padding.w, a0,a1,a2,a3
+  _0:=node.new.this.ex8(u0, core.hud.block0, _3,_4, _5, _6, _7, _8,_9,_10);
+ node.prop.x.s(u0, _0, _1);
+ node.prop.y.s(u0, _0, _2);
+# node.prop.w.s(u0, _0, _2);
+# node.prop.h.s(u0, _0, _2);
+};
+
+# util.gl.extra
+
+# block ]
+# backlight [
+
+gle.backlight {
+ # x,y,w,h, scale.xy, rgba, multipler, fsh
+ gl.shader.use(70014, _11);
+ gl.shader.uniform.f2(0, _4,_5); # scale
+ gl.shader.uniform.f4(1, _6,_7,_8,_9); # color
+ gl.shader.uniform.f1(2, _10); # multipler
+ gl.rect0(5, _0,_1, _2,_3);
+};
+
+gle.backlight0
+ backlight(__, 179000);
+
+gle.backlight1
+ backlight(__, 179001);
+
+# backlight ]
+# grid [
+
+gle.grid {
+ # x,y,w,h, color(r,g,b,a), size(x,y), dx,dy, ratio(x,y), fsh
+ cr _4; cg _5; cb _6; ca _7;
+ sx _8; sy _9;
+ dx _10; dy _11;
+ rx _12; ry _13;
+ fsh _14;
+ gl.shader.use(70014, fsh);
+ gl.shader.uniform.f2(0, sx,sy); # size
+ gl.shader.uniform.f2(1, dx,dy);
+ gl.shader.uniform.f2(2, rx,ry);
+ gl.shader.uniform.f4(3, cr,cg,cb,ca); # color
+ gl.rect0(5, _0,_1, _2,_3);
+};
+
+
+gle.grid0 {
+ # x,y,w,h, color(r,g,b,a), size(x,y), dx,dy, ratio(x,y)
+ gle.grid(__, 179002);
+};
+
+gle.grid0i {
+ # x,y,w,h, color(r,g,b,a), size(x,y), dx,dy, ratio(x,y)
+ gle.grid(__, 179012);
+};
+
+gle.grid1 {
+ # x,y,w,h, color(r,g,b,a), size(x,y), dx,dy, ratio(x,y)
+ gle.grid(__, 179003);
+};
+
+gle.grid1i {
+ # x,y,w,h, color(r,g,b,a), size(x,y), dx,dy, ratio(x,y)
+ gle.grid(__, 179013);
+};
+
+gle.grid2 {
+ # x,y,w,h, color(r,g,b,a), size(x,y), dx,dy, ratio(x,y)
+ gle.grid(__, 179004);
+};
+
+gle.grid3 {
+ # x,y,w,h, color(r,g,b,a), size(x,y), dx,dy, ratio(x,y)
+ gle.grid(__, 179005);
+};
+
+# grid ]
+# sdf [
+
+gle.sdf0 {
+ # x,y,w,h
+ #, scale.xy, rgba, multipler, fsh
+# gl.shader.use(70014, 150000);
+ gl.shader.use(70014, 150001);
+ gl.shader.uniform.f2(0, _2,_3); # xy
+# gl.shader.use(70014, _11);
+# gl.shader.uniform.f2(0, _4,_5); # scale
+# gl.shader.uniform.f4(1, _6,_7,_8,_9); # color
+# gl.shader.uniform.f1(2, _10); # multipler
+ gl.rect0(5, _0,_1, _2,_3);
+};
+
+
+# sdf ]
+# render texture [
+
+new.hud.rt0 {
+ # hid, x,y,w,h
+ # #vsh,fsh
+ _0:=node.new.this.ex4(u0, core.hud.rt0, _3,_4, 0,0);
+ node.prop.x.s(u0, _0, _1);
+ node.prop.y.s(u0, _0, _2);
+};
+
+# render texture ]
+# button [
+
+new.hud.button {
+ # hid, x,y,w,h, ev, view.id, extra
+};
+
+new.hud.button0 {
+ # hid, x,y,w,h, ev, type
+};
+
+new.hud.button0 {
+ # hid, x,y,w,h, type, text, a0,a1,a2,a3
+ _0:=node.new.this.ex8(u0, core.hud.button0, _3,_4, _5, _6, _7,_8,_9,_10);
+ node.prop.x.s(u0, _0, _1);
+ node.prop.y.s(u0, _0, _2);
+# node.prop.w.s(u0, _0, _2);
+# node.prop.h.s(u0, _0, _2);
+};
+
+# button ]

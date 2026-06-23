@@ -1,0 +1,65 @@
+### 900710 basic.ui.label
+# mode, style, text
+
+r0:=k==0;
+
+draw(r0, 900711);
+
+_ @1010;
+_ @1100;
+_ @sys.node;
+_ @sys.obj;
+_ @sys.llog;
+_ @util.map.std;
+_ @ul.ui;
+_ @sys.os;
+_ @os.util2;
+
+mode0 p0;
+style0 p1;
+txt0 p2;
+
+tl0 0;
+
+# STYLE [
+
+# basic.ui.label.style 
+
+primitives 900712; # !!!! CHANGE
+
+_ @primitives;
+
+style { _ struct;
+ auto.width 1;
+};
+
+# STYLE ]
+
+if (r0) {
+ new.text.label(tl0, 0,0,1, txt0, 18, 1001,1,1, 5352,15877, 0); 
+};
+
+if (style.auto.width==0) {
+ node.set.h(u0, tl0,h);
+ node.set.w(u0, tl0,w);
+};
+
+if (style.auto.width) {
+ w:=node.value.g(u0, tl0,2);
+ h:=node.value.g(u0, tl0,3);
+};
+
+k:=1;
+
+### 900711 basic.ui.label.draw
+
+color(u0, 0.2,0.2,0.5,0.2);
+#color(u0, 1,1,0,0);
+rect(u0, 6, 0,0,w,h);
+
+
+### 900712 primitives
+
+struct {
+  
+};

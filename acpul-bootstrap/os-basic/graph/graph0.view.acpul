@@ -1,0 +1,117 @@
+### 90320 os.graph0.view
+# name, mode, style, ...
+#  mode 0 line2d
+#   values0, count
+#   v0 -> values0
+#   v1 -> text0
+
+name p0;
+mode p1;
+style p2;
+
+pvalues0 p3;
+pcount0 p4;
+
+r0:=k==0;
+
+_ @1010;
+_ @sys.obj;
+_ @sys.node;
+_ @sys.os;
+_ @os.basic;
+_ @os.graph0.inc;
+
+draw(r0, 90321);
+
+if (r0) {
+ values0:=pvalues0;
+ pcount0:=if(pcount0<=0,100,pcount0);
+ 
+ os.graph.obj2d.new(pcount0);
+
+# w:=100;
+# h:=100;
+};
+
+values0 r2;
+
+os.graph.obj2d.isavar r1;
+os.graph.obj2d.values0 r2;
+
+#values.update {
+# n:=100;
+# i:=0; while(i<n) {
+#  buffer.set(u0, values0,0,i, sin(t+i*0.1)*100+10*rnd(u0));
+#  i+=1;
+# };
+#};
+#if (r0) {
+#values.update;
+#};
+
+os.graph.obj2d.update.minmax1d(0);
+
+#os.graph.obj2d.update.minmax2d(0,1);
+
+_ @sys.ul.ui;
+
+tl0 r3;
+
+#h0 100;
+h0 h;
+
+if (tl0==0) {
+ if (name*h0) {
+  if (style==os.graph0.style.default) {
+   new.text.label(tl0, 5,h0-20,0.7, name, 20, 0,0,0, 0,10170202, 1); 
+  };
+ };
+};
+
+
+nid node.ex.this.id(u0);
+
+node.value.s(u0, nid,0, values0);
+node.value.s(u0, nid,1, tl0);
+
+
+k:=1;
+
+
+#_ @4;
+#ui.value1(l12,110,110,0.5,h);
+
+### 90321 os.graph0.view.draw
+
+#color(u0, 0.,0.2,0.2,0.5);
+color(u0, 0.5,0.3,0.0,0.3);
+psize(u0, 1);
+rect(u0, 6, 0,0, w,h);
+rect(u0, 2, 1,1, w-2,h-2);
+
+_ @1010;
+_ @sys.os;
+_ @os.basic;
+#_ @sys.llog;
+
+_ @1100;
+_ @util.gl.std;
+
+_ @sys.node;
+_ @sys.obj;
+_ @os.basic;
+_ @os.graph0.inc;
+
+os.graph.obj2d.isavar r1;
+os.graph.obj2d.values0 r2;
+
+#psize1(u0, 1);
+#rect(u0, 3, 0,0,100,100);
+
+draw.graph {
+ _ os.graph.obj2d; 
+ os.graph.line2d.draw(isavar, values0,0, w-2,h-2, min.x.g,max.x.g, min.y.g,max.y.g);
+};
+
+psize1(1);
+draw.graph;

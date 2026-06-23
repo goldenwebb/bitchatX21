@@ -1,0 +1,395 @@
+### 70170 ui.textlines
+# _ [
+
+ul.ui.text.view 70172;
+ul.ui.memory.view 70180;
+
+# _ ]
+# new [
+
+new.text.view {
+ # hid, x,y,s, lines :: buffer
+ _0:=node.new.this.ex4(u0, ul.ui.text.view, _4, 0,0,0);
+ node.prop.x.s(u0, _0, _1);
+ node.prop.y.s(u0, _0, _2);
+ node.prop.s.s(u0, _0, _3);
+};
+
+new.memory.view {
+ # hid, x,y,s, object,i, w,h, ?font,fsize
+ wctx0 _0;
+ 
+ _ @ui.windows;
+ ui.window.context.isavar wctx0;
+ wctx ui.window.context;
+
+ wctx.new1.xywh(_1,_2,_6,_7);
+
+ _0:=node.new.this.ex4(u0, ul.ui.memory.view, wctx0, _4,_5, 0);
+ node.prop.s.s(u0, _0, _3);
+};
+
+# new ]
+
+ui.textlines { _;
+ dma0 0;
+ dma1 1;
+ dma2 2;
+ dma5 5;
+ b0 l0;
+ b1 l1;
+ b2 l2;
+ uniform1 1;
+ uniform2 2;
+};
+
+ui.textlines.lines.vec {
+ new {
+  # -> o
+  b0:=buffer.new(u0, 10000,1000000);
+  buffer.dma(u0, dma5, b0,0);
+  b0;
+ };
+ use {
+  # o
+  buffer.dma(u0, dma5, _0,0);
+ };
+ end {
+  dma.off(u0, dma5);
+ };
+
+ select {
+  # i, dma0,dma1
+#  font0
+#  font0size
+  i _0;
+  dma0 _1;
+  dma1 _2;
+  fchars b0;
+  
+  fchars:=dma.get(u0, dma5,i);
+
+#  llog.printv(r0, S.select.fchars, fchars);
+
+  if (fchars>0) {
+    buffer.dma(u0, dma0, fchars,0);
+    buffer.dma(u0, dma1, fchars,1);
+  };
+
+  if (fchars<=0) {
+   fchars:=buffer.new(u0, 256*3*4, 100000*3*4); # x,y,z [+ shape] ;
+   buffer.add(u0, fchars, 256*4, 100000*4); # char, texture, offs0,offs1
+
+   dma.set(u0, dma5,i, fchars);
+
+   buffer.dma(u0, dma0, fchars,0);
+   buffer.dma(u0, dma1, fchars,1);
+  };
+ };
+
+ # fill [
+ 
+ fill {
+  # lvec, rows, font,fsize, text
+  lvec0 _0;
+  rows _1;
+  font _2;
+  fsize _3;
+  text _4;
+
+  lines.vec.use(lvec0);
+
+  i:=0;
+  while(i<rows) {
+   lines.vec.select(i, dma0,dma1);
+
+#   text TXT.VIEW.TXT.VIEW.TXT.VIEW;
+   media.ft.text.dma(u0, font,fsize, text, dma0,dma1,-1);
+
+#   llog.printv(u0, S.select.i, i);
+#  llog.printo(u0, S.dma0, 0, dma0,-1);
+#  llog.printo(u0, S.dma1, 0, dma1,-1);
+   i+=1;
+  };
+
+  lines.vec.end();
+ };
+
+ # fill ]
+ # update [
+
+ update {
+  # lvec, rows, lines, start.i, font,fsize
+  lvec0 _0;
+  rows _1;
+  lines0 _2;
+  start.i _3;
+  font _4;
+  fsize _5;
+
+  lines.vec.use(lvec0);
+
+#  llog.printo(u0, S.lvec0, 0, lvec0,-1);
+
+  i:=0;
+  while(i<rows) {
+   lines.vec.select(i, dma0,dma1);
+
+   buffer.dma(u0, dma2, lines0,i+start.i);
+#   buffer.dma(u0, dma2, lvec0,0);
+
+#   llog.printo(u0, S.lvec0.dma2, 0, dma2,-1);
+
+   media.ft.text.dma(u0, font,fsize, dma2, dma0,dma1,-1);
+#   llog.printv(u0, S.select.i, i);
+#   llog.printo(u0, S.font.dma0, 0, dma0,-1);
+#   llog.printo(u0, S.font.dma1, 0, dma1,-1);
+   i+=1;
+  };
+  lines.vec.end(lvec0);
+ };
+
+ # update ]
+};
+
+ui.textlines.options.info {
+ dma0 0;
+ dma1 1;
+ b0 l0;
+ b1 l1;
+ b2 l2;
+ #vsh 10018020;
+ vsh 5352;
+ #fsh 10018021;
+ fsh 5353;
+ texattr0 0;
+ texunit0 0;
+};
+
+ui.textlines.render {
+
+ shader node.ex.shader;
+
+ render.chars0 {
+ # x,y
+  x _0;
+  y _1;
+
+  l2:=0;
+  while (l2 < l1) {
+   a0 0; # verts
+   a1 1; # texCoords
+   eoffs 4*4*l2;
+   # r0, i, dma,o,esize,stride,count, type,normalized
+   shader.attribute.dma(u0, a1, dma0,eoffs,  2,4,4, 0,0);
+   shader.attribute.dma(u0, a0, dma0,eoffs+2,2,4,4, 0,0);
+
+#   shader.uniform.f2(u0, uniform1, x,y+sin((l2+t*0.05)*20)*100); 
+   shader.uniform.f2(u0, uniform1, x,y); 
+
+   color.phase
+    shader.uniform.f1(u0, uniform2, _0);
+   
+#   color.phase(0+sin(t));
+   color.phase(0);
+
+   node.ex.gl.draw(u0, 6, 4);
+   l2+=1;
+  };
+ };
+ 
+
+ render.chars1.rects {
+  color(u0, 0.5,0.5,0,0.5);
+  l2:=0;
+  while (l2 < l1) {
+   char.info.sz 8;
+   sz char.info.sz;
+   rectoffs sz*(l2+1)+4;
+   x0 d0; y0 d1; x1 d2; y1 d3;
+   x0:=dma.get(u0, dma1,rectoffs+0);
+   y0:=dma.get(u0, dma1,rectoffs+1);
+   x1:=dma.get(u0, dma1,rectoffs+2);
+   y1:=dma.get(u0, dma1,rectoffs+3);
+   rect(u0, 2, x+x0,y+y0,x1-x0,y1-y0);
+   l2+=1;
+  };
+ };
+
+ draw.line {
+  # x,y, line
+  fchars0 _0.fchars0;
+  dma0 _0.dma0;
+  dma1 _0.dma1;
+  vsh _0.vsh;
+  fsh _0.fsh;
+  texattr0 _0.texattr0;
+  texunit0 _0.texunit0;
+
+  l0 _0.b0;
+  l1 _0.b1;
+  l2 _0.b2;
+
+  x _1;
+  y _2;
+
+  line _3;
+
+  shader.use(u0, vsh,fsh);
+
+  shader.uniform.f2(u0, uniform1, x,y); 
+
+  offscount 1;
+  l1:=dma.get(u0, 1, offscount);
+
+  startitems 8;
+  itemsize 4;
+  offstexture 1;
+  l0:=dma.get(u0, 1, startitems+offstexture);
+  shader.uniform.texture.name(u0, texattr0, l0, texunit0);
+#  if (r0) {
+#   _ @1010; _ @sys.llog; llog.b(Q.tmp.text); llog.pv(Q.texture, l0); llog.e();
+#   _ @1010; _ @sys.llog; llog.b(Q.tmp.text); llog.pv(Q.count, l1); llog.e();
+#  };
+  shader.uniform.f1(u0, uniform2, 0); 
+#     u49+=0.001;
+#     u49:=0.5;
+
+  render.chars0(x,y);
+#  render.chars1.rects;
+
+
+#  dma.off(u0, dma0);
+#  dma.off(u0, dma1);
+ };
+
+ draw.all {
+  # lvec, rows, startline, options
+  lvec0 _0;
+  rows _1;
+  startline _2;
+
+  lines.vec.use(lvec0);
+
+#  llog.printv(r0, S.r2, r2);
+#  llog.printo(r0, S.r2o, 0, r2,-1);
+#  llog.printo(r0, S.dma5, 0, dma5,-1);
+
+  i:=0;
+  while(i<rows) {
+   lines.vec.select(i, dma0,dma1); 
+
+#  llog.printv(u0, S.select.i, i);
+#  llog.printo(r0, S.dma0, 0, dma0,-1);
+#  llog.printo(r0, S.dma1, 0, dma1,-1);
+
+   row rows-i;
+   draw.line(_3, 0,row*20, startline+i);
+
+# draw(options.info, 0, row*25+row*sin(t*2)*20, row);
+ 
+   i+=1;
+  };
+
+  dma.off(u0, dma0);
+  dma.off(u0, dma1);
+  lines.vec.end(lvec0);
+ };
+};
+
+ui.textlines.lines.vec.scale {
+  # lvec, rows, lines, start.i, scale.x,scale.y
+  lvec0 _0;
+  rows _1;
+  lines0 _2;
+  start.i _3;
+  scale.x _4;
+  scale.y _5;
+
+  lines.vec.use(lvec0);
+
+  scale.line {
+   # scale.x,scale.y
+   # (dma0,dma1) - chars.text
+
+   scale.x _0;
+   scale.y _1;
+
+   offscount 1;
+   chars.count=dma.get(u0, dma1, offscount);
+
+   l2:=0;
+   while (l2 < chars.count) {
+    a0 0; # verts
+    a1 1; # texCoords
+    eoffs 4*4*l2;
+
+#    llog.printv(r0, S.char.i, l2);
+
+    scale.char.vertex {
+     x2 {
+      dma.get2(u0, dma0,eoffs+_0);
+
+#     llog.printv2(r0, S.char0, o0,o1);
+
+      o0*=scale.x;
+      o1*=scale.y;
+
+      dma.set2(u0, dma0,eoffs+_0, o0,o1);
+     };
+
+     x2(2);
+     x2(2+4);
+     x2(2+8);
+     x2(2+12);
+    };
+    
+    scale.char.vertex;
+
+    scale.char.rect {
+     roffs 8+8*l2;
+     dma.get4(u0, dma1,roffs+4);
+     o0*=scale.x;
+     o1*=scale.y;
+     o2*=scale.x;
+     o3*=scale.y;
+     dma.set4(u0, dma1,roffs+4, o0,o1,o2,o3);
+    };
+
+    scale.char.rect;
+
+    l2+=1;
+   };
+
+   scale.line.rect {
+    dma.get2(u0, dma1,2+0);
+    o0*=scale.x;
+    o1*=scale.y;
+    dma.set2(u0, dma1,2+0, o0,o1);
+    dma.get2(u0, dma1,2+3);
+    o0*=scale.x;
+    o1*=scale.y;
+    dma.set2(u0, dma1,2+3, o0,o1);
+   };
+
+   scale.line.rect;
+
+#   llog.printo(r0, S.row, 0, dma1,-1);
+  };
+
+  i:=0;
+  while(i<rows) {
+   lines.vec.select(i, dma0,dma1);
+
+#   llog.printo(r0, S.row, 0, dma0,-1);
+#   llog.printo(r0, S.row, 0, dma1,-1);
+
+   buffer.dma(u0, dma2, lines0,i+start.i);
+
+   scale.line(scale.x,scale.y);
+
+   i+=1;
+  };
+  lines.vec.end(lvec0);
+};
+

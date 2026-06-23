@@ -1,0 +1,365 @@
+### 70124 ul.ui.collection.scroll
+# subview, options, svp0,svp1
+
+nid node.ex.this.id(u0);
+
+r0:=k==0;
+
+draw(r0, 70125);
+
+_ @1010;
+_ @1100;
+_ @sys.node;
+_ @sys.obj;
+_ @sys.llog;
+_ @util.map.std;
+_ @ul.ui;
+#_ @ui.collection;
+
+
+llog.b(A.ul.ui.collection.scroll);
+#llog.erase(r0, 0);
+
+# collection.obj [
+
+collection0 p1;
+
+ui.collection 70120;
+_ @ui.collection;
+
+info ui.collection.default.options.info;
+
+ui.collection.options.obj.isavar collection0;
+o ui.collection.options.obj;
+
+width o.width.g;
+height o.height.g;
+cols o.cols.g;
+rows o.rows.g;
+scroll.direction o.scroll.direction.g;
+cells.count o.cells.count;
+
+# collection.obj ]
+
+need.layout l7;
+
+need.layout:=(w!=width)+(h!=height);
+
+w:=width;
+h:=height; 
+
+ul.ui.collection.cell 70126;
+
+_ @ul.ui.collection.util.layout;
+
+cell0 l4;
+
+# vec1d [
+
+x0 x;
+y0 y;
+
+o.scroll.offset.x.s(x0);
+o.scroll.offset.y.s(y0);
+
+scroll.offset.x x0;
+scroll.offset.y y0;
+
+#
+# TODO: Review cell caching, need full refactor
+#
+
+
+# Start and end cell index
+start.cell.i floor(scroll.offset.y/grid.h);
+#end.cell.i min(round(0+(scroll.offset.y+h)/grid.h),cells.count);
+end.cell.i round(0+(scroll.offset.y+h)/grid.h);
+
+# PROCESS CELLS VISIBLE [
+
+process.cells1a.vec1d.vertical {
+ # start, end
+# start.i floor(scroll.offset.y/grid.h);
+# end.i round(0+(scroll.offset.y+h)/grid.h);
+ start _0;
+ end _1;
+
+ i:=start; while(i<end) {
+  check.cell1a.vec1d.visible(i);
+  i+=1;
+ };
+};
+
+# PROCESS CELLS VISIBLE ]
+
+last.cell 0;
+
+last.cell:=end.cell.i;
+
+_ @ui.collection;
+ui.collection.cell.obj.isavar cell0;
+cell0opts ui.collection.cell.obj;
+
+# PROCESS VISIBLE CELLS
+process.cells1a.vec1d.vertical(start.cell.i, end.cell.i);
+
+# CHECK CELL VISIBLE & LAYOUT [
+
+check.cell1a.vec1d.visible {
+ # i
+ i _0;
+
+ cell0:=o.cell.at(i);
+
+#  llog.pv(S.ui.cell.i, i);
+#  llog.pv(S.ui.cell.show.g, cell0opts.show.g);
+#  llog.printo(u0, S.ui.cell, 0, cell0,-1);
+
+ # if not visible
+# if ((cell0>0)*cells.group.check(cell0)) {
+ if (cell0opts.show.g==0) {
+
+  layout.cell.vec1d(c0,i);
+
+  cell0opts.show.s(1);
+
+  cell0opts.i.s(i);
+  cell0opts.j.s(j);
+
+  cid0=node.new.this.ex8(u0, ul.ui.collection.cell, i, i,0, c0.w,c0.h, cell0, nid, collection0);
+  node.prop.x.s(u0, cid0, c0.x);
+  node.prop.y.s(u0, cid0, c0.y);
+
+  cell0opts.nid.s(cid0);
+
+  # Add to the group
+  cells.group.add(cell0, cid0);
+
+#  map.key.new.v(u0, mnidcid0,0, nid, cid);
+
+
+#  llog.printo(u0, S.ui.cells.group, 0, cells.group.isavar,-1);
+ };
+};
+
+# CHECK CELL VISIBLE & LAYOUT ]
+# RELOAD [
+
+destroy.cell.view {
+ # map:i |dma0|
+ cid0=dma.get(u0, 0,0);
+ node.prop.lt.s(u0, cid0, 0.1);
+ 
+ cell0:=it.map.get.key(u0, _0,_1);
+ cell0opts.show.s(0);
+
+# node.prop.x.s(u0, cid0, rnd(u0)*10);
+# node.prop.lt.s(u0, nid, 0.1);
+# s:=2;
+};
+
+reload {
+ cells.group.for.each(destroy.cell.view);
+
+ # erase all
+ cells.group.new;
+};
+
+# RELOAD ]
+# CELLS GROUP NODES [
+
+_ @ul.ui.collection.util.cells.group;
+
+if (r0) {
+ cells.group.new;
+ 
+# mnidcid0:=map.new(u0, 10,10);
+};
+
+# CELLS GROUP NODES ]
+# LAYOUT CELLS [
+
+dma0 0;
+
+layout.relocate.cell {
+ # map,it
+
+ cnode0 l1;
+ cnode0:=dma.get(u0, dma0,0);
+
+ cell0:=it.map.get.key(u0, _0,_1);
+
+ i0 cell0opts.i.g();
+
+ layout.cell.vec1d(c0,i0);
+
+ node.prop.x.s(u0, cnode0, c0.x);
+ node.prop.y.s(u0, cnode0, c0.y);
+};
+
+if (need.layout) {
+ cells.group.for.each(layout.relocate.cell);
+};
+
+# LAYOUT CELLS ]
+
+# vec1d ]
+
+# proto [
+
+layout.types {
+ fixed 0;
+ float 1;
+};
+
+update.minmax {
+ on {
+  add.cell 0;
+  remove.cell 1;
+  move.cell 2;
+  visible.cell 3;
+ };
+};
+
+# proto ]
+
+# cell event [
+
+scrolling 0;
+x0 0;
+y0 0;
+
+options ui.collection.default.options.info;
+#scroll.direction options.sd.both; #vertical;
+
+_ @ul.ui.collection.scroll.touch;
+_ @ul.ui.collection.scroll.move;
+
+# PROCESS EVENTS [
+
+_ @sys.events;
+_ @os.util2;
+
+my.ev {
+ # ev, o0... - event
+
+ # SCROLL DOWN
+
+ if (_0==ui.event.scroll.down) {
+  # ..
+  ly+=1000;
+ };
+
+ # TABLE RELOAD
+
+ if (_0==ui.event.table.reload) {
+  reload;
+ };
+};
+
+parent0=node.get.parent(u0, nid);
+
+ui.event.process4(ui.pool,parent0, my.ev);
+
+# PROCESS EVENTS ]
+# SCROLL [
+
+
+#_ @1100;
+#_ @util.scroller.std;
+#
+#scroller.isavar l6;
+#scroller.test;
+
+# SCROLL ]
+# DEBUG [
+
+_ @4;
+#ui.value1(l13,0,50,0.5,y<min.y);
+#ui.value1(l14,100,50,0.5,ly);
+#val0 0; ui.value1(val0,0,100,0.5,height);
+#val0 0; ui.value1(val0,0,100,0.5,ncount);
+#val0 0; ui.value1(val0,0,100,0.5,last.cell);
+#val0 0; ui.value1(val0,0,100,0.5,max.y);
+#val0 0; ui.value1(val0,0,100,0.5,content.height);
+#val0 0; ui.value1(val0,0,100,0.5,dir.y);
+#val0 0; ui.value1(val0,0,100,0.5,dir.y);
+
+#ui.value1(l14,0,50,0.5,vx);
+#ui.value1(l15,0,0,0.5,vy);
+#ui.value1(l14,0,50,0.5,accx);
+#ui.value1(l15,0,0,0.5,accy);
+#ui.value1(l15,0,0,0.5,pt0);
+#ui.value1(l14,0,50,0.5,lx);
+#ui.value1(l15,0,0,0.5,ly);
+#ui.value1(l15,0,0,0.5,scrolling);
+#ui.value1(l15,0,0,0.5,prevt0);
+
+#lbl0 0; val0 0; ui.value4(lbl0,val0,0,0,2, Bounce, bounce);
+#lbl0 0; val0 0; ui.value4(lbl0,val0,0,40,2, Max.y, max.y);
+#lbl0 0; val0 0; ui.value4(lbl0,val0,0,80,2, A.y, y);
+
+#debug.graph0.add.v(ly);
+
+#debug.graph.add.v(debug.graph1, max.y);
+#debug.graph.add.v(debug.graph1, bounce);
+
+#debug.graph.add.v(debug.graph2, y);
+
+debug {
+ _ @nodes;
+ _ @nodes.inc.node2;
+ _ @nodes.graph0.util;
+ _ @os.util2;
+
+ graph nodes.graph;
+
+ sn0 0;
+ graph0 0;
+ graph1 0;
+ graph2 0;
+ if (r0) {
+#  new.node2(sn0, 0,0,1,w/2,h/2, 1, 70014,150018); # golden.prize1
+#  new.node2(sn0, 0,0,1,w/1,h/1, 1, 70014,150009); # clock2.node
+  graph0:=new.node0(u0, nodes.graph0, -100,0,1,w,h, GRAPH0,0,0,0);
+  node.move.to.parent(graph0);
+  graph1:=new.node0(u0, nodes.graph0, -300,0,1,w,h, GRAPH1,0,0,0);
+  node.move.to.parent(graph1);
+  graph2:=new.node0(u0, nodes.graph0, -300,200,1,w,h, GRAPH2,0,0,0);
+  node.move.to.parent(graph2);
+ };
+ graph0.add.v {
+  # v
+  nodes.graph.add.v(graph0, _0);
+ };
+
+};
+
+#debug;
+
+#debug.graph0.add.v(rnd(u0));
+#debug.graph0.add.v(sin(t));
+#  node.move.to.parent(debug.graph0);
+
+t+=dt;
+
+# DEBUG ]
+
+# cell event ]
+
+llog.e();
+
+k:=1;
+#y+=10;
+
+### 70125 ul.ui.collection.scroll.draw
+
+_ @0;
+
+color(u0, 0.5,0.5,0,0.5);
+
+if (DEBUG.FRAMES) {
+ rect(u0, 2, 0,0,w,h);
+};
+
+

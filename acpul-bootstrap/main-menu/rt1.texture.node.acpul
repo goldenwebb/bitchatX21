@@ -1,0 +1,105 @@
+### rt1.texture.node.inc
+# : r1,r2,r3
+
+_ @rt1.texture.node;
+
+### rt1.texture.node
+# mode
+#  0 - none
+#  1 - flip y
+
+_ @1010;
+_ @sys.node;
+_ @1100;
+_ @ul.ui;
+_ @sys.os;
+_ @os.basic.ui;
+_ @os.util0;
+_ @os.util2;
+_ @sys.cpu;
+_ @sys.obj;
+_ @basic.ui.shader.node3.inc;
+_ @sys.storage.ex;
+_ @dma.std;
+_ @sys.shader.ex;
+
+mode p0;
+mode0 r2;
+
+tex0 r1;
+tex1 r3;
+
+w0 w;
+h0 h;
+
+mode0:=mode;
+
+init0 0+(tex0==0)*w0*h0;
+
+if (init0) {
+ tex0:=node.ex.texture.create(u0, w0,h0);
+
+ node.ex.child.draw.s(u0, 0);
+
+# node.value.s(u0, nid,0, tex0);
+
+ if (mode0==1) {
+  tex1:=node.ex.texture.create(u0, w0,h0);
+  node.value.s(u0, nid,0, tex1);
+  node.value.s(u0, nid,1, tex0);
+ };
+};
+
+draw(r0, NNN(rt1.texture.node.draw));
+
+### rt1.texture.node.draw
+
+tex0 r1;
+mode r2;
+tex1 r3;
+
+#mode 1;
+#mode 0;
+
+#w 500; h 500;
+#color(u0, 1,1,0,1);
+#rect(u0, 2, 0,0, w,h);
+
+_ @4;
+_ @900776;
+_ @1100;
+_ @util.gl.std;
+
+_ @sys.obj.key;
+_ @sys.shader.ex;
+
+
+if (tex0>0) {
+ draw.to.fbo;
+};
+
+draw.to.fbo {
+ node.ex.gl.fbo(u0, tex0);
+ node.ex.gl.clear(u0, 0,0,0,0);
+
+ node.ex.gl.child.draw(u0);
+
+ node.ex.gl.fbo(u0, -1);
+};
+
+draw.to.fbo1 {
+ node.ex.gl.fbo(u0, tex1);
+ node.ex.gl.clear(u0, 0,0,0,0);
+
+ gl.rect0.texture(5, 0,h, w,-h, tex0);
+
+ node.ex.gl.fbo(u0, -1);
+};
+
+if (mode==0) {
+ gl.rect0.texture(5, 0,0, w,h, tex0);
+};
+if (mode==1) {
+ draw.to.fbo1;
+ gl.rect0.texture(5, 0,0, w,h, tex1);
+};

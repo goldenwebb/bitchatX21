@@ -1,0 +1,162 @@
+### 15888 livelog.test
+
+draw(r0, 15889);
+
+_ @sys.livelog2;
+_ @livelog.util;
+
+livelog.test.abc 18000;
+
+log0 0;
+
+if (r0) {
+ log0:=llog2.new(u0, Livelog.test);
+ llog2.set.splitter(u0, log0, 1);
+ llog2.events.on(u0, log0, 1);
+
+
+ # EXPAND ALL [
+ 
+ llog2.log00 llog2.log(__);
+ llog2.log {
+  llog2.log00(__);
+  llog2.set.attribute.v(_0, _1, _2, EXPAND, 1);
+ };
+ 
+ # EXPAND ALL ]
+
+ llog2.log(u0, log0, A.B, qwerty);
+ llog2.log(u0, log0, A.B, COOOOOOOL);
+ llog2.log(u0, log0, A.C, qwerty);
+ llog2.log(u0, log0, A.D.E, qwerty);
+# llog2.log(u0, log0, F1, qwerty);
+# llog2.log(u0, log0, F2, qwerty);
+# llog2.log(u0, log0, F3, qwerty);
+# llog2.log(u0, log0, F4, qwerty);
+# llog2.log(u0, log0, F5, qwerty);
+# llog2.log(u0, log0, F6, qwerty);
+# llog2.log(u0, log0, F7, qwerty);
+# llog2.log(u0, log0, F8, qwerty);
+# llog2.log(u0, log0, F9, qwerty);
+# llog2.log(u0, log0, F10, qwerty);
+# llog2.log(u0, log0, F11, qwerty);
+# llog2.log(u0, log0, F12, qwerty);
+# llog2.log(u0, log0, F13, qwerty);
+
+
+ #llog2.set.attribute.v(u0, log0, F1, EXPAND, 1);
+ #llog2.set.attribute.v(u0, log0, F1, SUBNODE, livelog.test.abc);
+
+ llog2.path.select(u0, log0, llog2.root, 0);
+ llog2.path.push(u0, log0, SELECT1);
+# llog2.path.push(u0, log0, GO);
+# llog2.path.pop(u0, log0);
+ llog2.log(u0, log0, llog2.cursor, Selector_WORK);
+
+ llog2.path.push.v(u0, log0, format, v);
+
+ llog2.path.select(u0, log0, llog2.root, 0);
+# i=0;while(i<100){
+ llog2.path.push.v(u0, log0, S.format.value0, log0);
+# i+=1;
+# };
+ llog2.log(u0, log0, llog2.cursor, Selector2);
+};
+
+ll1 10;
+
+llog2.path.select(u0, log0, llog2.root, 0);
+llog2.path.push.v(u0, log0, S.format.value0, ll1);
+llog2.log(u0, log0, llog2.cursor, NEW);
+#llog2.log(u0, log0, llog2.cursor, llog2.path.push.v.buf0);
+
+if (ll1<100){
+ ll1+=1;
+};
+
+x:=sin(t*10);
+t+=dt;
+
+_ @ide.common;
+
+logview0 0;
+
+if (r0) {
+ new.livelog.view(logview0, 0,0,1, 500,500, log0);
+};
+
+_ @hackernews;
+
+hn0 0;
+
+if (r0) {
+# new.hackernews.view(hn0, 450,-380,500,500);
+};
+
+### 15889 livelog.test.draw
+
+color(u0, 0.3,0.5,0.,0.5);
+rect(u0, 2, 0,0,w,h);
+#rect(u0, 5, 0,0,w,h);
+#rect(u0, 6, 0,0,1000,1000);
+
+
+
+
+### 18000 livelog.test.abc
+# llog,lnode
+
+livelog0 p0;
+lnode0 p1;
+
+draw(r0, 18001);
+w:=160;
+t+=dt;
+
+_ @1010; _ @sys.node;
+
+#HEROLESSUS 10009000;
+#l0:=node.new.this.ex(r0, HEROLESSUS, 0);
+HERO 18010;
+node.new.this.ex(r0, HERO, 0);
+
+h:=210;
+
+### 18001 livelog.test.abc.draw
+
+
+q sin(t*3)*0.5+0.5;
+color(u0, 0.9*q,0.9*q,0.5*(1-q),0.5);
+#rect(u0, 6, 0,0,100,15);
+q sin(t*3)*0.5+0.5;
+rect(u0, 6, 0,0,w*(1-q),24);
+
+
+### 18010 HERO
+
+draw(r0, 18011);
+w:=160;
+t+=dt;
+
+_ @1010;
+_ @sys.node;
+
+# new head,body,hand,leg [
+
+h1.head 10009012;
+h1.body 10009014;
+h1.hand 10009016;
+h1.leg 10009018;
+node.new.this.ex(r0, h1.body, 0);
+node.new.this.ex(r0, h1.head, 0);
+R 1; L 0;
+node.new.this.ex(r0, h1.hand, R);
+node.new.this.ex(r0, h1.hand, L);
+node.new.this.ex(r0, h1.leg, R);
+node.new.this.ex(r0, h1.leg, L);
+
+# new head,body,hand,leg ]
+
+### 18011 HERO.draw
+
+rect(u0, 6, 0,0,w,h);

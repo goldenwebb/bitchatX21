@@ -1,0 +1,116 @@
+### ui0.hstack
+# mode
+#  0 - sync.height
+#  1 - sync.height, auto.width
+
+_ @ui0.xstack.common;
+
+# Just a list
+simple.list 0;
+
+# child limit to parent w. child.w=parent.w/count
+limit.to.parent.common 0; 
+# child limit to parent width by formula cell.w = w * weight / weights
+limit.to.parent.weights 0; 
+
+weight0 0;
+weights0 0;
+
+# Mode 0: simple list
+if (mode0 == 0) {
+ sync.height := 1;
+ simple.list := 1;
+};
+
+# Mode 1: common width
+if (mode0 == 1) {
+ sync.height := 1;
+ limit.to.parent.common := 1;
+ auto.width := 1;
+};
+
+# Mode 2: common cell width with weights
+if (mode0 == 2) {
+ limit.to.parent.weights := 1;
+};
+
+if (XSTACK.DBG) {
+ draw.fid(ui0.hstack.draw);
+};
+
+
+layout.nodes.hstack {
+ x0=0;
+ y0=0;
+ w0=w;
+ h0=h;
+
+ n=node.get.children.count(u0, nid);
+
+ weights1=0;
+
+ i=0; while(i<n) {
+  cid0=node.get.child.at(u0, nid, i);
+
+  # Sync height
+  if (sync.height) {
+   node.set.y(u0, cid0, y0);
+   node.set.h(u0, cid0, h0);
+  };
+
+  node.set.x(u0, cid0, x0);
+
+  # Simple list
+  if (simple.list) {
+   x0+=node.get.w(u0, cid0);
+  };
+
+  # Common cell size 
+  if (limit.to.parent.common) {
+   node.set.w(u0, cid0, w0/n);
+   x0+=node.get.w(u0, cid0);
+  };
+
+  # Use weights
+  if (limit.to.parent.weights) {
+   weight0:=node.get.v(cid0, WEIGHT);
+   weights1+=weight0;
+
+   # Calc size for weight s = weights/cell.weight
+   if (weights0>0) {
+    w1=w0 * weight0/weight0;
+    node.set.w(u0, cid0, w1);
+    x0+=w1;
+   };
+
+   # Default size for no weights
+   if (weights0<=0) {
+    w1=w0/n;
+    node.set.w(u0, cid0, w1);
+    x0+=w1;
+   };
+  };
+
+  # gap?
+
+  i+=1;
+ };
+
+ weights0:=weights1;
+
+ # Auto width
+ if (auto.width) {
+#  if (direction0==0) {
+   w:=x0;
+#  };
+#  if (direction0==1) {
+#  };
+ };
+};
+
+layout.nodes.hstack;
+
+### ui0.hstack.draw
+
+color(u0, 1,0,1,1);
+#rect(u0, 2, 0,0,w,h);

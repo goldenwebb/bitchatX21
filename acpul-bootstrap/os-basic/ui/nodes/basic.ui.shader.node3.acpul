@@ -1,0 +1,195 @@
+### basic.ui.shader.node3.inc
+
+new.ui.shader.node3
+ # hid, x,y,s, w,h, vsh,fsh
+ new.node.common4(_0, _1,_2,_3, _4,_5, basic.ui.shader.node3, _4,_5, _6, _7);
+
+#new.ui.shader.node3(sid, 0,0,1, 500,500, 11,22);
+
+
+### 900784 basic.ui.shader.node3
+# w,h, vsh,fsh
+# 0: -> texutre
+# 1: draw.off - disable draw: 0 - draw, 1 - no draw, 2 - no fbo
+
+#y:=100;
+
+_ @4;
+
+if ((w==0)+(h==0)) {
+ w:=p0;
+ h:=p1;
+#shader.set.uniform.v2(nid, iResolution, w,h);
+};
+
+vsh0 r2;
+fsh0 r3;
+
+vsh0:=p2;
+fsh0:=p3;
+
+draw(r0, 900785);
+
+tex0 r1;
+
+tw r5;
+th r6;
+
+if (r0) {
+ create.texture {
+  tw:=w;
+  th:=h;
+
+#  tex0:=node.ex.texture.create(u0, w,h);
+  tex0:=node.ex.texture.create.fmt(r0, w,h, node.ex.texture.fmt.rgba8888, 1);
+  node.value.s(u0, nid,0, tex0); # 0: tex
+ };
+ create.texture;
+ node.value.s(u0, nid,1, 0); # 1: draw.off
+};
+
+#nid00:=rnd(u0);
+
+_ @sys.obj.key;
+_ @sys.shader.ex;
+
+#obj_key_set_v(u0, 2, nid, A.value1, 0, 1);
+
+#obj.key.set(u0, 2, nid, A.value1, 0, 1);
+#obj.key.set2(u0, 2, nid, iResolution, 0, w,h);
+
+_ @sys.display;
+
+# hack! iResolution*2 [
+sscale=display.scale(u0, 0);
+sscale:=if(sscale==2,1,3/2); # MAGIC!
+# hack! iResolution*2 ]
+
+# scale to texture
+sw tw/w;
+sh th/h;
+
+resolution.x w*sscale*sw;
+resolution.y h*sscale*sh;
+
+shader.set.uniform.v2(nid, iResolution, w*sscale*sw,h*sscale*sh);
+#shader.set.uniform.v2(nid, iResolution, w*sscale,h*sscale);
+
+
+#_ @4;
+
+#ui.value1(l11,0,0,1, resolution.x);
+#ui.value1(l12,0,100,1, resolution.y);
+#ui.value1(l11,0,0,1/5, sscale);
+#ui.value1(l11,0,0,1, filter.self);
+#ui.value1(l11,0,0,1, filter.self);
+#ui.value1(l11,0,0,1, filter.params.count.g);
+
+#ui.value1(l11,0,0,1, vsh0);
+#ui.value1(l12,0,100,1, fsh0);
+
+# DRAW OFF [
+
+draw.off r4;
+draw.off:=node.value.g(u0, nid,1);
+
+# DRAW OFF ]
+# EVENTS [
+
+_ @sys.events;
+_ @os.util2;
+
+my.ev {
+ # ev, o0... - event
+ if (_0==ui.event.change.texture) {
+  tex0:=o0;
+#  tex0:=-1;
+#  s:=2;
+ };
+};
+
+ui.event.process4(ui.pool,nid, my.ev);
+
+# EVENTS ]
+
+#_ @4;
+#
+#ui.value1(l11,0,0,1, tex0);
+
+
+#x+=dt;
+
+### 900785 basic.ui.shader.node3.draw
+
+_ @4;
+_ @900776;
+_ @1100;
+_ @util.gl.std;
+
+_ @sys.obj.key;
+_ @sys.shader.ex;
+
+#
+
+tex0 r1;
+
+vsh0 r2;
+fsh0 r3;
+
+draw.off r4;
+
+rendered l1;
+
+tw r5;
+th r6;
+
+#
+
+is.texture draw.off!=2;
+
+#
+
+draw.to.fbo {
+ node.ex.gl.fbo(u0, tex0);
+ node.ex.gl.clear(u0, 0,0,0,0);
+
+ gl.shader.use(vsh0,fsh0);
+
+ #gl.shader.use(70014,28415);
+ #obj.key.set(u0, 0, nid, time, 10124);
+ #shader.load.uniforms(u0, nid);
+ #gl.shader.use(70014,28766);
+ shader.load.uniforms(u0, nid);
+
+ gl.rect0(5, 0,0, tw,th);
+# gl.rect0(5, 0,0, w,h);
+ #gl.rect0(5, 0,0, 1000,1000);
+ node.ex.gl.fbo(u0, -1);
+};
+
+
+if (draw.off==0) {
+ rendered:=0;
+};
+
+if (rendered==0) {
+ rendered:=1;
+ draw.to.fbo;
+};
+
+# NO TEXTURE
+if (is.texture==0) {
+ gl.shader.use(vsh0,fsh0);
+
+ shader.load.uniforms(u0, nid);
+
+ gl.rect0(5, 0,0, w,h);
+};
+
+if (is.texture) {
+ gl.rect0.texture(5, 0,0, w,h, tex0);
+};
+
+#rect(u0, 2, 0,0, w,h);
+
+

@@ -1,0 +1,110 @@
+### http.request.node
+# req, ev.handle, timeout.max, autoclose, simulate.res.raw, log
+# EV: www.pool2,nid, http.event.res, j0,raw,obj1
+# EV:www.pool3,ev.handle, http.event.res, j0,raw,obj1
+
+_ @easy.start.new;
+_ @4;
+
+_ @sys.http;
+_ @sys.events;
+_ @sys.llog;
+
+draw.fid(http.request.node.draw);
+
+req0 p0;
+handle0 p1;
+autoclose p3;
+simulate.res.raw p4;
+logging 1;
+
+llog.b(HTTP.REQUEST);
+
+reqid0 0;
+reqid0.last 0;
+
+# HTTP TIMEOUT [
+
+timeout 0;
+timeout.max p2;
+
+timeout+=dt;
+if (timeout>timeout.max) {
+ timeout:=0;
+ reqid0.last:=0;
+};
+
+# HTTP TIMEOUT ]
+# HTTP REQUEST [
+
+if (reqid0.last==0) {
+# reqid0.last:=binance.req.BTCUSDT;
+ reqid0.last:=http.req.json(req0);
+ timeout:=0;
+
+ if (logging) {
+  llog.po(HTTP.req0, 0, req0,-1);
+ };
+};
+
+# HTTP REQUEST ]
+
+
+if (r0) {
+};
+
+exit lt:=0.01;
+
+#t+=dt;
+
+# HTTP EVENTS PROCESS PER REQUEST reqId [
+
+http.process.events.req {
+ # reqid
+ reqid _0;
+ tb0=1;
+ while(tb0>0) {
+  tb0:=events.pop(u0, www.pool.res,reqid);
+  if (tb0==http.event.res) {
+   # HTTP event www.pool.res,reqId, jo, raw, obj1, 0
+#   reqid0.last:=0;
+   j0=o0;
+   raw=o1;
+   obj1=o2;
+   events.push(u0, www.pool2,nid, http.event.res, j0,raw,obj1, reqid);
+   events.push(u0, www.pool3,handle0, http.event.res, j0,raw,obj1, reqid);
+
+   if (logging) {
+    llog.po(HTTP.RESPONSE, 0+8, raw,-1);
+#    llog.po(HTTP.RESPONSE, 0+8+16, raw,-1);
+   };
+
+   if (autoclose) {
+    exit;
+   };
+  };
+ };
+};
+http.process.events.req(reqid0.last);
+
+# HTTP EVENTS PROCESS PER REQUEST reqId ]
+# HTTP REQUEST ]
+
+#reqid2 0;
+
+_ @4;
+lbl0 0; val0 0; ui.value4(lbl0,val0,0,20,1, Timeout, timeout);
+lbl0 0; val0 0; ui.value4(lbl0,val0,0,40,1, Timeout.max, timeout.max);
+lbl0 0; val0 0; ui.value4(lbl0,val0,0,60,1, S.reqid0.last, reqid0.last);
+lbl0 0; val0 0; ui.value4(lbl0,val0,0,80,1, S.req0, req0);
+#lbl0 0; val0 0; ui.value4(lbl0,val0,0,240,1, S.reqid2, reqid2);
+
+lbl0 0; val0 0; ui.value4(lbl0,val0,0,0,1, HTTP, reqid0.last);
+
+llog.e;
+
+### http.request.node.draw
+
+color(u0, 0,0,0,0.8);
+rect(u0, 6, 0,0,w,h);
+

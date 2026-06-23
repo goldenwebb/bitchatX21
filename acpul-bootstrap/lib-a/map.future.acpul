@@ -1,0 +1,57 @@
+### map.future
+
+# MAP FUTURE [
+
+_ @sys.obj;
+
+it.key.new.dma {
+ # u0, map:it, id, dma
+ it.key.new(_0, _1,_2, _3);
+ it.dma(_0, _4, _1,_2);
+};
+
+map.key.new.v {
+ # u0, map:it, key, v
+ it.key.new.dma(_0, _1,_2, _3, 0);
+ dma.set(u0, 0,0, _4);
+ dma.off(u0, 0);
+};
+
+map.key.new.v2 {
+ # u0, map:it, key, v0:v1
+# it.key.new.dma(_0, _1,_2, _3, 0);
+# dma.set2(u0, 0,0, _4,_5);
+# dma.off(u0, 0);
+};
+
+map.key.erase {
+ # u0, map:it, key
+ it.key(_0, _1,_2, _3);
+ it.map.erase(_0, _1,_2, 0);
+};
+
+map.it.get.v {
+ # u0, map:it -> v
+ it.dma(_0, 0, _1,_2); # dma0
+ res=dma.get(_0, 0,0);
+ dma.off(_0, 0);
+ res;
+};
+
+map.for.each {
+ # u0, map:it, fn
+ u0 _0;
+ map0 _1;
+ i0 _2;
+ found=it.begin(u0, map0,i0);
+ while(found > -1) {
+  it.dma(u0, 0, map0,i0);
+  _3(map0,i0);
+#   llog.printo(u0, S.ui.cells.group, 0, dma0,-1);
+  found:=it.next(u0, map0,i0);
+ };
+ dma.off(u0, 0);
+};
+
+# MAP FUTURE ]
+

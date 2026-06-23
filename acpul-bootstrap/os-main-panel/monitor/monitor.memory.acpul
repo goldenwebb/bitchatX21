@@ -1,0 +1,136 @@
+### 15210 os.monitor.memory
+# w,h
+
+r0:=k==0;
+
+draw(r0, 15211);
+
+w:=p0;
+h:=p1;
+
+_ @1010;
+_ @sys.ul.ui;
+_ @sys.obj;
+_ @sys.llog;
+
+dma0 0;
+
+tl0 r1;
+tl1 r2;
+tl2 r3;
+tl3 r4;
+points0 r5;
+size0 100;
+
+llog.begin(u0, A.os.monitor.memory);
+llog.erase(r0, 0);
+
+if (r0) {
+ new.text.label0(tl0, -20,60,0.5, Memory, 20);
+ new.text.label0(tl1, -20,50,0.5, Total.V0.K, 20);
+ new.text.label0(tl2, -20,40,0.5, Free.V0.K, 20);
+ new.text.label0(tl3, -20,30,0.5, Used.V0.K, 20);
+ 
+ points0:=buffer.new(u0, 2*(size0+1), 2*(size0+1));
+ buffer.dma(u0, dma0, points0,0);
+ dma.fill(u0, dma0, 0, (size0+1)*2, 110);
+ dma.set2(u0, dma0, size0*2, 12345,55);
+
+ fill.line {
+  i:=0;while(i<size0) {
+   dma.set2(u0, dma0, i*2, i,i);
+   i+=1;
+  };
+ };
+ fill.line;
+# dma.copy2(u0, dma0,1,1, dma0,3,1, size0-1, 1); 
+# dma.copy2(u0, dma0,1,1, dma0,3,1, size0-1, 1); 
+# dma.copy2(u0, dma0,0,1, dma0,2,1, size0, 1); 
+# dma.copy2(u0, dma0,0,1, dma0,2,1, size0, 1); 
+# dma.copy2(u0, dma0,0,1, dma0,2,1, size0, 1); 
+
+# llog.begin(u0, S.points0);
+# llog.printo(u0, S.points0, 0, points0,-1);
+# llog.print(u0, AAABBBCCC);
+# llog.end(u0);
+};
+
+ buffer.dma(u0, dma0, points0,0);
+
+
+
+ dma.set2(u0, dma0, size0*2, 12345,rnd(u0)*100);
+ dma.copy2(u0, dma0,1,1, dma0,3,1, size0, 1); 
+# dma.set2(u0, dma0, size0*2, 12345,rnd(u0)*100);
+# dma.copy2(u0, dma0,1,1, dma0,3,1, size0, 1); 
+
+llog.end(u0);
+
+#w:=700;
+
+k:=1;
+
+### 15211 os.monitor.memory.draw
+
+color(u0, 0,0,0.5,0.8);
+rect(u0, 6, 0,0,w,h);
+
+_ @1010;
+_ @1100;
+_ @sys.node;
+_ @sys.obj;
+_ @util.gl.std;
+
+q @15210;
+points0 q.points0;
+size0 q.size0;
+dma0 0;
+
+if (1) {
+vsh.a0.pos 15215;
+fsh.fill0 15216;
+gl.shader.use(vsh.a0.pos, fsh.fill0);
+gl.shader.attribute.buffer0(0, dma0, points0,0, 2,size0,0);
+#gl.shader.attribute.buffer0(1, 2, points,1, 2,4,0);
+#gl.shader.uniform.texture(0, texD, 0);
+sw w/size0;
+sh 1;
+gl.shader.uniform.f4(0, sw,sh,1,1); 
+
+#gl.draw(6, 4);
+ gl.draw(3, size0);
+# gl.draw(5, size0);
+};
+
+# 1 draw points
+# 2 draw lines
+# 3 draw triangels
+# 4 draw vg
+
+### 15215:S vsh:(a0:pos)
+
+#define a_position a0
+attribute vec4 a_position;
+#define scale p0
+uniform vec4 scale; 
+
+void main()
+{
+   gl_Position = CC_MVPMatrix * (a_position * scale);
+}
+
+### 15216:S N0: fill0()
+
+//varying highp vec2 pos;
+
+void main()
+{
+//  gl_FragColor = vec4(.5,0.1,.1,.2);
+//  gl_FragColor = vec4(0.,1.,0.,1.);
+//  gl_FragColor = vec4(.1,sin(gl_FragCoord.x*gl_FragCoord.y*10.),.5,1.);
+//  gl_FragColor = vec4(.1,sin(gl_FragCoord.x*100.+gl_FragCoord.y*100.),.5,1.);
+  gl_FragColor = vec4(.8,0.8+0.1*sin(gl_FragCoord.x/gl_FragCoord.y*10.),.5,1.);
+//  gl_FragColor = vec4(.1,sin(gl_FragCoord.x/gl_FragCoord.y*100.),.5,1.);
+//  gl_FragColor = vec4(.1,sin(gl_FragCoord.x/gl_FragCoord.y*100.),.5,1.);
+}
+

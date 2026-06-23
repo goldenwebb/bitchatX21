@@ -1,0 +1,236 @@
+### 90220 os.util2
+
+# COMMON [
+
+nid node.ex.this.id(u0);
+
+node.move.to.parent {
+ # nid
+ nid _0;
+ parent=node.get.parent(u0, nid);
+ parent1=node.get.parent(u0, parent);
+ node.change.parent(u0, parent1, nid);
+};
+
+node.parent
+ # u0, nid -> parent
+ node.get.parent(u0, _1);
+
+node.parent.w
+ # u0, nid -> width
+ node.prop.w.g(_0, node.get.parent(u0, _1));
+
+node.parent.h
+ # u0, nid -> height
+ node.prop.h.g(_0, node.get.parent(u0, _1));
+
+# COMMON ]
+# sys.node2 [
+# get xysrwh [
+
+node.get.x
+ # r0, nid
+ node.prop.x.g(__);
+
+node.get.y
+ # r0, nid
+ node.prop.y.g(__);
+
+node.get.s
+ # r0, nid
+ node.prop.s.g(__);
+
+node.get.r
+ # r0, nid
+ node.prop.r.g(__);
+
+node.get.w
+ # r0, nid
+ node.prop.w.g(__);
+
+node.get.h
+ # r0, nid
+ node.prop.h.g(__);
+
+node.x node.get.x(u0, __);
+node.y node.get.y(u0, __);
+node.w node.get.w(u0, __);
+node.h node.get.h(u0, __);
+node.s node.get.s(u0, __);
+
+# get xysrwh ]
+# set xysrwh lt visible [
+
+node.set.x
+ # r0, nid, x
+ node.prop.x.s(__);
+
+node.set.y
+ # r0, nid, y
+ node.prop.y.s(__);
+
+node.set.s
+ # r0, nid, s
+ node.prop.s.s(__);
+
+node.set.r
+ # r0, nid, r
+ node.prop.r.s(__);
+
+node.set.w
+ # r0, nid, w
+ node.prop.w.s(__);
+
+node.set.h
+ # r0, nid, h
+ node.prop.h.s(__);
+
+node.set.lt
+ # r0, nid, lt
+ node.prop.lt.s(__);
+
+node.set.z.order
+ # r0, nid, z
+ node.prop.z.order.s(__);
+
+node.set.visible
+ node.prop.visible.s(_0, _1, _2);
+
+node.set.visible.stop {
+ node.set.visible(_0, _1, _2);
+ node.set.running(_0, _1, _2);
+ node.set.process.children(_0, _1, _2);
+ node.set.enable.draw(_0, _1, _2);
+};
+
+# set xysrwh lt visible ]
+# set xy wh xywh xyswh xysrwh [
+
+node.set.xy {
+ # r0, nid, x,y
+ x(_0, _1, _2);
+ y(_0, _1, _3);
+};
+
+node.set.wh {
+ # r0, nid, w,h
+ w(_0, _1, _2);
+ h(_0, _1, _3);
+};
+
+node.set.xywh {
+ # r0, nid, x,y,w,h
+ xy(_0, _1, _2,_3);
+ wh(_0, _1, _4,_5);
+};
+
+node.set.xyswh {
+ # r0, nid, x,y,s,w,h
+ xy(_0, _1, _2,_3);
+ s(_0, _1, _4);
+ wh(_0, _1, _5,_6);
+};
+
+node.set.xysrwh {
+ # r0, nid, x,y,s,r,w,h
+ xy(_0, _1, _2,_3);
+ s(_0, _1, _4);
+ r(_0, _1, _5);
+ wh(_0, _1, _6,_7);
+};
+
+# set xy wh xywh xyswh xysrwh ]
+# node new [
+
+node.new.nid0 d37;
+
+node.new.p1
+ # r0, nid, p0
+ new.this.ex(__);
+
+node.new.p1.xyswh {
+ # r0, nid, xyswh, p0
+ nid0:=new.this.ex(_0, _1, _7);
+ set.xyswh(_0, nid0, _2,_3,_4,_5,_6);
+ nid0;
+};
+
+node.new.p4
+ # r0, nid, p0-3
+ node.new.this.ex4(__);
+
+node.new.p4.xyswh {
+ # r0, nid, xyswh, p0-3
+ nid0:=node.new.this.ex4(_0, _1, _7,_8,_9,_10);
+ set.xyswh(_0, nid0, _2,_3,_4,_5,_6);
+ nid0;
+};
+
+node.new.p8
+ # r0, nid, p0-7
+ node.new.this.ex8(__);
+
+# node new ]
+
+node.center {
+ # id, w,h
+ id _0;
+ w _1;
+ h _2;
+
+ w1=node.w(id);
+ h1=node.h(id);
+
+ x1=(w-w1)/2;
+ y1=(h-h1)/2;
+
+ node.set.xy(u0, id, x1,y1);
+};
+
+
+# sys.node2 ]
+
+# events [
+
+ui.pool 70100;
+ui.pool2 70101;
+ui.pool4 70104;
+ui.pool5 70105;
+
+ui.event.button.push 1;
+ui.event.button.pop 2;
+ui.event.button.click 3;
+
+
+ui.event.touch.began 10;
+ui.event.touch.move 11;
+ui.event.touch.end 12;
+ui.event.touch.click ui.event.button.click;
+
+ui.event.process3 {
+ # b0, pool,id, fn
+ b0 _0;
+ pool0 _1;
+ id0 _2;
+
+ b0:=1;
+ while(b0) {
+  b0:=events.pop(u0, pool0,id0);
+  _3(_0);
+ };
+};
+
+ui.event.process4 {
+ # pool,id, fn
+ pool0 _0;
+ id0 _1;
+
+ b0=1;
+ while(b0) {
+  b0:=events.pop(u0, pool0,id0);
+  _2(b0);
+ };
+};
+
+# events ]
+

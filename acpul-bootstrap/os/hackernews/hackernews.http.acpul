@@ -1,0 +1,110 @@
+### hackernews.http
+
+# HN HTTP [
+
+#S.hn.url https://hacker-news.firebaseio.com/v0;
+
+#S.hn.get.topstories topstories.json?print=pretty;
+#S.hn.get.askstories askstories.json?print=pretty;
+#S.hn.get.updates updates.json?print=pretty;
+#S.hn.get.updates updates.json?print=pretty;
+#S.hn.get.users lj.json?print=pretty;
+
+hn.req.ex {
+ # url, obj1 
+ # : - > ev http.event.res
+ path _0;
+ obj1 _1;
+# body _2;
+
+ req d0;
+ req:=jobj.new;
+ jobj.str.s(req, A.host, S.hn.url);
+ jobj.str.s(req, A.path, path);
+ jobj.str.s(req, A.method, A.GET);
+ jobj.v.s(req, A.obj1, obj1);
+# jobj.o.s(req, A.body, _0);
+# llog.pv(A.hn.req, req);
+# llog.po(A.hn.req, 0, req,-1);
+ http.req.json(req);
+ obj.delete(u0, req);
+};
+
+hn.req.maxitems0 {
+ #  -> ev http.event.res
+ req d0;
+ req:=jobj.new;
+ jobj.str.s(req, A.host, S.hn.url);
+ jobj.str.s(req, A.path, S.hn.get.maxitems);
+ jobj.str.s(req, A.method, A.GET);
+ jobj.v.s(req, A.obj1, S.hn.get.maxitems);
+# jobj.o.s(req, A.body, _0);
+ llog.pv(A.hn.req, req);
+ llog.po(A.hn.req, 0, req,-1);
+ http.req.json(req);
+ obj.delete(u0, req);
+};
+
+# S.hn.url
+# HN.url
+# HN.path.get.max.items
+# URL.hn
+# PATH.hn
+#
+# URL.PATH.hn
+# URL.hackernews.com
+# URL.news.hackernews.com
+#
+# PATH.hn
+#
+# HN.url
+# URL HN.url;
+# PATH HN.url.path.*;
+#
+
+URL.hn S.hn.url;
+
+# bad
+#PATH.hn.get.maxitems S.hn.get.maxitems;
+#PATH PATH.hn;
+
+# good
+#PATH0.hn.get.maxitems S.hn.get.maxitems;
+#PATH PATH0.hn;
+
+# good
+PATH.hn.get.maxitems S.hn.get.maxitems;
+PATH.hn.get.item S.hn.get.item;
+PATH.hn.get.topstories S.hn.get.topstories;
+#PATH {_;_ hn;};
+PATH { _; _ hn; };
+
+hn.req.maxitems {
+ req.ex(PATH.get.maxitems, PATH.get.maxitems);
+};
+
+hn.req.item {
+ # id, obj1
+ id _0;
+ obj1 _1;
+
+ txt0=0;
+ dma.print1.v(txt0, PATH.get.item, id);
+ 
+# llog.b(HTTP.REQ.hn.req.item);
+# llog.pv(A.url.path.item.txt0, txt0);
+# llog.po(A.url.path.item.txt0, 0+8+16, txt0,-1);
+
+ req.ex(txt0, obj1);
+# llog.e;
+ obj.delete(u0, txt0);
+};
+
+hn.req.stories {
+ req.ex(PATH.hn.get.topstories, HN.Stories);
+};
+
+hn.req.topic {
+ id _0;
+ hn.req.item(id, id);
+};

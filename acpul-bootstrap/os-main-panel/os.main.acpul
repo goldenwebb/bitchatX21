@@ -1,0 +1,27 @@
+### 15100 os.main
+
+_ @1010;
+_ @sys.node;
+
+
+
+os.main.panel 15110;
+
+os.main.panel.new {
+ # hid, x,y,s, w,h
+ _0:=node.new.this.ex4(u0, os.main.panel, _4,_5, 0,0);
+ node.prop.x.s(u0, _0, _1);
+ node.prop.y.s(u0, _0, _2);
+ node.prop.s.s(u0, _0, _3);
+};
+
+os.ide 15500;
+
+os.main.ide.new {
+ # hid, x,y,s, w,h
+ _0:=node.new.this.ex4(u0, os.ide, _4,_5, 0,0);
+ node.prop.x.s(u0, _0, _1);
+ node.prop.y.s(u0, _0, _2);
+ node.prop.s.s(u0, _0, _3);
+};
+

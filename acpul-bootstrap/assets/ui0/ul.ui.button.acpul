@@ -1,0 +1,131 @@
+### 70102 ul.ui.button
+# w,h, type, params...
+
+type p2;
+
+q.type {
+ default 0;
+ custom 10000; # (node, param, debug)
+};
+
+param.custom {
+ node p3;
+ value p4;
+ debug p5;
+ ex0 p6;
+ ex1 p7;
+  # 0-no-draw 
+  # 1-draw
+};
+
+r0:=k==0;
+
+id r7;
+
+if (r0) {
+ id:=node.ex.this.id(u0);
+ 
+ w:=p0;
+ h:=p1;
+
+ if (type == q.type.default) {
+  draw(r0, 70103);
+ };
+
+ # CUSTOM TYPE
+ if (type == q.type.custom) {
+  if (param.custom.debug == 1) {
+   draw(r0, 70103);
+  };
+
+  node.new.this.ex8(r0, param.custom.node, id, w,h, param.custom.value, param.custom.debug, param.custom.ex0, param.custom.ex1); 
+ };
+};
+
+ui.pool 70100;
+
+ui.event.button.push 1;
+ui.event.button.pop 2;
+ui.event.button.click 3;
+
+_ @1010;
+_ @sys.events;
+_ @sys.touch;
+
+# touch [
+
+pressed r3;
+touch.ev {
+ began {
+  # x,y 
+  pressed:=1;
+  events.push(u0, ui.pool,id, ui.event.button.push, 0,0,0,0);
+ };
+ moved {
+  # x,y
+ };
+ ended {
+  # x,y
+  pressed:=0;
+  events.push(u0, ui.pool,id, ui.event.button.pop, 0,0,0,0);
+ };
+};
+#s+=if(pressed, if(s<1.5, 0.01, 0), if(s>1, 0-0.01, 0));
+
+touch.id r1;
+touch.b0 r2;
+
+node.anchor.point.g(u0, nid);
+ap0.x=o0;
+ap0.y=o1;
+#ap0.x=1/2;#o0;
+#ap0.y=1/2;#o1;
+
+touch.rect(touch.id, 0-w*ap0.x,0-h*ap0.x,w,h);
+#touch.rect(touch.id, 0-w/2+w*ap0.x,0-h/2+h*ap0.x,w,h);
+#touch.rect(touch.id, 0-w/2,0-h/2,w,h);
+
+_ @sys.touch.ev.process.once;
+touch.b0:=1;
+while(touch.b0) {touch.ev.process.once(touch.id, touch.b0);};
+
+# touch ]
+
+_ @sys.node;
+
+if (r0) {
+ node.anchor.point.s(r0, 0.5,0.5);
+ x+=w/2;
+ y+=h/2;
+};
+
+_ @4;
+info {
+ lbl0 0; val0 0; ui.value4(lbl0,val0,10,30,0.5, X, x);
+ lbl0 0; val0 0; ui.value4(lbl0,val0,10,10,0.5, Y, y);
+ lbl0 0; val0 0; ui.value4(lbl0,val0,10,70,0.5, AP.x, ap0.x);
+ lbl0 0; val0 0; ui.value4(lbl0,val0,10,50,0.5, AP.y, ap0.y);
+};
+#info;
+
+# NOT WORKS!
+#info {
+#_ @ui.value5.up;
+#val0 0;ui.value5.start(val0, 200,400,1, 300,140, nid);
+#ui.value5.v(A.ap0.x, ap0.x);
+#ui.value5.v(A.ap0.y, ap0.y);
+#};
+#info;
+
+k:=1;
+
+### 70103 ul.ui.button.draw
+
+pressed r3;
+if(pressed, 
+ color(u0, 1,0.5,1,1), 
+ color(u0, 0.2,0.5,1,1));
+rect(u0, 6, 0,0,w,h);
+color(u0, 0,0,0,0.5);
+rect(u0, 2, 1,1,w-2,h-2);
+

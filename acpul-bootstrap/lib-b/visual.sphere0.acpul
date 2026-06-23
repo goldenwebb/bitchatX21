@@ -1,0 +1,100 @@
+### visual.sphere0
+# pool,id,i
+
+pool0 p0;
+id0 p1;
+i0 p2;
+
+_ @help.inc1;
+
+# SPHERE [
+
+_ @basic.ui;
+_ @os.util0;
+_ @os.util2;
+_ @basic.ui.shader.node3.inc;
+_ @sys.shader.ex;
+_ @basic.sphere2d;
+
+create.sphere {
+ # sn0, w,h
+ sn3sphere _0;
+ w0 _1; h0 _2;
+ x0 0; y0 0;
+ new.sphere2d(sn3sphere, x0,y0,1, w0,h0);
+ shader.set.uniform.v4(sn3sphere, A.backgroundColor, 0,0,0,0);
+ shader.set.uniform.v4(sn3sphere, A.sphereColor, rnd(u0),rnd(u0),rnd(u0),1);
+ shader.set.uniform.v3(sn3sphere, A.sphereSpeColor, rnd(u0),rnd(u0),rnd(u0));
+ shader.set.uniform.v(sn3sphere, A.sphereType, rnd(u0)>0.5);
+ shader.set.uniform.v(sn3sphere, A.sphereIor, rnd(u0)*20);
+ shader.set.uniform.v(sn3sphere, A.sphereRou, rnd(u0));
+};
+
+_ @sys.storage;
+
+
+load.texture {
+ # tex, pool,id,i
+ tex _0;
+ tex:=storage.image.load.texture(_1,_2,_3);
+# gl.texture.filter.nearest(tex);
+};
+
+pressed {
+ shader.set.uniform.v4(sn3sphere, A.sphereColor, rnd(u0),rnd(u0),rnd(u0),1);
+};
+
+sn3sphere 0;
+
+tex2 0;
+
+sn05 0;
+
+
+new.visual {
+ # w,h
+#sphere.w 100;
+#sphere.h 100;
+sphere.w _0;
+sphere.h _1;
+
+ load.texture(tex2, pool0,id0,i0);
+# load.texture(tex2, 10000,1,67);
+ create.sphere(sn3sphere, sphere.w,sphere.h);
+ tex0=node.value.g(u0, sn3sphere,0);
+
+ flipYtex 0;
+  new.ui.shader.node3(sn05, 0,0,1, sphere.w,sphere.h, 70014,28896); # mix.in2.alpha
+  shader.set.texture(sn05, A.iChannel0, tex0);
+  shader.set.texture(sn05, A.iChannel1, tex2);
+  shader.set.uniform.v2(sn05, A.iResolution1, 100,100); # tex1.size
+  shader.set.uniform.v(sn05, A.mode, 5);
+  # rect0in - bg
+  x0 0; y0 0;
+  w0 1; h0 1;
+  shader.set.uniform.v4(sn05, A.rect0in, x0,y0,w0,h0);
+  shader.set.uniform.v(sn05, A.mode0in, 1);
+  # rect1in - fg
+#  x1 0-0.5/2; y1 0-0.5/2;
+  x1 0-0.5/2; y1 0;
+  w1 1.5; h1 0;
+  y1:=0+1+0.5/2;
+  h1:=0-1.5;
+  if (flipYtex) {
+    y1:=0-0.5/2;
+    h1:=1.5;
+  };
+  shader.set.uniform.v4(sn05, A.rect1in, x1,y1,w1,h1);
+  shader.set.uniform.v(sn05, A.mode1in, 1);
+
+  tex2=node.value.g(u0, sn05,0);
+
+  node.anchor.point.s1(u0, sn05, 0.5,0.5);
+  node.set.xy(u0, sn05, sphere.w/2,sphere.h/2);
+};
+
+if ((tex2==0)*w*h) {
+ new.visual(w,h);
+};
+
+# SPHERE ]

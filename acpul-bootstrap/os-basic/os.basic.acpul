@@ -1,0 +1,26 @@
+### 90000 os.basic
+
+twobin.font.inc 90100;
+os.util0 90200;
+os.util1 90210;
+os.util2 90220;
+os.util3 90230;
+os.util4.tree 90240;
+os.util4.touch 90250;
+
+
+os.graph0.inc 90300;
+
+os.tree0.inc 900500;
+
+boot.common 8000010; # NOT os
+
+os.basic.ui 900700;
+
+basic.shaders0 28000; # NOT os
+basic.shaders1 29000; # NOT os
+
+os.basic.paint 90800;
+os.basic.ray3d 92000;
+
+os.nodes 93000;

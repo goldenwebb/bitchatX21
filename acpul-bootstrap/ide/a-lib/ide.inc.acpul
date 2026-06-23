@@ -1,0 +1,97 @@
+### ide.inc
+
+# OPEN EDITOR [
+
+open.editor {
+ # x,y,w,h, fid
+ x0 _0; y0 _1; w0 _2; h0 _3; fid _4;
+ editor0:=node.new.this.ex4(u0, ide.editor, w0,h0, 0,0);
+ node.prop.x.s(u0, editor0, x0);
+ node.prop.y.s(u0, editor0, y0);
+ node.value.s(u0, editor0,0, fid);
+ node.value.s(u0, editor0,2, sources.mode);
+};
+
+#open.editor2 {
+# fid _0;
+#
+# ew0 w-node.prop.w.g(u0, sources0);
+# ex0 node.prop.w.g(u0, sources0);
+# vh0 h-node.prop.h.g(u0, toolbar0);
+
+# open.editor(ex0,0, ew0,vh0, fid);
+#};
+
+open.editor3 {
+ # fid, type
+ fid _0;
+ type _1;
+
+ m0 metrics0.editor;
+ open.editor(m0.x,m0.y, m0.w,m0.h, fid, type);
+};
+
+# OPEN EDITOR ]
+# CLOSE EDITOR [
+
+close.editor {
+ node.prop.lt.s(u0, editor0, 0.0001);
+};
+
+# CLOSE EDITOR ]
+# RELOAD EDITOR [
+
+reload.editor {
+ fid _0;
+
+ close.editor;
+ open.editor3(fid);
+};
+
+# RELOAD EDITOR ]
+# NEW SOURCES [
+
+new.sources.view {
+ # sources, type
+ sources0 _0;
+ type _1;
+ m0 metrics0.sources;
+ sources0:=node.new.this.ex4(u0, ide.source.list, m0.w,m0.h, type, 0);
+ node.prop.x.s(u0, sources0, m0.x);
+ node.prop.y.s(u0, sources0, m0.y);
+};
+
+# NEW SOURCES ]
+# NEW TOOLBAR [
+
+new.toolbar {
+ m0 metrics0.toolbar;
+ toolbar0:=node.new.this.ex4(r0, ide.toolbar, m0.w,m0.h, 0,0);
+ node.prop.y.s(u0, toolbar0, m0.y);
+};
+
+# NEW TOOLBAR ]
+# UPDATE METRICS [
+
+update.metrics {
+ # SOURCES
+ m0 metrics0.sources;
+ node.prop.x.s(u0, sources0, m0.x);
+ node.prop.y.s(u0, sources0, m0.y);
+ m0 metrics0.sources;
+ node.prop.x.s(u0, sources1, m0.x);
+ node.prop.y.s(u0, sources1, m0.y);
+ # TOOLBAR
+ m0 metrics0.toolbar;
+ node.prop.y.s(u0, toolbar0, m0.y);
+ # EDITOR
+ m0 metrics0.editor;
+ node.prop.x.s(u0, editor0, m0.x);
+ node.prop.y.s(u0, editor0, m0.y);
+
+ editor0 metrics0.editor;
+ node.prop.y.s(u0, chat0, editor0.y-chat0.h);
+# node.prop.y.s(u0, chat0, 0);
+};
+
+# UPDATE METRICS ]

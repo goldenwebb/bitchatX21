@@ -1,0 +1,53 @@
+### 90210 os.util1
+
+_ @1100;
+_ @sys.ul.ui;
+_ @sys.events;
+_ @sys.os;
+_ @os.basic;
+_ @os.util0;
+
+# new.xbutton1 [
+
+new.xbutton1 {
+ # hid, x,y,w,h, xid
+ hid _0;
+ xid _5;
+ new.vg.button(hid, _1,_2,1, _3,_4, 0, 0);
+ node.value.s(u0, hid,0, nid);
+ node.value.s(u0, hid,1, xid);
+};
+
+# new.xbutton1 ]
+# events.xprocess [
+
+events.xprocess {
+# id, event.loop, b0
+ id _0;
+ event.loop _1;
+ tb0 _2;
+
+ tb0:=1; while(tb0) { 
+  tb0:=ui.event(id);
+  events.loop(tb0, id);
+ };
+};
+
+# events.xprocess ]
+# new.xbutton2 [
+
+_ @ul.ui;
+_ @util.dma.std;
+_ @core.hud;
+
+new.xbutton2 {
+ # hid, x,y,w,h, xid, type, text, a0,a1,a2,a3
+ hid _0;
+ xid _5;
+# new.vg.button(hid, _1,_2,1, _3,_4, 0);
+ new.hud.button0(hid, _1,_2,_3,_4, _6, _7, _8,_9,_10,_11);
+ node.value.s(u0, hid,0, nid);
+ node.value.s(u0, hid,1, xid);
+};
+
+# new.xbutton2 ]

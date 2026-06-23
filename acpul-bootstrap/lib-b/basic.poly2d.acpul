@@ -1,0 +1,45 @@
+### basic.poly2d
+
+poly2d {
+# new {
+#  
+# };
+ figure1 {
+  # hid
+  sn2poly _0;
+  shader.set.uniformi.v2(sn2poly, A.lineXY, 0, -0.46,0.26);
+  shader.set.uniformi.v2(sn2poly, A.lineXY, 1, 0.46,0.26);
+  shader.set.uniformi.v2(sn2poly, A.lineXY, 2, 0,-0.5);
+  shader.set.uniformi.v2(sn2poly, A.lineXY, 3, -0.46,0.26);
+  shader.set.uniformi.v2.count(sn2poly, A.lineXY, 4);
+ };
+
+ figure1.color1 {
+  # hid
+  sn2poly _0;
+  shader.set.uniformi.v4(sn2poly, A.lineColor, 0, 1.2,1.2,0, 1);
+  shader.set.uniformi.v4(sn2poly, A.lineColor, 1, 1.2,0,1.2, 1);
+  shader.set.uniformi.v4(sn2poly, A.lineColor, 2, 0,1.2,0, 1);
+  shader.set.uniformi.v4(sn2poly, A.lineColor, 3, 0,0,1, 1);
+  shader.set.uniformi.v4.count(sn2poly, A.lineColor, 4);
+ };
+};
+
+new.poly2d {
+ # hid, x,y,s, w,h
+ new.ui.shader.node3(_0, _1,_2,_3, _4,_5, 70014,28781); # 
+ shader.set.uniform.v(_0, A.colorMode, 0);
+};
+
+### basic.poly2d.test
+
+_ @basic.poly2d;
+
+poly2d.test0 {
+ sn2poly 0;
+
+ new.poly2d(sn2poly, 0,420,1, 300,300);
+ poly2d.figure1(sn2poly);
+ poly2d.figure1.color1(sn2poly);
+};
+

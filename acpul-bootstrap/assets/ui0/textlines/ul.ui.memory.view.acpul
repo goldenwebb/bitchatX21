@@ -1,0 +1,135 @@
+### 70180 ul.ui.memory.view
+## object,i, w,h, font,fsize
+# wctx, object,i
+
+#obj0 p0;
+
+wctx0 p0;
+obj0 p1;
+
+draw(r0, 70181);
+
+_ @1010;
+_ @sys.obj;
+_ @sys.llog;
+_ @sys.ul.ui;
+_ @ui.textlines;
+_ @ui.windows;
+
+ui.window.context.isavar wctx0;
+wctx ui.window.context;
+
+tv0 r7;
+lines r6;
+
+llog.begin(u0, S.ul.ui.memory.view);
+llog.erase(r0, 0);
+
+if (r0) {
+# new.button(tv0, 0,0,1, 100,100, 0);
+
+ lines:=buffer.new(u0, 100, 100000);
+
+ obj.dump.lines(u0, lines, obj0);
+# obj.dump.lines(u0, lines);
+
+# buffer.dma(u0, 0, lines,0);
+# llog.printo(r0, S.lines, 0, lines,-1);
+# llog.printo(r0, S.obj0, 0, obj0,-1);
+
+ new.text.view(tv0, 0,0,1, lines,-1);
+};
+
+llog.end(u0);
+
+# windows [
+
+if (r0) {
+ if (wctx.w.g==0) {
+  wctx.w.s(500);
+  wctx.h.s(500);
+ };
+};
+
+vh h;
+vw w;
+
+id node.ex.this.id(u0);
+
+hdr0 r2;
+
+_ @os.util2;
+bootnid u29;
+
+move.to.boot.screen {
+ node.change.parent(u0, bootnid, nid);
+};
+
+
+if (r0) {
+ hdr0:=node.new.this.ex4(r0, ul.ui.window.header, id, wctx0, 0,0);
+
+};
+ move.to.boot.screen;
+
+
+#if (r1==1)
+# wctx.y.s(y);
+#};
+#r1+=1;
+
+PAINT 10160000;
+#node.new.this.ex(r0, PAINT, 0);
+
+CLOCK 10170000;
+#node.new.this.ex(r0, CLOCK, 0);
+
+NEBULA 11800;
+#node.new.this.ex(r0, NEBULA, 0);
+
+# POS [
+
+wctx.xywh.g(x,y,w,h);
+
+node.prop.w.s(u0, tv0, w);
+node.prop.h.s(u0, tv0, h);
+
+# POS ]
+
+ui.window.context.process {
+ # uid, x,y
+ tb0 l7; 
+
+ # hdr0 [
+
+ tb0:=1; while(tb0) { tb0:=ui.event(_0);
+  if (tb0==ui.event.windows.move) {
+ #  watch(o0);
+ #  watch(o1);
+   _1+=o0;
+   _2+=o1;
+   wctx.x.s(_1);
+   wctx.y.s(_2);
+  };
+ };
+
+ # hdr0 ]
+};
+#ui.window.context.process(hdr0, x,y);
+
+# windows ]
+
+#TOUCH_POS_X TOUCH_POS_X.ul.ui.memory.view;
+#TOUCH_POS_Y TOUCH_POS_Y.ul.ui.memory.view;
+#TOUCH_POS_S TOUCH_POS_S.ul.ui.memory.view;
+#_ @touch.tool.default.scale0.store;
+
+
+
+### 70181 ul.ui.memory.view.draw
+
+color(u0, 0.5,0,0.5,0.5);
+rect(u0, 6, 0,0,w,h);
+
+
+

@@ -1,0 +1,321 @@
+### 78000 core.particles 
+
+# limited
+#  a: start, end, step
+#  t: start
+#
+# unlimited
+#  a: start, da
+#
+# continue
+#  attribute current
+#  attribute next
+#  attribute prev
+
+core.particles.view 78010;
+
+aparticles {
+ a {
+  x0 0; y0 1; z0 2;
+  tx 3; ty 4;
+  x1 5; y1 6; z1 7;
+  m0 8; m1 9; m2 10;
+  w0 8; w1 9; w2 10; w3 11;
+  size 12;
+ };
+};
+
+### 78010 core.particles.view
+
+r0:=k==0;
+
+draw(r0, 78011);
+
+_ @1010;
+_ @sys.node;
+_ @1100;
+_ @util.gl.std;
+_ @sys.llog;
+_ @sys.obj;
+_ @util.dma.std;
+_ @core.particles;
+
+aparticles { _;
+ add.point {
+  particles0 _0;
+  tcoords0 _1;
+  i _2;
+  ti _3;
+  x0 _4; y0 _5; z0 _6;
+  x1 _7; y1 _8; z1 _9;
+  m0 _10; m1 _11; m2 _12;
+  w0 _13; w1 _14; w2 _15; w3 _16;
+
+  q ti*2;
+  d i*a.size;
+  buffer.set3(u0, particles0,0,d, x0,y0,z0);
+
+  buffer.get2(u0, tcoords0,0,q);
+  buffer.set2(u0, particles0,0,d+a.tx, o0,o1);
+
+  buffer.set3(u0, particles0,0,d+a.x1, x1,y1,z1);
+  buffer.set3(u0, particles0,0,d+a.m0, m0,m1,m2);
+  buffer.set4(u0, particles0,0,d+a.w0, w0,w1,w2,w3);
+ };
+
+
+ build0 {
+  # particles, tcoords, n
+  particles0 _0;
+  tcoords0 _1;
+  count d0;
+  count:=_2;
+  watch(a.size);
+
+  particles0:=buffer.new(u0, a.size*n,1000000); # params
+  buffer.add(u0, particles0, 6*n,100000); # indicies
+
+  a aparticles.a;
+
+  i:=0; while(i<count){
+
+   add.particle {
+    # particles, tcoords, i, tex.i, x0,y0,z0, x1,y1,z1, w,h
+    particles0 _0;
+    tcoords0 _1;
+    i _2;
+
+    t _3*4;
+    l i*4;
+    w _10;
+    h _11;
+    x0 _4;
+    y0 _5;
+    z0 _6;
+    x1 _7;
+    y1 _8;
+    z1 _9;
+    add.point(particles0, tcoords0, l, t+0, x0,y0,z0, x1,y1,z1, 0,0,0, 0,0,0,0);
+    add.point(particles0, tcoords0, l+1, t+1, x0+w,y0,z0, x1+w,y1,z1, 0,0,0, 0,0,0,0);
+    add.point(particles0, tcoords0, l+2, t+3, x0,y0+h,z0, x1,y1+h,z1, 0,0,0, 0,0,0,0);
+    add.point(particles0, tcoords0, l+3, t+2, x0+w,y0+h,z0, x1+w,y1+h,z1, 0,0,0, 0,0,0,0);
+
+    q i*4;
+    buffer.set3(u0, particles0,1,i*6, q+0,q+1,q+2);
+    buffer.set3(u0, particles0,1,i*6+3, q+3,q+1,q+2);
+   };
+
+
+   t d1;
+   w d2;
+   h d3;
+   x0 d4;
+   y0 d5;
+   z0 d6;
+   x1 d7;
+   y1 d8;
+   z1 d9;
+#   t:=0;
+   t:=round(rnd(u0)*3);
+   x0:=rnd(u0)*800;
+   y0:=rnd(u0)*1100;
+   z0:=0;
+#   x1:=x0-100+200*rnd(u0);
+#   y1:=y0+200+rnd(u0)*100;
+   x1:=x0;
+   y1:=y0;
+   z1:=0;
+   w:=32/2;
+   h:=32/2;
+   add.particle(particles0, tcoords0, i, t, x0,y0,z0, x1,y1,z1, w,h);
+#   add.particle(particles0, tcoords0, i, 0, 0,0,0, 0,0,0, 200,200);
+
+   i+=1;
+  };
+#  llog.po(A.particles.particles0, 0, particles0,-1);
+ };
+};
+
+tex0 r1;
+tcoords0 r2;
+particles0 r3;
+
+tw 64;
+th 64;
+
+llog.b(A.Particles);
+llog.erase(r0, 0);
+
+if (r0) {
+ tex0:=node.ex.texture.create.fmt(r0, tw,th, node.ex.texture.fmt.rgb565, 1);
+ 
+ init.sprites.tex {
+  tcoords0:=buffer.new(u0, 2*4*4,10000); # points
+#  buffer.add(u0, tcoords0, 100,10000); # indicies
+ 
+  grid.rect4 {
+   # buf, i, x,y, w,h
+   i _1;
+   x _2; y _3; w _4; h _5;
+   # set points
+   x0 x*w;
+   y0 y*h;
+   x1 x*w+1*w;
+   y1 y*h+1*h;
+   buffer.set4(u0, _0,0,i*8, x0,y0,x1,y0);
+   buffer.set4(u0, _0,0,i*8+4, x1,y1,x0,y1);
+   # set indecies
+#   q i*4;
+#   buffer.set3(u0, _0,1,i*6, q+0,q+1,q+2);
+#   buffer.set3(u0, _0,1,i*6+3, q+0,q+2,q+3);
+  };
+  grid.rect4(tcoords0, 0, 0,0,0.5,0.5);
+  grid.rect4(tcoords0, 1, 1,0,0.5,0.5);
+  grid.rect4(tcoords0, 2, 0,1,0.5,0.5);
+  grid.rect4(tcoords0, 3, 1,1,0.5,0.5);
+
+  llog.po(A.particles.tcoords0, 0, tcoords0,-1);
+ };
+ init.sprites.tex;
+
+ # todo: buffer.copy(dst,i,offs, src,i,offs, n)
+
+
+ aparticles.build0(particles0, tcoords0, 10000);
+# aparticles.build0(particles0, tcoords0, 1);
+
+};
+
+llog.e();
+
+#x:=400;#+sin(t)*50;
+#y:=400;
+
+w:=100;
+h:=100;
+
+t+=dt;
+
+k:=1;
+
+
+### 78011 core.particles.view.draw
+
+psize(u0, 3);
+
+color(u0, 0,1,0,1);
+rect(u0, 2, 0,0, 110,110);
+
+draw.points {
+ i:=0;while(i<10){
+#  rect(u0, 2, sin(t+i*10)*20+w/2,sin(t+i)*50+h/2,10,10);
+  color(u0, 0.5+0.5*sin(t/2+i*10),0.5+0.5*sin(t/7+i*25),0.5+0.5*sin(t/28+i*0.1), 1);
+  rect(u0, 2, sin(t+i*10)*20+w/2,sin(t+i)*50+h/2,1,10);
+#  rect(u0, 6, sin(t+i*10)*20+w/2,sin(t+i)*50+h/2,15,50);
+  i+=1;
+ };
+};
+draw.points;
+
+_ @1010;
+_ @sys.node;
+_ @sys.display;
+_ @1100;
+_ @util.gl.std;
+_ @core.particles;
+_ @sys.obj;
+_ @core.hud;
+
+tex0 r1;
+
+to.texture {
+ gl.fbo(tex0);
+ gl.clear(0,0,0.0,0);
+
+ color(u0, 1,1,0.2,1);
+# rect(u0, 6, 0,0,32,32);
+ psize(u0, 1);
+# circle(u0, 3, 16,16, 5, t*10, 20, 1);
+ color(u0, 0.2,1,1,1);
+# rect(u0, 6, 32,0,32,32);
+# circle(u0, 3, 16+32,16, 4, t*15, 20, 1);
+ color(u0, 1,0.5,1,0.5);
+# circle(u0, 3, 16,16+32, 8, t*18, 20, 1);
+# rect(u0, 6, 0,32,32,32);
+ color(u0, 0.5,1,0.5,0.5);
+# circle(u0, 3, 16+32,16+32, 7, t*21, 20, 1);
+# rect(u0, 6, 32,32,32,32);
+ gle.backlight1(0,0,32,32, 2+sin(t),2, 1,1,1,1, 0.7);
+ gle.backlight1(0,0,w,h, 2,2, 0,0.5,1,1, 0.5);
+ gle.backlight1(0,0,w,h, 4,4, 1,0,1,1, 0.8);
+ gle.backlight1(8,8,w/2,h/2, 10,10, 1,1,0,1, 1);
+ draw.points;
+
+
+ gl.fbo(-1);
+};
+to.texture;
+
+gl.draw.texture.rect0 {
+ # tex, x,y, w,h
+ gl.shader.use(70014,70015);
+ gl.shader.uniform.texture(0, tex0, 0);
+# gl.blend(u0, 1, 8);
+ gl.rect0(5, 0,0, w,h);
+};
+
+gl.blend(u0, 3, 5);
+gl.draw.texture.rect0(tex0, 0,0, w,h);
+gl.blend(u0, 5, 8);
+
+dma0 0;
+dma1 1;
+
+particles0 r3;
+
+vsh 178000; # particle0.vsh
+fsh 178100; # particle0.fsh
+
+aparticles.draw {
+ gl.shader.use(vsh, fsh);
+
+ attr.pstart 0;
+ attr.pend 1;
+ attr.tcoords 2;
+
+ uniform.texture 0;
+ uniform.progress 1;
+
+ stride a.size;
+
+ buffer.dma(u0, dma0, particles0,0); # points
+ count dma.size(u0, dma0)/a.size;
+
+ gl.shader.attribute.dma(attr.pstart, dma0,0, 3,stride,count, 0,0);
+ gl.shader.attribute.dma(attr.pend, dma0,a.x1, 3,stride,count, 0,0);
+ gl.shader.attribute.dma(attr.tcoords, dma0,a.tx, 2,stride,count, 0,0);
+ gl.shader.uniform.texture(uniform.texture, tex0, 0);
+
+ gl.shader.uniform.f1(uniform.progress, sin(t));
+
+ buffer.dma(u0, dma1, particles0,1); # inidicies
+
+ l0:=node.ex.shader.indices.dma(u0, dma1, dma.size(u0, dma1));
+
+ node.ex.gl.draw.elements(u0, 4, l0);
+
+ obj.delete(u0, l0);
+};
+
+gl.blend(u0, 3, 5);
+aparticles.draw;
+gl.blend(u0, 5, 8);
+
+#if (r0) {
+# _ @sys.llog;
+# llog.b(A.Particles);
+# llog.erase(u0, 0);
+# llog.printo(u0, A.particles.draw.particles0, 0, particles0,-1);
+# llog.e();
+#};
+#watch(node.ex.this.id(u0));

@@ -1,0 +1,142 @@
+### 90240 os.util4.tree 
+
+# LAYOUT [
+
+tree { _;
+ parent0 d2;
+};
+
+tree.pre {
+ parent0:=node.get.parent(u0, nid0);
+};
+
+tree.layout {
+
+ parent.w node.prop.w.g(u0, parent0);
+ parent.h node.prop.h.g(u0, parent0);
+
+ update.size.width {
+  w:=parent.w;
+ };
+
+ update.position.by.prev.vertical {
+  index0 d0;
+  index0:=node.get.index(u0, nid0);
+
+  if (index0>0) {
+   prev0 d1;
+   prev0:=node.get.child.at(u0, parent0,index0-1);
+
+   prev0.y node.prop.y.g(u0, prev0);
+   prev0.h node.prop.h.g(u0, prev0);
+
+#   watch(parent0);
+#   watch(prev0);
+#   watch(index0);
+#   watch(prev0.y);
+#   watch(prev0.h);
+
+   y:=prev0.y+prev0.h;
+  };
+ };
+
+ update.wh.bbox {
+  node.get.bounding.box(u0, -1, 0);
+  #x:=o0;
+  #y:=o1;
+#  w:=min(o2, w.min);
+#  h:=min(o3, h.min);
+  w:=o2;
+  h:=o3;
+ };
+ 
+ vertical.mode {
+  update.position.by.prev.vertical;
+  update.size.width;
+#  update.wh.bbox(100,100);#(w,h);
+ };
+};
+
+tree.test0 {
+ tree.layout.update.position.by.prev.vertical;
+
+ tree.layout.update.wh.bbox;
+};
+
+
+
+# LAYOUT ]
+# VISIBLE [
+
+
+
+tree.sys.node0 node; # hack
+
+tree.node.visible {
+ node tree.sys.node0; # hack
+ _ @sys.os;
+ _ @os.util2;
+
+ view1 d3;
+
+ scroll0 view0;
+
+ view1:=node.get.parent(u0, scroll0);
+
+ view1.x node.x(view1);
+ view1.y node.y(view1);
+ view1.w node.w(view1);
+ view1.h node.h(view1);
+
+ visible r7;
+
+ visible.rect {
+  x 0;
+  y 0;
+  w view1.w;
+  h view1.h;
+ };
+
+ vr visible.rect;
+
+ check.visible {
+  y0 d0;
+  y1 d1;
+
+# yy d2;
+
+  node.transform.point(u0, view1, nid, 0,0);
+# yy:=o1;
+# node.transform.point(view0, nid, 0,0);
+
+# y0:=yy+view0.y;
+# y1:=y0+h;
+
+  y0:=o1;
+  node.transform.point(u0, view1, nid, 0,h);
+  y1:=o1;
+# watch(y0);
+# watch(y1);
+
+  0+(y0<vr.h)*(y1>vr.x);
+ };
+
+ visible:=check.visible(vr);
+#visible:=rnd(u0)>0.5;
+#r+=1;
+
+#s:=0.7;
+#s:=0.5;
+#s:=0.3;
+
+ node.visible.s(u0, visible);
+
+#watch(view0);
+#watch(view0.h);
+
+#watch(h);
+
+#watch(y);
+};
+
+# VISIBLE ]

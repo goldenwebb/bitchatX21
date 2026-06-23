@@ -1,0 +1,478 @@
+### 70112 ul.ui.text.label.extra
+
+# extra struct [
+
+_ @sys.obj;
+_ @struct.def;
+
+label.extra { _ struct;
+ max.width 0;
+ texture.width 0;
+ texture.height 0;
+ oo 0;
+ view {x 0;y 0;w 1;h 1;};
+
+ pack pack8(max.width, texture.width, texture.height, view.x,view.y,view.w,view.h, oo,oo);
+ unpack unpack8(_0, max.width, texture.width, texture.height, view.x,view.y,view.w,view.h, oo,oo);
+};
+
+# extra struct ]
+
+### 70106 ul.ui.text.label
+# text, size, font(pool,id,i), vsh,fsh, extra
+# 0-3: min {x;y;w;h;};
+# 4: tex?
+
+draw(r0, 70107);
+
+text0 p0;
+size0 p1;
+pool0 p2;
+id0 p3;
+i0 p4;
+
+vsh0 p5;
+fsh0 p6;
+extra0 p7;
+
+#extra0 1;
+
+# EXTRA [
+
+_ @ul.ui.text.label.extra;
+extra label.extra;
+
+tex1 r4;
+
+if (r0) {
+ if (extra0>0) {
+  res=extra.unpack(extra0);
+  if (res>0) {
+   if (extra.texture.width > 0) {
+    create.texture {
+     w extra.texture.width;
+     h extra.texture.height;
+     tex1:=node.ex.texture.create(u0, w,h);
+     node.value.s(u0, nid,4, tex1);
+    };
+    create.texture;
+   };
+  };
+ };
+};
+
+# B. 1 - version 1: set max width, fixed formula [
+# B. 1 - version 1: set max width, fixed formula ]
+
+# EXTRA ]
+
+vsh1 r1;
+fsh1 r2;
+
+mode0 r3;
+
+TMP.TEXT 11110000;
+_ @TMP.TEXT;
+
+if (r0) {
+ pool0:=if(pool0==0, 1000, pool0);
+ vsh1:=if(vsh0==0, text.options.info.vsh, vsh0);
+ fsh1:=if(fsh0==0, text.options.info.fsh, fsh0);
+
+ # B. version 1 [
+ if (extra0==1) {
+  mode0:=1;
+
+  vsh0v1 10018022; # no params
+  vsh0v2 15870; # uniforms x,y color
+
+  vsh1:=if(vsh0==0, vsh0v2, vsh0);
+  vsh1:=vsh0v1;
+ };
+ # B. version 1 ]
+};
+
+fnt1 { _ text.options.info;
+ font0 r7;
+ fchars0 r6;
+ font.size size0;
+ file.pool pool0;
+ file.id id0;
+ file.i i0;
+ vsh vsh1;
+ fsh fsh1;
+};
+
+text.init(r0, fnt1, text0);
+
+_ @1010;
+_ @sys.node;
+_ @sys.events;
+
+ui.pool 70100;
+
+ui.event.text.update 1888;
+
+nid node.ex.this.id(u0);
+#l0:=clk0;
+#watch(nid);
+
+tb0 l3;
+tb0:=1;
+while(tb0>0) {
+ tb0:=events.pop(u0, ui.pool,nid);
+ if (tb0==ui.event.text.update) {
+# watch(nid);
+#  text0
+  text0:=o0;
+  text.update(r0, fnt1, text0);
+#  if (mode0==1) {
+#   w:=0;
+#   h:=0;
+#  };
+#  clock.skin0 10170010;
+#  clock.skin1 10170020;
+#  l0:=node.new.this.ex4(u0, clock.skin0, 200,200);
+#  l0:=1;while(l0){l0;};
+ };
+};
+
+#_ @4;
+#val0 0; ui.value1(val0,0,40,0.25,tex1);
+
+# SET FONT METRICS [
+
+fnt1.metrics {
+ _ @sys.obj;
+
+ minx buffer.get(u0, fnt1.fchars0,1, 2);
+ miny buffer.get(u0, fnt1.fchars0,1, 3);
+ minz buffer.get(u0, fnt1.fchars0,1, 4);
+
+ maxx buffer.get(u0, fnt1.fchars0,1, 5);
+ maxy buffer.get(u0, fnt1.fchars0,1, 6);
+ maxz buffer.get(u0, fnt1.fchars0,1, 7);
+};
+
+nid0=nid;
+
+# set min max value xy
+node.value.s(u0, nid0,0, fnt1.metrics.minx);
+node.value.s(u0, nid0,1, fnt1.metrics.miny);
+node.value.s(u0, nid0,2, fnt1.metrics.maxx);
+node.value.s(u0, nid0,3, fnt1.metrics.maxy);
+
+if (mode0==0) {
+ w:=fnt1.metrics.minx+fnt1.metrics.maxx;
+ h:=fnt1.metrics.miny+fnt1.metrics.maxy;
+};
+
+if (mode0==1) {
+ w:=if(w==0, fnt1.metrics.minx+fnt1.metrics.maxx, w);
+ h:=if(h==0, fnt1.metrics.miny+fnt1.metrics.maxy, h);
+};
+
+# SET FONT METRICS ]
+
+
+#_ @4;
+#ui.value1(l12,110,110,0.5,fnt1.metrics.maxx);
+
+
+### 70107 ul.ui.text.text.draw
+
+tex1 r4;
+
+# EXTRA [
+
+extra0 p7;
+
+_ @ul.ui.text.label.extra;
+extra label.extra;
+
+# BUG-23784: Wrong init var - tmp: init manually [
+# TODO: add to issues
+# Wrong initialization default var
+extra.view.x:=0;
+extra.view.y:=0;
+extra.view.w:=1;
+extra.view.h:=1;
+# BUG-23784: Wrong init var - tmp: init manually ]
+
+# Always extra unpack
+if (extra0>1) {
+ extra.unpack(extra0);
+
+#  extra.view.x:=0;
+#  extra.view.y:=0;
+#  extra.view.w:=1;
+#  extra.view.h:=1;
+
+ calc.align {
+  # todo
+ };
+};
+
+
+#_ @4;
+#ui.value1(l12,10,10,0.5,pp);
+#ui.value1(l12,10,10,0.5,extra0);
+#ui.value1(l12,10,10,0.5,extra.view.w);
+
+# EXTRA ]
+# DRAW 1 [
+
+q @70106;
+if (tex1==0) {
+ q.text.draw(r0, q.fnt1, extra.view);
+};
+
+# DRAW 1 ]
+# DRAW 2 [
+
+_ @4;
+_ @900776;
+_ @1100;
+_ @util.gl.std;
+
+if (tex1>0) {
+ node.ex.gl.fbo(u0, tex1);
+ node.ex.gl.clear(u0, 0,0,0,0);
+
+ q.text.draw(r0, q.fnt1, extra.view);
+
+ node.ex.gl.fbo(u0, -1);
+
+ w node.texture.width(tex1);
+ h node.texture.height(tex1);
+
+ gl.rect0.texture(5, 0,0, w,h, tex1);
+
+};
+
+# DRAW 2 ]
+
+
+
+
+### 11110000 tmp.text
+
+mode0 r3;
+
+_ @0;
+
+text {
+ _ @1010;
+ _ @sys.media;
+ _ @sys.obj;
+ _ @sys.node;
+
+ options.info {
+  file {
+   pool 1000;
+   id 0;
+   i 0;
+  };
+  font.size 100;
+  vsh 10018020;
+  fsh 10018021;
+# vsh 15870;
+# fsh 15871;
+  texattr0 0;
+  texunit0 0;
+ };
+
+# lvec0 r2;
+
+
+ init {
+  # r0, options, string
+  r0 _0;
+  string _2;
+
+  font0 _1.font0;
+  fchars0 _1.fchars0;
+
+  fnt.load {
+   # file
+   font0:=media.ft.load.font(u0, 0, _0.pool,_0.id,_0.i);
+  };
+  if (r0) {
+   fnt.load(_1.file);
+
+   fchars0:=buffer.new(u0, 100*3*4, 100000*3*4); # x,y,z [+ shape] ;
+   buffer.add(u0, fchars0, 100*4, 100000*4); # char, texture, offs0,offs1
+   buffer.dma(u0, dma0, fchars0,0);
+   buffer.dma(u0, dma1, fchars0,1);
+
+   media.ft.text.dma(u0, font0,_1.font.size*2, string, dma0,dma1,-1);
+
+   _ @sys.ul.ui;
+   _ @ui.textlines;
+
+   ui.textlines.lines.vec.scale.scale.line(0.5,0.5);
+#lines.vec ui.textlines.lines.vec;
+#   ui.textlines.lines.vec.scale(lvec0, 1, lines0, 0, 0.5,0.5);
+
+#   _ @1010; _ @sys.llog; llog.b(A.tmp.text); 
+#   llog.erase(u0, 0);
+#   llog.pv(Q.font0, font0); 
+#   llog.pv(Q.fchars0, fchars0); 
+#   llog.pv(Q.text.dma0.size, dma.size(u0, dma0)); 
+#   llog.pv(Q.text.dma1.size, dma.size(u0, dma1)); 
+#   llog.e();
+
+   dma.off(u0, dma0);
+   dma.off(u0, dma1);
+  };
+ };
+
+ # UPDATE
+
+ update {
+  # r0, options, string
+
+  font0 _1.font0;
+  fchars0 _1.fchars0;
+
+  buffer.dma(u0, dma0, fchars0,0);
+  buffer.dma(u0, dma1, fchars0,1);
+
+  media.ft.text.dma(u0, font0,_1.font.size, _2, dma0,dma1,-1);
+
+  dma.off(u0, dma0);
+  dma.off(u0, dma1);
+ };
+
+ # DRAW
+
+ draw {
+  # r0, options, view
+  r0 _0;
+
+  font0 _1.font0;
+  fchars0 _1.fchars0;
+  vsh _1.vsh;
+  fsh _1.fsh;
+  texattr0 _1.texattr0;
+  texunit0 _1.texunit0;
+
+  node.ex.shader.use(u0, vsh,fsh);
+
+  buffer.dma(u0, dma0, fchars0,0);
+  buffer.dma(u0, dma1, fchars0,1);
+
+  offscount 1;
+  nchars=dma.get(u0, 1, offscount);
+
+  startitems 8;
+  itemsize 4;
+  offstexture 1;
+
+  tex0=dma.get(u0, 1, startitems+offstexture);
+
+  node.ex.shader.uniform.texture.name(u0, texattr0, tex0, texunit0);
+
+#  view _2;# {x 0;y 0;w 1;h 1;};
+#  shader.uniform.f4(u0, 3, view.x,view.y,view.w,view.h);
+  shader.uniform.f4(u0, 3, _2.x,_2.y,_2.w,_2.h);
+#  shader.uniform.f4(u0, 3, 0,0,1,1);
+
+
+  if (r0) {
+#   _ @1010; _ @sys.llog; llog.b(Q.tmp.text); llog.pv(Q.texture, l0); llog.e();
+#   _ @1010; _ @sys.llog; llog.b(Q.tmp.text); llog.pv(Q.count, l1); llog.e();
+  };
+
+  render.chars {
+   i=0;
+   while (i < nchars) {
+   # r0, i, dma,o,esize,stride,count, type,normalized
+    a0 0; # verts
+    a1 1; # texCoords
+#   dma0 0;
+    eoffs 4*4*i;
+    node.ex.shader.attribute.dma(u0, a1, dma0,eoffs,  2,4,4, 0,0);
+    node.ex.shader.attribute.dma(u0, a0, dma0,eoffs+2,2,4,4, 0,0);
+
+    node.ex.gl.draw(u0, 6, 4);
+    i+=1;
+   };
+  };
+
+  if (mode0 == 0) {
+   render.chars;
+  };
+  if (mode0 == 1) {
+#   render.chars;
+   x 0;
+   y 0;
+   line 0;
+   start.x 0;
+   end.x w;
+   render.chars1(x,y, line, nchars, start.x, end.x);
+  };
+
+# vsh 15870;
+# fsh 15871;
+
+  uniform1 1;
+  uniform2 2;
+
+  shader node.ex.shader;
+
+  render.draw.char {
+
+   a0 0; # verts
+   a1 1; # texCoords
+   eoffs 4*4*l2;
+   # r0, i, dma,o,esize,stride,count, type,normalized
+   shader.attribute.dma(u0, a1, dma0,eoffs,  2,4,4, 0,0);
+   shader.attribute.dma(u0, a0, dma0,eoffs+2,2,4,4, 0,0);
+
+#   shader.uniform.f2(u0, uniform1, x,y+sin((l2+t*0.05)*20)*100); 
+   shader.uniform.f2(u0, uniform1, x,y); 
+
+#   color.phase
+#    shader.uniform.f1(u0, uniform2, _0);
+   
+#   color.phase(0+sin(t));
+#   color.phase(0);
+#   col l2;
+#   l3:=cpu.get.formula.info.text.matrix.attribute(u0, fid0, line,col, 0);
+#   shader.uniform.f1(u0, uniform2, l3);
+   shader.uniform.f1(u0, uniform2, 0);
+
+   node.ex.gl.draw(u0, 6, 4);
+  };
+
+ render.chars1 {
+ # x,y, line, count, start.x, end.x
+  x _0;
+  y _1;
+  line _2;
+  count _3;
+  start.x _4;
+  end.x _5;
+
+  l2:=0;
+  while (l2 < count) {
+
+   offs l2*8+8;
+   cx0 = dma.get(u0, dma1, offs+4);
+   cx1 = dma.get(u0, dma1, offs+4+2);
+
+   if ((start.x<=cx0)*(cx1<=end.x)) {
+    render.draw.char;
+   };
+   if (cx0>end.x) {
+    l2:=count;
+   };
+   l2+=1;
+  };
+
+  dma.off(u0, dma0);
+  dma.off(u0, dma1);
+ };
+};
+

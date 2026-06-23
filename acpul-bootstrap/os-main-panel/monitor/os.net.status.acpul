@@ -1,0 +1,97 @@
+### 15400 os.net.status
+
+r0:=k==0;
+
+draw(r0, 15401);
+
+_ @1010;
+_ @1100;
+_ @sys.os;
+_ @sys.net;
+_ @os.monitor;
+
+ind0.net r1;
+ind1.llog r2;
+
+if (r0) {
+# aaa;
+# bbb;
+ os.net.status.view.new(ind0.net, 0,0,1, 200,50, net.srv.net);
+ os.net.status.view.new(ind1.llog, 0,50,1, 200,50, net.srv.llog);
+};
+
+k:=1;
+
+### 15401 os.net.status.draw
+
+_ @0;
+
+color(u0, 1,1,1,1);
+
+if (DEBUG.FRAMES) {
+ rect(u0, 3, 0,0, w,h);
+};
+
+### 15410 os.net.status.indicator
+# type
+
+r0:=k==0;
+
+draw(r0, 15410);
+
+type p0;
+
+_ @1010;
+_ @1100;
+_ @sys.os;
+_ @sys.net;
+
+connected r1;
+
+#buf0 r2;
+#
+#if (r0) {
+# buf0:=buffer.new(u0, 32000,32000);
+# buffer.add(u0, buf0, 32000,32000);
+#};
+#
+#buffer.dma(u0, dma1, buf0,0);
+#buffer.dma(u0, dma1, buf0,1);
+
+dma0 0;
+dma1 1;
+
+txt0.url r3;
+
+status.update {
+ buffer.dma(u0, dma0, txt0.url,0);
+ dma.off(u0, dma1);
+
+# connected:=net.get.status(type, txt0.url,dma1);
+ connected:=net.get.status(type, 0, dma0,dma1);
+};
+
+if (r0) {
+ dma.print1.v1(txt0.url, S.format.net.status.indicator, type);
+ new.text.common0(clk0, 0,0,1, 200,50, txt0.url);
+};
+
+status.update;
+
+k:=1;
+
+### 15410 os.net.status.indicator.draw
+
+connected r1;
+
+if (connected) {
+ color(u0, 0,1,0,1);
+ circle(u0, 6, 0,0, 100, 0, 20, 0);
+};
+if (!connected) {
+ color(u0, 1,0,0,1);
+ rect(u0, 6, 0,h/4, h/2,h/2);
+};
+
+color(u0, 1,1,0,1);
+rect(u0, 3, 0,0, w,h);

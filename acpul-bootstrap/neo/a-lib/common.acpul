@@ -1,0 +1,208 @@
+### 7510 photoneo.common
+
+_ @1010;
+_ @sys.obj;
+_ @sys.node;
+_ @sys.cpu;
+_ @sys.storage;
+
+photoneo.common.gl.extra 7511;
+photoneo.common.texture.loader 7512;
+photoneo.common.v0 7514;
+
+_ @photoneo.common.gl.extra;
+_ @photoneo.common.texture.loader;
+_ @photoneo.common.v0;
+
+photoneo.util 7550;
+_ @photoneo.util;
+
+pn.pool 777;
+pn.pool.img0 0;
+
+metrics {
+ screen {w 768; h 1024;};
+};
+
+# api [
+
+pneo.e.pool 7500;
+pneo.e { _;
+ texture.ready 1;
+};
+
+pneo.init
+ # r0
+ io(_0, 505000, 0,0,0,0);
+
+pneo.process
+ # u0, images::buffer, filters::buffers
+ io(_0, 505001, _1, _2, 0,0);
+
+pneo.options.size
+ # u0, w,h
+ io(_0, 505002, _1, _2, 0,0);
+
+pneo.options.gene.nonce
+ # u0, nonce0,nonce1
+ io(_0, 505003, _1, _2, 0,0);
+
+pneo.options.depth.min.max
+ # u0, depth(min,max)
+ io(_0, 505004, _1, _2, 0,0);
+
+pneo.options.mutations.gene.max.nodes
+ # u0, mutations, gene, max.nodes
+ io(_0, 505005, _1, _2, _3,0);
+
+pneo.release.texture
+ # u0, tex
+ io(_0, 505006, _1, 0,0,0);
+
+pneo.get.handle
+ # u0 -> handle
+ io(_0, 505007, 0,0,0,0);
+
+# api ]
+
+### 7511 photoneo.common.gl.extra
+
+# gl extra [
+# from 7019 filters.common [
+
+gl.shader.use 
+ # vsh, fsh
+ node.ex.shader.use(u0, _0, _1);
+
+gl.shader.uniform.texture
+ # uniform, tex, unit
+ node.ex.shader.uniform.texture(u0, _0, _1, _2);
+
+gl.shader.uniform.f1
+ # uniform, f
+ node.ex.shader.uniform.f1(u0, _0, _1);
+
+gl.shader.uniform.f2
+ # uniform, f0,v1
+ node.ex.shader.uniform.f2(u0, _0, _1,_2);
+
+gl.draw # mode, count
+ node.ex.gl.draw(u0, _0, _1);
+
+gl.fbo 
+ # tex
+ node.ex.gl.fbo(u0, _0);
+
+gl.rect 
+ # x,y, w,h
+ node.ex.gl.rect(u0, _0,_1, _2,_3);
+
+# from 7019 filters.common ]
+# texture [
+
+gl.texture.param 
+ # tex, p, v
+ node.ex.texture.set.param(u0, _0, _1, _2);
+
+gl.texture.p node.ex.texture.p;
+gl.texture.v node.ex.texture.v;
+
+gl.texture.filter { 
+ # tex, v
+ param(_0, p.filter.min, _1);
+ param(_0, p.filter.mag, _1);
+};
+
+gl.texture.wrap { 
+ # tex, v
+ param(_0, p.wrap.s, _1);
+ param(_0, p.wrap.t, _1);
+};
+
+gl.texture.filter.nearest 
+ # tex
+ filter(_0, v.filter.nearest);
+
+gl.texture.filter.linear 
+ # tex
+ filter(_0, v.filter.linear);
+
+gl.texture.wrap.repeat
+ # tex
+ wrap(_0, v.wrap.repeat);
+
+gl.texture.wrap.clamp.to.edge
+ # tex
+ wrap(_0, v.wrap.clamp.to.edge);
+
+gl.texture.wrap.mirrored.repeat
+ # tex
+ wrap(_0, v.wrap.mirrored.repeat);
+
+# texture ]
+# gl extra ]
+
+
+### 7512 photoneo.common.texture.loader
+
+# texture loader [
+
+texture.loader {
+ load.texture {
+  # tex, pool,id,i
+  tex _0;
+  tex:=storage.image.load.texture(_1,_2,_3);
+  _ @1010; _ @sys.llog; llog.b(PN.log); llog.pv(Q.fid, cpu.get.current.fid(u0)); llog.pv4(Q.load.texure.pool.id.i.tex, _1,_2,_3, tex); llog.e();
+ };
+ init {
+  # r0, tex, pool,id,i
+  if (_0) {
+   load.texture(_1, _2,_3,_4);
+  };
+ };
+ update {
+  # b0, tex, pool,id
+  l0 _0;
+  tex _1;
+  pool _2;
+  id _3;
+  l0:=storage.get.event(0);
+  if (l0==storage.e.new.file) { 
+#   watch(l0);
+   _ @1010; _ @sys.llog; llog.b(PN.log); llog.pv(Q.fid, cpu.get.current.fid(u0)); llog.pv4(Q.new.file.type.pool.id.i, o0, o1,o2,o3); llog.e();
+   load.texture(tex, o1,o2,o3);
+  };
+ };
+};
+
+# texture loader ]
+# texture copy0 [
+
+texture.copy0 {
+ # src, dst, w,h
+ texsrc _0;
+ texout _1;
+ w _2;
+ h _3;
+ 
+ node.ex.gl.fbo(u0, -1);
+ node.ex.gl.fbo(u0, texout);
+
+ node.ex.gl.clear(u0, 0,1,0,1);
+
+ shader node.ex.shader;
+ vsh 5404; fsh 5405;
+ shader.use(u0, vsh,fsh);
+ shader.uniform.texture.name(u0, 0, texsrc, 0);
+
+# w 768; h 1024;
+# w 1920/2; h 1080/2;
+# w 1080; h 1920;
+# node.ex.gl.point4tex4(u0, 5, 0,0,w,0,0,h,w,h, 0,1, 1,1, 0,0, 1,0);
+ node.ex.gl.point4tex4(u0, 5, 0,0,w,0,0,h,w,h, 0,0, 1,0, 0,1, 1,1);
+
+ node.ex.gl.fbo(u0, -1);
+};
+
+# texture copy0 ]
+

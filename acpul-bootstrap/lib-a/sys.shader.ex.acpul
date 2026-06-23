@@ -1,0 +1,87 @@
+### sys.shader.ex
+
+_ @sys.obj.key;
+
+# INCLUDE SHADER [
+
+
+#
+# format: <type, count, value>
+#  type
+#   1 - f1
+#   2 - f2
+#   3 - f3
+#   4 - f4
+#   5 - tex
+shader.load.uniforms
+ # u0, nid
+ shader_load(_0, _1);
+
+# VALUE
+
+shader.set.uniform.v
+ # uid, name, v
+ obj.key.set4(u0, 2, _0,_1,0, 1,0, _2, 0);
+
+shader.set.uniform.v2
+ # uid, name, v0,v1
+ obj.key.set4(u0, 2, _0,_1,0, 2,0, _2,_3);
+
+shader.set.uniform.v3
+ # uid, name, v0,v1,v2
+ obj.key.set8(u0, 2, _0,_1,0, 3,0, _2,_3,_4, 0, 0,0,0,0);
+
+shader.set.uniform.v4
+ # uid, name, v0,v1,v2,v3
+ obj.key.set8(u0, 2, _0,_1,0, 4,0, _2,_3,_4,_5, 0,0,0,0);
+
+shader.set.texture
+ # uid, name, tex0
+ obj.key.set4(u0, 2, _0,_1,0, 5,0, _2, 0);
+
+# ARRAY
+
+#shader.set.uniformi.v
+ # uid, name, i, v
+# obj.key.set4(u0, 2, _0,_1,_2, 1,1, _3, 0);
+
+shader.set.uniformi.v2
+ # uid, name, i, v0,v1
+ obj.key.set2(u0, 2, _0,_1,2+_2*2, _3,_4);
+
+#shader.set.uniformi.v3
+# # uid, name, i, v0,v1,v2
+# obj.key.set8(u0, 2, _0,_1,_2*3, 3,1, _3,_4,_5, 0, 0,0,0,0);
+
+shader.set.uniformi.v4
+ # uid, name, i, v0,v1,v2,v3
+ obj.key.set4(u0, 2, _0,_1,2+_2*4, _3,_4,_5,_6);
+
+#shader.set.texture
+# # uid, name, tex0
+# obj.key.set4(u0, 2, _0,_1,0, 5,1, _2, 0);
+
+shader.set.uniformi.count
+ # uid, name, size, n
+ obj.key.set2(u0, 2, _0,_1,0, _2,_3);
+
+shader.set.uniformi.v1.count
+ # uid, name, n
+ obj.key.set2(u0, 2, _0,_1,0, 1,_2);
+
+shader.set.uniformi.v2.count
+ # uid, name, n
+ obj.key.set2(u0, 2, _0,_1,0, 2,_2);
+
+shader.set.uniformi.v3.count
+ # uid, name, n
+ obj.key.set2(u0, 2, _0,_1,0, 3,_2);
+
+shader.set.uniformi.v4.count
+ # uid, name, n
+ obj.key.set2(u0, 2, _0,_1,0, 4,_2);
+
+
+
+# INCLUDE SHADER ]
+

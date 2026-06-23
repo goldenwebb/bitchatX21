@@ -1,0 +1,54 @@
+### 90350:S graph0.vsh (a0:pos,a1:val,u0:scale,u1:center)
+
+#define a_position a0
+attribute vec4 a_position;
+#define a_value a1
+attribute vec4 a_value;
+#define scale p0
+uniform vec4 scale; 
+#define center0 p1
+uniform vec4 center0; 
+
+void main()
+{
+   gl_Position = CC_MVPMatrix * ((a_position + vec4(center0.x,a_value.x-center0.y,0.,0.)) * scale);
+}
+
+
+
+### 90351:S graph0.fill.fsh ()
+
+//varying highp vec2 pos;
+
+#define time CC_Time[3]
+
+void main()
+{
+//    gl_FragColor = vec4(.5,0.1,.1,.2);
+//  gl_FragColor = vec4(0.,1.,0.,1.);
+//  gl_FragColor = vec4(.1,sin(gl_FragCoord.x*gl_FragCoord.y*10.),.5,1.);
+//  gl_FragColor = vec4(.1,sin(gl_FragCoord.x*100.+gl_FragCoord.y*100.),.5,1.);
+//  gl_FragColor = vec4(.8,0.8+0.1*sin(gl_FragCoord.x/gl_FragCoord.y*10.),.5,1.);
+//  gl_FragColor = vec4(.1,sin(gl_FragCoord.x/gl_FragCoord.y*100.),.5,1.);
+//  gl_FragColor = vec4(.1,sin(gl_FragCoord.x/gl_FragCoord.y*100.),.5,1.);
+  gl_FragColor = vec4(.5+sin(time*.08)*.5,sin(gl_FragCoord.x/(gl_FragCoord.y+time)*100.),.5+sin(time*0.2)*.5,1.);
+}
+
+
+
+### 90352:S graph0.fill1.fsh ()
+
+//varying highp vec2 pos;
+
+void main()
+{
+    gl_FragColor = vec4(.5,0.1,.1,.2);
+//  gl_FragColor = vec4(0.,1.,0.,1.);
+//  gl_FragColor = vec4(.1,sin(gl_FragCoord.x*gl_FragCoord.y*10.),.5,1.);
+//  gl_FragColor = vec4(.1,sin(gl_FragCoord.x*100.+gl_FragCoord.y*100.),.5,1.);
+//  gl_FragColor = vec4(.8,0.8+0.1*sin(gl_FragCoord.x/gl_FragCoord.y*10.),.5,1.);
+//  gl_FragColor = vec4(.1,sin(gl_FragCoord.x/gl_FragCoord.y*100.),.5,1.);
+//  gl_FragColor = vec4(.1,sin(gl_FragCoord.x/gl_FragCoord.y*100.),.5,1.);
+}
+
+

@@ -1,0 +1,103 @@
+### sys.time
+
+get.time
+ # u0, mode -> time
+ # mode:
+ #  0 - HH:MM:SS.US o2=hours, o1=minutes, o0=seconds, o3=us
+ #  1 - TIMEVAL timeval double(o0=low, o1=high)
+ #  2 - DATE o2=year, o1=month, o0=day
+ io(_0, 502300, _1, 0, 0,0);
+
+
+get.time0 get.time(__);
+
+get.time get.time0(u0, 0);
+get.time.timeval get.time0(u0, 1);
+get.time.date get.time0(u0, 2);
+
+
+### sys.time.test
+# ## 118110 sys.time.test
+
+
+test.time0 {
+ # u0, x,y,s
+ _ @os.util0;
+ u0 _0;
+ x _1;
+ y _2;
+ s _3;
+
+ tid0 0;
+ if (u0) {
+  # dynamic name
+  new.node.common0(tid0, x,y,s, 300,300, node.fid.by.name(u0, sys.time.test.node), 0);
+  # static name
+#  new.node.common0(tid0, x,y,s, 300,300, 118111, 0); 
+ };
+};
+
+
+
+
+# ## 118111 sys.time.test.node
+### sys.time.test.node
+
+
+
+
+_ @sys.time;
+_ @4;
+_ @os.util0;
+
+_ @basic.ui.shader.node3.inc;
+_ @sys.shader.ex;
+
+_ @basic.poly2d;
+_ @basic.poly2d.test;
+_ @basic.lines2d.test;
+
+
+if (r0) {
+ sn2poly 0;
+ new.poly2d(sn2poly, 0-30,0-30,1, 400,420);
+ lines2d.figure2(sn1lines);
+# poly2d.figure1(sn2poly);
+# poly2d.figure1.color1(sn2poly);
+};
+
+test.time0 {
+ # x,y
+ x _0;
+ y _1;
+ui.value4a ui.value4(_0,_1,x+_2,y+_3,_4, _5, _6);
+ui.value4 ui.value4a(__);
+
+get.time(u0);
+lbl0 0; val0 0; ui.value4(lbl0,val0,0,60,1, HH, o2);
+lbl0 0; val0 0; ui.value4(lbl0,val0,0,40,1, MM, o1);
+lbl0 0; val0 0; ui.value4(lbl0,val0,0,20,1, SS, o0);
+lbl0 0; val0 0; ui.value4(lbl0,val0,0,0,1, UU, o3);
+get.time.timeval(u0);
+lbl0 0; val0 0; ui.value4(lbl0,val0,0,10+40+80,1, TS1, o2);
+lbl0 0; val0 0; ui.value4(lbl0,val0,0,10+20+80,1, TS0, o1);
+lbl0 0; val0 0; ui.value4(lbl0,val0,0,10+0+80,1, TUU, o0);
+get.time.date(u0);
+lbl0 0; val0 0; ui.value4(lbl0,val0,0,60+160,1, WD, o3);
+lbl0 0; val0 0; ui.value4(lbl0,val0,0,40+160,1, Y, o2);
+lbl0 0; val0 0; ui.value4(lbl0,val0,0,20+160,1, M, o1);
+lbl0 0; val0 0; ui.value4(lbl0,val0,0,0+160,1, D, o0);
+
+o2:=node.fid.by.name(u0, sys.time.test.dyn); 
+o1:=node.fid.by.name(u0, sys.time.test); 
+o0:=node.fid.by.name(u0, sys.time.test.node);
+lbl0 0; val0 0; ui.value4(lbl0,val0,0,90+160+40,1, FID.sys.time.dyn, o2);
+lbl0 0; val0 0; ui.value4(lbl0,val0,0,90+160+20,1, FID.sys.time, o1);
+lbl0 0; val0 0; ui.value4(lbl0,val0,0,90+160,1, FID.test.node, o0);
+};
+
+test.time0(0,0);
+
+### sys.time.test.dyn
+
+0;

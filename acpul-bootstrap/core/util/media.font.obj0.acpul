@@ -1,0 +1,79 @@
+### 1107 media.font.obj0
+
+# [0] <drawItem>
+# [1] type,count
+#     mixX,minY,minZ,maxX,maxY,maxZ
+#     <infoChars>
+# type: 0
+# [0] drawItem {
+#  0: texCoord(x,y)*4
+#  8: vertex(x,y)*4
+#  16: _size_
+# }
+# [1] infoChar {
+#  0: charCode
+#  1: texture
+#  2: position, length
+#  4: rect(minXY,maxXY)
+# }
+
+media.font.obj0 { _;
+# isavar;
+# pchar;
+ g1 buffer.get(u0, isavar,1,_0);
+ type g1(0);
+ count g1(1);
+ min {x g1(2); y g1(3); z g1(4);};
+ max {x g1(5); y g1(6); z g1(7);};
+
+ infoChar {
+  charCode g1(pchar+0);
+  texture g1(pchar+1);
+  position g1(pchar+2);
+  length g1(pchar+3);
+  rect {
+   min {
+    x g1(pchar+4);
+    y g1(pchar+5);
+   };
+   max {
+    x g1(pchar+6);
+    y g1(pchar+7);
+   };
+  };
+ };
+
+ select.char
+  # i
+  pchar:=8+8*_0;
+};
+
+media.font.obj1 { _;
+# isavar;
+ g1 buffer.get(u0, isavar,1,_0);
+ type g1(0);
+ count g1(1);
+ min {x g1(2); y g1(3); z g1(4);};
+ max {x g1(5); y g1(6); z g1(7);};
+
+ pchar 8+8*_0;
+
+ g2 g1(pchar(_0)+_1);
+
+ infoChar {
+  charCode g2(_0,0);
+  texture g2(_0,1);
+  position g2(_0,2);
+  length g2(_0,3);
+  rect {
+   min {
+    x g2(_0,4);
+    y g2(_0,5);
+   };
+   max {
+    x g2(_0,6);
+    y g2(_0,7);
+   };
+  };
+ };
+};

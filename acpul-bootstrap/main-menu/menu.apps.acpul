@@ -1,0 +1,390 @@
+### acpu.menu.apps
+
+# RUNNINGS: RUN APP [
+
+_ @map.future;
+
+runnings {
+ map0 0;
+ 
+ # Init runnings
+ init {
+  map0:=map.new(u0, 100,10000);
+ };
+
+ # Run app - todo: toggle.app
+ run.app {
+  # fid
+  fid _0;
+  found=it.key(u0, map0,0, fid);
+  if (found!=-1) {
+   # FOUND
+   app0=map.it.get.v(u0, map0,0);
+   map.key.erase(u0, map0,0, fid);
+   kill.app(app0);
+  };
+  if (found==-1) {
+   # NOT FOUND
+   app0=node.new.this.ex(u0, fid, 0);
+   map.key.new.v(u0, map0,0, fid, app0);
+  };
+ };
+ toggle.app {
+  run.app(__);
+ };
+ kill.all {
+  fn {
+   # map0:it
+   app0=map.it.get.v(u0, map0,0);
+   kill.app(app0);
+  };
+  map.for.each(u0, map0,0, fn);
+
+  # recreate map
+  obj.delete(u0, map0);
+  map0:=map.new(u0, 100,10000);
+ };
+};
+
+if (r0) {
+ runnings.init;
+};
+
+# RUNNINGS: RUN APP ]
+# TOGGLE APP1 [
+
+toggle.app1 {
+ # id, run
+ id0 _0;
+ show {
+  _1;
+ };
+ hide {
+  kill.app(id0);
+ };
+ if(id0, hide, show);
+};
+
+# TOGGLE APP1 ]
+
+
+# CLOSE APP
+
+kill.app {
+ # app
+ node.prop.lt.s(u0, _0, 0.01);
+ _0:=0;
+};
+
+close.apps {
+ runnings.kill.all;
+ kill.app(hn0);
+ kill.app(dota0);
+ kill.app(dota1);
+ kill.app(chat0);
+ kill.app(player0);
+ kill.app(files0);
+ kill.app(paint0);
+ kill.app(wallet0);
+ kill.app(hero0);
+ kill.app(video0);
+ kill.app(bootloader0);
+ kill.app(intro0);
+ kill.app(hipster0);
+ kill.app(winamp0);
+ kill.app(magazine0);
+};
+
+# APPS EVENTS
+
+process.apps.events {
+ # ev, o0... - event
+
+ if (_0==boot.run.dota) {
+  toggle.dota;
+ };
+ if (_0==boot.toggle.dota.test) {
+  toggle.dota.test;
+ };
+
+ if (_0==boot.close.apps) {
+  hide.default;
+  close.apps;
+ };
+ if (_0==boot.toggle.files) {
+  toggle.files;
+ };
+ if (_0==boot.toggle.player) {
+  toggle.player;
+ };
+ if (_0==boot.toggle.magazine) {
+  toggle.magazine;
+ };
+ if (_0==boot.toggle.ai.chat) {
+  toggle.ai.chat;
+ };
+ if (_0==boot.toggle.stars) {
+  toggle.stars;
+ };
+ if (_0==boot.event.intro) {
+  new.startup.intro;
+ };
+ if (_0==boot.event.hipster) {
+  toggle.hipster;
+ };
+ if (_0==boot.event.winamp) {
+  toggle.winamp;
+ };
+ if (_0==boot.event.run.app) {
+  fid=o0;
+  runnings.toggle.app(fid);
+ };
+# if (_0==boot.toggle.hero) {
+#  toggle.hero;
+# };
+
+};
+
+# STARTUP APP [
+
+startup.app {
+ # flag, nfid
+ if (r0*_0) {
+  runnings.toggle.app(NNN(_1));
+ };
+};
+
+startup.app(BOOT.RESUME, resume.bubbles.test);
+
+# STARTUP APP ]
+# DOTA [
+
+dota0 0;
+
+run.dota {
+ hide.default;
+ dota0:=node.new.this.ex(u0, DOTA.MAIN, 0);
+};
+
+toggle.dota app1(dota0, run.dota);
+
+# DOTA ]
+# DOTA TEST [
+
+dota1 0;
+
+new.dota.test {
+ new.node.common0(dota1, 0,0,1, 1000,1000, node.fid.by.name(u0, dota.test.main), 0);
+# node.prop.z.order.s(u0, dota1, 1000);
+};
+
+toggle.dota.test app1(dota1, new.dota.test);
+
+if (BOOT.DOTA.TEST*r0) {
+ new.dota.test;
+};
+
+# DOTA TEST ]
+# HERO [
+
+hero0 0;
+
+run.nebula {
+ hide.default;
+ GAME.NEBULA 11800;
+ hero0:=node.new.this.ex(u0, GAME.NEBULA, 0);
+};
+
+# HERO ]
+# PAINT [
+
+paint0 0;
+
+run.paint {
+ hide.default;
+# _ @core.vg;
+ kill.app(paint0);
+ PAINT 10160000;
+ paint0:=node.new.this.ex(u0, PAINT, 0);
+};
+
+#toggle.paint app1(paint0, run.paint);
+
+# PAINT ]
+# WALLET [
+
+wallet0 0;
+
+run.wallet {
+ hide.default;
+ _ @core.gl3d;
+ wallet0:=node.new.this.ex(u0, gl3d.test.main, 0);
+};
+
+toggle.wallet app1(wallet0, run.wallet);
+
+# WALLET ]
+# PLAYER [
+
+player0 0;
+
+new.player {
+ new.node.common0(player0, 0,100,1, 768/8*2,1024/8*2, NNN(acpu.player), 0);
+};
+
+toggle.player {
+ show {
+  new.player;
+ };
+ hide {
+  kill.app(player0);
+ };
+ if(player0, hide, show);
+};
+
+# PLAYER ]
+# WINAMP [
+
+winamp0 0;
+
+new.winamp
+ new.node.common0(winamp0, 0,0,1, 300,300, node.fid.by.name(u0, A.winamp), 0);
+
+toggle.winamp {
+ show {
+  new.winamp;
+ };
+ hide {
+  kill.app(winamp0);
+ };
+ if(winamp0, hide, show);
+};
+
+# WINAMP ]
+# CHAT AI [
+
+chat0 0;
+
+new.ai.chat {
+# new.node.common0(chat0, 100,200,1, 300,300, NNN(ai.chat.dialog), 0);
+# new.node.common0(chat0, 0,0,1, 500,500, NNN(gpt.chat.test), 0);
+ chat0:=new.node.ai(50,200,1, 300,300, 0);
+};
+
+
+toggle.ai.chat {
+ show {
+  new.ai.chat;
+ };
+ hide {
+  kill.app(chat0);
+ };
+ if(chat0, hide, show);
+};
+
+# CHAT AI ]
+# FILES [
+
+files0 0;
+
+new.files {
+ new.node.common0(files0, 500,100,1, 768/8*2,1024/8*2, NNN(acpu.files), 0);
+};
+
+toggle.files {
+ show {
+  new.files;
+ };
+ hide {
+  kill.app(files0);
+ };
+ if(files0, hide, show);
+};
+
+# FILES ]
+# HIPSTER [
+
+hipster0 0;
+new.startup.hipster {
+ hipster0:=node.new.this.ex(u0, HIPSTER.BANNER, 0);
+};
+
+toggle.hipster {
+ show {
+  new.startup.hipster;
+ };
+ hide {
+  kill.app(hipster0);
+ };
+ if(hipster0, hide, show);
+};
+
+# HIPSTER ]
+# INTRO [
+
+intro0 0;
+new.startup.intro {
+ new.node.common0(intro0, 0,0,1, w,h, NNN(boot.startup.intro), 0);
+};
+
+if (BOOT.INTRO*r0) {
+ new.startup.intro;
+};
+
+# INTRO ]
+# MAGAZINE [
+
+magazine0 0;
+new.magazine {
+ new.node.common0(magazine0, 0,0,1, w,h, NNN(xen.magazine), 0);
+};
+
+toggle.magazine {
+ show {
+  new.magazine;
+ };
+ hide {
+  kill.app(magazine0);
+ };
+ if(magazine0, hide, show);
+};
+
+if (BOOT.MAGAZINE*r0) {
+ new.magazine;
+};
+
+# MAGAZINE ]
+# BITCHAT [
+
+_ @bitchat.inc;
+
+bitchat0 0;
+
+if (BOOT.BITCHAT*r0) {
+# bitchat0:=node.new.this.ex(r0, NNN(bitchat.run), 0);
+ events.push(u0, boot.pool,0, boot.event.run.app, NNN(bitchat.run), 0,0,0);
+};
+
+
+# BITCHAT ]
+# STARS [
+
+stars0 0;
+
+run.stars {
+  _ @stars3d;
+ stars0:=node.new.this.ex(u0, stars3d.default, 0);
+# node.new.this.ex(r0, stars3d.radial, 0);
+};
+
+toggle.stars {
+ show {
+  run.stars;
+ };
+ hide {
+  kill.app(stars0);
+ };
+ if(stars0, hide, show);
+};
+
+# STARS ]

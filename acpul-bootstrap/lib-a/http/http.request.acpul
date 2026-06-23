@@ -1,0 +1,21 @@
+### http.request
+
+new.http.request {
+ # x,y,s, w,h, req, ev.handle, timeout.max, autoclose, simulate.res.raw, logging -> hid
+ _ @basic.ui;
+ hid0 0;
+ new.node.common8(hid0, _0,_1,_2, _3,_4, NNN(http.request.node), _5, _6, _7, _8, _9, _10, 0,0,0);
+ hid0;
+};
+
+make.req.get {
+ # host, path
+ req=jobj.new;
+ jobj.str.s(req, A.host, _0);
+ jobj.str.s(req, A.path, _1);
+ jobj.str.s(req, A.method, A.GET);
+ req;
+};
+
+
+

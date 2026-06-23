@@ -1,0 +1,58 @@
+### 79400 core.hud.cell.text0
+# w,h, cell0, collection0
+
+r0:=k==0;
+
+draw(r0, 79401);
+
+w:=p0;
+h:=p1;
+
+_ @1010;
+_ @1100;
+_ @sys.node;
+#_ @sys.touch;
+#_ @sys.events;
+_ @sys.obj;
+_ @sys.llog;
+_ @ul.ui;
+_ @ui.collection;
+_ @util.dma.std;
+_ @core.hud;
+
+# cell.text0 [
+
+cell0 p2;
+
+ui.collection.cell.obj.isavar cell0;
+cell0opts ui.collection.cell.obj.type0.text;
+
+text cell0opts.text.g;
+
+# cell.text0 ]
+
+txt0 r1;
+tl0 r2;
+blk0 r3;
+
+if (r0) {
+# dma.print0.v(txt0, S.format.cell.text0.empty, p0);
+# new.text.label(tl0, 0-40,0-20,1, txt0, 14, 0,0,0, 0,10170202, 0); 
+ new.hud.block1(blk0, 0,0, w,h, 1, 1, 10, 2,1);
+ new.text.label(tl0, 0-40,0-20,1, text, 14, 0,0,0, 0,10170202, 0);
+};
+
+k:=1;
+
+### 79401 core.hud.cell.text0
+
+l0:=0;
+
+#_ @1010;
+#_ @sys.node;
+#nid node.ex.this.id(u0);
+#l0:=node.get.parent(u0, nid);
+#y node.prop.y.g(u0, l0);
+
+#color(u0, 0,0.5,0,1.5);
+#rect(u0, 6, y,0, w,h);

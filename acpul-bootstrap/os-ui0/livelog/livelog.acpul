@@ -1,0 +1,36 @@
+### livelog.common
+
+#_ @sys.livelog2;
+
+ul.ui.livelog.view 15880;
+ul.ui.livelog.node 15884;
+
+ul.ui.livelog.test 15889;
+
+_ @livelog.node.layout.options;
+
+new.livelog.node0 {
+ # view, livelog0, pathnode
+ depth 0;
+ view _0;
+ livelog0 _1;
+ pathnode _2;
+
+ layout.options.new(0,0, align.type.by.prev, TOP);
+ layout0 = layout.options.pack;
+
+ node.new.p8(u0, ul.ui.livelog.node, depth, view, livelog0,pathnode, 0, layout0, 0,0);
+};
+
+new.livelog.node1 {
+ # depth, view, livelog0, pathnode, opts, layout
+ node.new.p8(u0, ul.ui.livelog.node, _0, _1, _2, _3, _4, _5, 0,0);
+};
+
+
+
+
+
+
+
+

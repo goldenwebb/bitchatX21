@@ -1,0 +1,16 @@
+### 15000 sys.os
+
+# 15000-16000 os
+# 15000 sys.os
+# 15100 os.main
+# 15200 os.monitor
+# 15500 os.ide
+
+os.main 15100;
+os.monitor 15200;
+os.ide 15500;
+
+os.basic 90000;
+os.apps 91000;
+
+_ @os.basic;

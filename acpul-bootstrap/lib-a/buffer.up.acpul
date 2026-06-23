@@ -1,0 +1,75 @@
+### buffer.up
+
+# BUFFER RESIZE [
+# TODO: Review buffer.resize0.remove.last
+
+buffer.resize.remove.lastXX {
+# u0, buf
+ buffer.dma(_0, 0, vg0,0);
+ dma.strip.size(_0, 0, dma.size(u0, 0) - 1);
+};
+
+buffer.resize.remove.last {
+ # u0, buf,i
+ vg0 _1; i _2;
+ buffer.dma(_0, 0, vg0,i);
+ dma.strip.size(_0, 0, dma.size(u0, 0) - 1);
+};
+
+# BUFFER RESIZE ]
+
+buffer.clear {
+ # u0, buf,i,offset size
+ buffer.dma(_0, 0, _1,_2);
+ dma.fill(_0, 0,_3,_4, 0);
+ dma.off(_0, 0);
+};
+
+
+# buffer push pop last [
+
+buffer.push 
+ # u0, buf,i, v
+ buffer.set(_0, _1,_2,buffer.size(_0,_1,_2), _3);
+
+buffer.push2
+ # u0, buf,i, v0:v1
+ buffer.set2(_0, _1,_2,buffer.size(_0,_1,_2), _3,_4);
+
+buffer.push4
+ # u0, buf,i, v0:v1:v2:v3
+ buffer.set4(_0, _1,_2,buffer.size(_0,_1,_2), _3,_4,_5,_6);
+
+buffer.get.last 
+ # u0, buf,i -> last:v
+ buffer.get(_0, _1,_2,buffer.size(_0,_1,_2)-1);
+
+buffer.pop { 
+ # u0, buf,i -> last:v
+ v=get.last(_0, _1,_2);
+ buffer.resize.remove.last(_0, _1,_2);
+ v;
+};
+
+# buffer push pop last ]
+
+# BUFFER SORT [
+
+# ## buffer.sort
+
+buffer.sort {
+ # u0, mode, buf:i, offset:vsize, count -> sorted buffer
+ # * modify input buffer
+ io(_0,  502101, _5, _6, 0, 0);
+ io(_0,  502105, _1, _2,_3, _4);
+};
+
+buffer.sort.up sort(_0, 0, _1,_2, _3,_4, _5);
+buffer.sort.down sort(_0, 1, _1,_2, _3,_4, _5);
+
+# ## buffer.sort.test
+#
+#buffer.sort.up(u0, offset,vsize, count);
+#buffer.sort.down(u0, offset,vsize, count);
+
+# BUFFER SORT ]

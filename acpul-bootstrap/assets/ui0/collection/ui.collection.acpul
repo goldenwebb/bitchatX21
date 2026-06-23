@@ -1,0 +1,157 @@
+### 70120 ul.ui.collection
+
+ui.collection.view 70122;
+
+_ @70128; # ui.collection.cell.obj
+
+# ui.collection.options [
+
+ui.collection.default.options.info {
+ t {
+  vec1d 1;
+  mat2d 2;
+  mat3d 3;
+  default vec1d;
+ };
+ type t.default;
+ width 200;
+ height 200;
+ cols 1;
+ rows 5;
+ sd {
+  vertical 0;
+  horizontal 1;
+  both 2;
+ };
+ scroll.direction sd.vertical;
+ cell.view.fid 0;
+
+ grid.width 200/5;
+ grid.height 200/5;
+
+ draw.cell.fid 70127;
+ draw.view.fid 70123;
+};
+
+ui.collection.options.obj { # 10 min, small overhead
+ _ @sys.obj;
+ dma0 0;
+
+# isavar l0;
+
+ vg buffer.get(u0, isavar,0, _0);
+ vs buffer.set(u0, isavar,0, _0, _1);
+
+ a {
+  type 0;
+  width 1;
+  height 2;
+  cols 3;
+  rows 4;
+  scroll.direction 5;
+  cell.view.fid 6;
+
+  grid.width 7;
+  grid.height 8;
+
+  scroll.offset.x 9;
+  scroll.offset.y 10;
+
+  draw.cell.fid 11;
+  draw.view.fid 12;
+
+  view.nid 13; # collection.view nid
+
+  cells 100;
+  cells.updated 101;
+  node.scroll 102;
+
+  max 700;
+ };
+
+ view.nid.g vg(a.view.nid); view.nid.s vs(a.view.nid, _0);
+
+ type.g vg(a.type); type.s vs(a.type, _0);
+ width.g vg(a.width); width.s vs(a.width, _0);
+ height.g vg(a.height); height.s vs(a.height, _0);
+ cols.g vg(a.cols); cols.s vs(a.cols, _0);
+ rows.g vg(a.rows); rows.s vs(a.rows, _0);
+ scroll.direction.g vg(a.scroll.direction); scroll.direction.s vs(a.scroll.direction, _0);
+ cell.view.fid.g vg(a.cell.view.fid); cell.view.fid.s vs(a.cell.view.fid, _0);
+
+ grid.width.g vg(a.grid.width); grid.width.s vs(a.grid.width, _0);
+ grid.height.g vg(a.grid.height); grid.height.s vs(a.grid.height, _0);
+
+ scroll.offset.x.g vg(a.scroll.offset.x); scroll.offset.x.s vs(a.scroll.offset.x, _0);
+ scroll.offset.y.g vg(a.scroll.offset.y); scroll.offset.y.s vs(a.scroll.offset.y, _0);
+
+ draw.cell.fid.g vg(a.draw.cell.fid); draw.cell.fid.s vs(a.draw.cell.fid, _0);
+ draw.view.fid.g vg(a.draw.view.fid); draw.view.fid.s vs(a.draw.view.fid, _0);
+
+ cells.g vg(a.cells); cells.s vs(a.cells, _0);
+ cells.updated.g vg(a.cells.updated); cells.updated.s vs(a.cells.updated, _0);
+ node.scroll.g vg(a.node.scroll); node.scroll.s vs(a.node.scroll, _0);
+
+
+ new {
+  isavar:=buffer.new(u0, a.max,a.max);
+  cells.s( buffer.new(u0, 100,1000000) );
+#  add.cell;
+ };
+
+ init {
+  # info::ui.collection.default.options.info
+  type.s(_0.type);
+  width.s(_0.width);
+  height.s(_0.height);
+  cols.s(_0.cols);
+  rows.s(_0.rows);
+  scroll.direction.s(_0.scroll.direction);
+  cell.view.fid.s(_0.cell.view.fid);
+  grid.width.s(_0.grid.width);
+  grid.height.s(_0.grid.height);
+  draw.cell.fid.s(_0.draw.cell.fid);
+  draw.view.fid.s(_0.draw.view.fid);
+ };
+
+ cells.count buffer.size(u0, cells.g,0);
+
+ cell.at {
+  # index
+  buffer.get(u0, cells.g,0, _0);
+ };
+
+ set.cell.vec1d {
+  # i, cell::ui.collection.cell.obj
+
+#  buffer.set(u0, cells.g,0, count, count+1);
+  buffer.set(u0, cells.g,0, _0, _1);
+  cells.updated.s(1);
+
+#  count; 
+#  _ @sys.events;
+#  events.push(u0, ui.pool,owner.id, ui.event.collection.changed, nid,0, _2-x0,_3-y0);
+ };
+
+ add.cell.vec1d {
+  # cell::ui.collection.cell.obj
+  set.cell.vec1d(cells.count, _0);
+ };
+};
+
+# ui.collection.options ]
+
+
+ul.ui.collection.test.snowgame 70150;
+easy.game ul.ui.collection.test.snowgame;
+
+ui.collection.new {
+ # hid, x,y,s, options :: default.options.info
+ _0:=node.new.this.ex4(u0, ui.collection.view , easy.game, _4,0, 0);
+ node.prop.x.s(u0, _0, _1);
+ node.prop.y.s(u0, _0, _2);
+ node.prop.s.s(u0, _0, _3);
+};
+
+#ui.event.collection.cell.moved 1; # dx,dy
+#ui.event.collection.cell.hided 2;

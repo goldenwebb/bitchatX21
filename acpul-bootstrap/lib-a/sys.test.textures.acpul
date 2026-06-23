@@ -1,0 +1,43 @@
+### sys.test.textures
+
+_ @sys.time;
+_ @4;
+_ @os.util0;
+
+_ @basic.ui.shader.node3.inc;
+_ @sys.shader.ex;
+
+new.texture0
+ # hid, x,y,s, w,h
+ new.ui.shader.node3(_0, _1,_2,_3, _4,_5, 70014,28782); # cd.disk.tex1
+
+sn0 0;
+tid0 0;
+
+tex0 0;
+
+if (r0) {
+# x 0; y 0; s 1;
+# new.node.common0(tid0, x,y,s, 300,300, node.fid.by.name(u0, sys.time.test.node), 0);
+
+# new.ui.shader.node3(sn0, 0,0,1, 100,100, 70014,28777); # metamorphosis777
+ new.ui.shader.node3(sn0, 0,0,1, 300,300, 70014,28777); # metamorphosis777
+
+ new.texture0(tid0, x,y,s, 300,300);
+# new.texture0(tid0, x,y,s, 500,500);
+ tex0:=node.value.g(u0, nid,0);
+
+ shader.set.texture(tid0, A.texture0, tex0);
+};
+
+draw(r0, node.fid.by.name(r0, sys.test.textures.test));
+
+TOUCH_POS_X TOUCH_POS_X.TEST_TEXTURE;
+TOUCH_POS_Y TOUCH_POS_Y.TEST_TEXTURE;
+TOUCH_POS_S TOUCH_POS_S.TEST_TEXTURE;
+_ @touch.tool.default.scale0.store;
+
+### sys.test.textures.test
+
+color(u0, 0.9,0.9,0,0.5);
+rect(u0, 6, 0,0, w,h);

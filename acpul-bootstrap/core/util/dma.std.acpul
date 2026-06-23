@@ -1,0 +1,231 @@
+### 1101 dma.std
+
+dma0 0;
+dma1 1;
+dma2 2;
+dma3 3;
+dma4 4;
+dma5 5;
+
+dma.set3 {
+# u0, dma, offset, v0,v1,v2
+ dma_set2(_0, _1, _2, _3,_4);
+ dma_set(_0, _1, _2+2, _5);
+};
+
+dma.set8 {
+# u0, dma, offset, v0,v1,v2,v3,v4,v5,v6,v7
+ u24=_2;
+ dma_set4(_0, _1, u24, _3,_4,_5,_6);
+ dma_set4(_0, _1, u24+4, _7,_8,_9,_10);
+};
+
+dma.get8 {
+ # u0, dma, offset -> o0-o7
+# llog.pv(DMA_4.p, _2+4);
+ dma_get4(_0, _1, _2+4);
+ o4:=o0; o5:=o1; o6:=o2; o7:=o3;
+# llog.pv4(DMA_4, o0,o1,o2,o3);
+# llog.pv(DMA_0.p, _2);
+ dma_get4(_0, _1, _2);
+# llog.pv4(DMA_0, o0,o1,o2,o3);
+};
+
+dma.print0.v {
+ # buf, fmt, v
+ txt0 _0; fmt _1; v _2;
+ txt0:=buffer.new(u0, 100,10000);
+ buffer.dma(u0, dma0, txt0,0);
+ dma.off(u0, dma1);
+ dma.set(u0, dma1,0, v);
+ dma.print(u0, dma0, fmt, dma1);
+ dma.off(u0, dma0);
+};
+
+dma.print0.v2 {
+ # buf, fmt, v0,v1
+ txt0 _0; fmt _1; v0 _2; v1 _3;
+ txt0:=buffer.new(u0, 100,10000);
+ buffer.dma(u0, dma0, txt0,0);
+ dma.off(u0, dma1);
+ dma.set2(u0, dma1,0, v0,v1);
+ dma.print(u0, dma0, fmt, dma1);
+ dma.off(u0, dma0);
+};
+
+dma.print1.v {
+ # buf, fmt, v
+ txt0 _0; fmt _1; v _2;
+ if (txt0==0) {
+  txt0:=buffer.new(u0, 100,10000);
+ };
+ buffer.dma(u0, dma0, txt0,0);
+ dma.off(u0, dma1);
+ dma.set(u0, dma1,0, v);
+ dma.print(u0, dma0, fmt, dma1);
+ dma.off(u0, dma0);
+};
+
+dma.print1.v2 {
+ # buf, fmt, v0,v1
+ txt0 _0; fmt _1; v0 _2; v1 _3;
+ if (txt0==0) {
+  txt0:=buffer.new(u0, 100,10000);
+ };
+ buffer.dma(u0, dma0, txt0,0);
+ dma.off(u0, dma1);
+ dma.set2(u0, dma1,0, v0,v1);
+ dma.print(u0, dma0, fmt, dma1);
+ dma.off(u0, dma0);
+};
+
+dma.print1.v3 {
+ # buf, fmt, v0,v1,v3
+ txt0 _0; fmt _1; v0 _2; v1 _3; v2 _4;
+ if (txt0==0) {
+  txt0:=buffer.new(u0, 100,10000);
+ };
+ buffer.dma(u0, dma0, txt0,0);
+ dma.off(u0, dma1);
+ dma.set3(u0, dma1,0, v0,v1,v2);
+ dma.print(u0, dma0, fmt, dma1);
+ dma.off(u0, dma0);
+};
+
+dma.print1.v4a {
+ # buf,i, fmt, v0-4
+ txt0 _0; i0 _1; fmt _2; v0 _3; v1 _4; v2 _5; v3 _6;
+ if (txt0==0) {
+  txt0:=buffer.new(u0, 100,10000);
+ };
+ buffer.dma(u0, dma0, txt0,i0);
+ dma.off(u0, dma1);
+ dma.set4(u0, dma1,0, v0,v1,v2,v3);
+ dma.print(u0, dma0, fmt, dma1);
+ dma.off(u0, dma0);
+};
+
+
+
+dma.v2a.rect0 {
+# dma,offset, x,y,w,h
+ x _2; y _3; w _4; h _5;
+# dma.set8(u0, _0,_1, x,y, x+w,y, x+w,y+h, x,y+h);
+# dma.set8(u0, _0,_1, x,y, x,y+h, x+w,y+h, x+w,y);
+# dma.set8(u0, _0,_1, x+w,y+h, x+w,y, x,y, x,y+h);
+# dma.set8(u0, _0,_1, x,y+h, x+w,y, x+w,y+h, x,y+h);
+# 3-2
+# | |
+# 0-1
+ x0 x; y0 y; 
+ x1 x; y1 y+h;
+ x2 x+w; y2 y+h;
+ x3 x+w; y3 y;
+# dma.set8(u0, _0,_1, x0,y0, x3,y3, x2,y2, x1,y1);
+# dma.set8(u0, _0,_1, x3,y3, x0,y0, x1,y1, x2,y2);
+# dma.set8(u0, _0,_1, x0,y0, x2,y2, x1,y1, x3,y3);
+# dma.set8(u0, _0,_1, x0,y0, x1,y1, x2,y2, x3,y3);
+# dma.set8(u0, _0,_1, y2,x2, y1,x1, y2,x2, y1,x1);
+ dma.set8(u0, _0,_1, x1,y1, x2,y2, x0,y0, x3,y3);
+};
+
+buffer.new.rect0 {
+ # dma, id, x,y, w,h
+ _1:=buffer.new(u0, 2*4, 2*4);
+ buffer.dma(u0, _0, _1,0);
+ dma.v2a.rect0(_0,0, _2,_3, _4,_5);
+ dma.off(u0, _0);
+};
+
+buffer.add.rect0 {
+ # dma, id, x,y, w,h
+ buffer.dma(u0, _0, _1,buffer.add(u0, _1, 2*4, 2*4));
+ dma.v2a.rect0(_0,0, _2,_3, _4,_5);
+ dma.off(u0, _0);
+};
+
+
+str.clone {
+ # str,i -> buf
+ str0 _0; i0 _1;
+ buf0 d0;
+ buf0:=buffer.new(u0, 100,1000000); # 
+ buffer.dma(u0, 0, str0,_1);
+ buffer.dma(u0, 1, buf0,0);
+ dma.copy(u0, 1,0, 0,0, dma.size(u0, 0)); 
+ buf0;
+};
+
+# DMA UTIL [
+
+  # alloc new buf each time
+  dma.atoi {
+   # v
+   txt0=0;
+   dma.print1.v(txt0, S.format.value0, _0);
+   txt0;
+  };
+
+  # shared buf
+  dma.atoi1 {
+   # v
+   txt0 0;
+   dma.print1.v(txt0, S.format.value0, _0);
+   txt0;
+  };
+
+  # your buf
+  dma.atoi2 {
+   # buf, v
+   txt0 _0;
+   dma.print1.v(txt0, S.format.value0, _1);
+   txt0;
+  };
+#  dma.printv(i);
+
+# DMA UTIL ]
+
+# ******** ********
+# ******** ********
+# ******** ********
+
+
+
+### I.buffer.from.dma
+# Example:
+# buffer.from.dma(buf0, dma0, dma1,i);
+
+buffer.from.dma {
+ # buf, dma0, dma1,b0
+ buf _0; dma0 _1; dma1 _2; n _3;
+ n=dma.size(u0, dma0);
+ buf:=buffer.new(u0, n, n);
+ buffer.dma(u0, dma1, buf,0);
+ dma.copy(u0, dma1,0, dma0,0, n);
+};
+
+buffer.from.dma0 {
+ buf0 0;
+ buffer.from.dma(buf0, 0, 1, 1024)
+ buf0;
+}
+
+### jobj.util
+
+_ @I.buffer.from.dma;
+
+# Example:
+# v=jobj.parse(jobj0, Apple.Key,0);
+# if (o0*v<0) {error;};
+#
+
+jobj.parse {
+ # j0, name,i -> v, o0=err
+ j0 _0; name _1; i _2;
+ dma0 0; dma1 1;
+ buf0 0;
+l11;
+ res=jobj.buf.dma(j0, name, dma0);
+ buffer.from.dma(buf0, dma0, dma1,i);
+ str.parse.value(0, buf0, 0,0); # parse %f
+};

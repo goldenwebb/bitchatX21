@@ -1,0 +1,104 @@
+### 900778 basic.ui.shader.node2
+# w,h, mode, filter
+# [0] -> texutre
+
+mode p2;
+filter0:=p3;
+
+_ @4;
+
+r0:=k==0;
+
+if ((w==0)+(h==0)) {
+ w:=p0;
+ h:=p1;
+};
+
+draw(r0, 900779);
+
+tex0 r1;
+filter0 r2;
+
+if (r0) {
+ create.texture {
+  tex0:=node.ex.texture.create(u0, w,h);
+  node.value.s(u0, nid,0, tex0);
+ };
+ create.texture;
+};
+ 
+#_ @basic.ui.shader.node2.inc;
+#filter.self:=filter0;
+
+#_ @4;
+#ui.value1(l11,0,0,1, filter.self);
+#ui.value1(l11,0,0,1, filter.self);
+#ui.value1(l11,0,0,1, filter.params.count.g);
+
+k:=1;
+
+### 900779 basic.ui.shader.node2.draw
+
+_ @4;
+_ @900776;
+_ @1100;
+_ @util.gl.std;
+
+tex0 r1;
+filter0 r2;
+
+
+_ @basic.ui.shader.node2.inc;
+
+filter.self:=filter0;
+
+ draw.to.tex {
+  node.ex.gl.fbo(u0, tex0);
+  node.ex.gl.clear(u0, 0,0,0,0);
+
+  gl.shader.use(vsh0,fsh0);
+
+  attr0 l1;
+  tunit0 l2;
+  attr0:=0;
+  tunit0:=0;
+  i:=0;
+  n:=min(filter.params.count.g, 100);
+  while(i<n) {
+
+
+   id d10; type d12; v0 d13; v1 d14; v2 d15; v3 d16;
+
+   filter.get.param(i, id,type,v0,v1,v2,v3);
+
+#ui.value1(l13,110,190,1,v0);
+
+   if (type==filter.param.type.texture) {
+    gl.shader.uniform.texture(attr0, v0, tunit0);
+    tunit0+=1;
+   };
+   if (type==filter.param.type.f1) {
+    gl.shader.uniform.f1(attr0, v0);
+   };
+   if (type==filter.param.type.f2) {
+    gl.shader.uniform.f2(attr0, v0,v1);
+   };
+   attr0+=1;
+   i+=1;
+  };
+
+  vsh0 filter.vsh.g;
+  fsh0 filter.fsh.g;
+# vsh0 150004;
+# fsh0 150002;
+
+#ui.value1(l11,110,150,1,vsh0);
+#ui.value1(l12,110,110,1,fsh0);
+
+  gl.rect0(5, 0,0, w,h);
+  node.ex.gl.fbo(u0, -1);
+ };
+
+ draw.to.tex;
+
+ gl.rect0.texture(5, 0,0, w,h, tex0);

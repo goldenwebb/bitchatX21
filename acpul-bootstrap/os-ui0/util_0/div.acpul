@@ -1,0 +1,55 @@
+### ui0.div
+# mode
+#  0 - center x,y. auto scale
+
+mode0 p0;
+
+_ @help.inc1;
+
+#draw.fid(ui0.div.draw);
+
+gap.l=node.get.v0(nid, GAP.L, 0);
+gap.r=node.get.v0(nid, GAP.R, 0);
+gap.t=node.get.v0(nid, GAP.T, 0);
+gap.b=node.get.v0(nid, GAP.B, 0);
+
+x1 r2;
+y1 r3;
+w1 r4;
+h1 r5;
+
+child0=node.get.child.at(u0, nid, 0);
+if (child0>0) {
+ if (mode0==0) {
+  w0=node.get.w(u0, child0)+gap.l+gap.r;
+  h0=node.get.h(u0, child0)+gap.t+gap.b;
+
+  sw=w/w0;
+  sh=h/h0;
+  s0=min(sw,sh);
+
+  x0=(w-w0*s0)/2+gap.l*s0;
+  y0=(h-h0*s0)/2+gap.b*s0;
+
+  node.set.s(u0, child0, s0);
+  node.set.xy(u0, child0, x0,y0);
+
+#  x1:=x0;
+#  y1:=y1;
+#  w1:=w0*s0;
+#  h1:=h0*s0;
+ };
+};
+
+### ui0.div.draw
+
+color(u0, 0.7,0.7,0,0.7);
+rect(u0, 2, 0,0,w,h);
+#rect(u0, 6, 0,0,w,h);
+
+x1 r2;
+y1 r3;
+w1 r4;
+h1 r5;
+
+#rect(u0, 2, x1,y1,w1,h1);

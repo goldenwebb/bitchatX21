@@ -1,0 +1,120 @@
+### simple.clock
+
+_ @4;
+_ @sys.time;
+_ @os.util0;
+
+_ @basic.ui.shader.node3.inc;
+_ @sys.shader.ex;
+
+_ @basic.poly2d;
+_ @basic.poly2d.test;
+_ @basic.lines2d.test;
+
+
+sn2poly 0;
+sn1lines 0;
+
+sn2clock 0;
+
+if ((sn2poly==0)*(w!=0)) {
+ new.poly2d(sn2poly, 0,0,1, w,h);
+ lines2d.figure2(sn2poly);
+
+ new.lines2d(sn1lines, 0,0,1, w,h);
+ lines2d.figure2(sn1lines);
+# lines2d.figure2.color1(sn1lines);
+ lines2d.figure2.color2(sn1lines);
+ shader.set.uniform.v4(sn1lines, A.backgroundColorAdd, -0.9, -0.5, -0.5, 0);
+
+ new.lines2d(sn2clock, 0,0,1, w,h);
+# lines2d.figure5.clock(sn2clock);
+ lines2d.figure5.clock.color1(sn2clock);
+# lines2d.figure5.clock.color2(sn2clock);
+# lines2d.figure5.clock.color3(sn2clock);
+# lines2d.figure3.dialog(sn1lines);
+# lines2d.figure3.color1(sn1lines);
+# lines2d.figure3.dialog(sn2poly);
+};
+
+_ @sys.time;
+
+_ @4;
+
+get.time(u0);
+#lbl0 0; val0 0; ui.value4(lbl0,val0,0,40,1, HH, o2);
+#lbl0 0; val0 0; ui.value4(lbl0,val0,0,20,1, MM, o1);
+#lbl0 0; val0 0; ui.value4(lbl0,val0,0,0,1, SS, o0);
+
+#hh=o2+rnd(u0);
+hh=o2;
+mm=o1;
+ss=o0;
+lines2d.figure5.clock(sn2clock, hh, mm, ss);
+#t+=dt;
+#lines2d.figure5.clock(sn2clock, t, t, t*2);
+
+lines2d.figure5.clock { _;
+ # hid, hh,mm,ss
+ sn1lines _0;
+ hh _1; mm _2; ss _3;
+ r pi*4/24*hh;
+ l 0.2;
+ shader.set.uniformi.v2(sn1lines, A.lineXY, 0, 0,0);
+ shader.set.uniformi.v2(sn1lines, A.lineXY, 1, sin(r)*l,cos(r)*l);
+# shader.set.uniformi.v2(sn1lines, A.lineXY, 1, 0.4,0);
+ shader.set.uniformi.v2(sn1lines, A.lineXY, 2, 0,0);
+ r pi*2/60*mm;
+ l 0.3;
+# shader.set.uniformi.v2(sn1lines, A.lineXY, 3, 0,0.3);
+ shader.set.uniformi.v2(sn1lines, A.lineXY, 3, sin(r)*l,cos(r)*l);
+ shader.set.uniformi.v2(sn1lines, A.lineXY, 4, 0,0);
+ r pi*2/60*ss;
+ l 0.4;
+ shader.set.uniformi.v2(sn1lines, A.lineXY, 5, sin(r)*l,cos(r)*l);
+# shader.set.uniformi.v2(sn1lines, A.lineXY, 5, 0.3,0.3);
+ shader.set.uniformi.v2.count(sn1lines, A.lineXY, 6);
+};
+
+_ @simple.clock.color;
+
+
+### simple.clock.color
+
+lines2d.figure5.clock.color1 {
+ # hid
+ sn1lines _0;
+ shader.set.uniformi.v4(sn1lines, A.lineColor, 0, 1.1,1,0, 1);
+ shader.set.uniformi.v4(sn1lines, A.lineColor, 1, 1.4,1.1,0, 1);
+ shader.set.uniformi.v4(sn1lines, A.lineColor, 2, 0,1,1, 1);
+ shader.set.uniformi.v4(sn1lines, A.lineColor, 3, 0,0,0, 1);
+ shader.set.uniformi.v4(sn1lines, A.lineColor, 4, 0,1,0, 1);
+ shader.set.uniformi.v4(sn1lines, A.lineColor, 5, 0,0,0, 1);
+ shader.set.uniformi.v4.count(sn1lines, A.lineColor, 6);
+};
+
+lines2d.figure5.clock.color2 {
+  # hid
+  sn1lines _0;
+  shader.set.uniformi.v4(sn1lines, A.lineColor, 0, 1.2,0.8,0, 1);
+  shader.set.uniformi.v4(sn1lines, A.lineColor, 1, 1.2,0.8,0, 1);
+  shader.set.uniformi.v4(sn1lines, A.lineColor, 2, 1,0.8,0, 1);
+  shader.set.uniformi.v4(sn1lines, A.lineColor, 3, 1,0.8,0, 1);
+  shader.set.uniformi.v4(sn1lines, A.lineColor, 4, 1.2,0.9,0, 1);
+  shader.set.uniformi.v4(sn1lines, A.lineColor, 5, 1,0,1, 1);
+  shader.set.uniformi.v4.count(sn1lines, A.lineColor, 6);
+ };
+
+lines2d.figure5.clock.color3 {
+  # hid
+  sn1lines _0;
+  r rnd(u0);
+  shader.set.uniformi.v4(sn1lines, A.lineColor, 0, r,r,r, 1);
+  shader.set.uniformi.v4(sn1lines, A.lineColor, 1, r,r,r, 1);
+  shader.set.uniformi.v4(sn1lines, A.lineColor, 2, r,r,r, 1);
+  shader.set.uniformi.v4(sn1lines, A.lineColor, 3, r,r,r, 1);
+  shader.set.uniformi.v4(sn1lines, A.lineColor, 4, r,r,r, 1);
+  shader.set.uniformi.v4(sn1lines, A.lineColor, 5, r,r,r, 1);
+  shader.set.uniformi.v4.count(sn1lines, A.lineColor, 6);
+ };
+

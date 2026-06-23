@@ -1,0 +1,232 @@
+### 200000 stars3d
+
+stars3d.default 200100;
+stars3d.radial 201000;
+
+### 200100 stars3d.default
+
+r0:=k==0;
+
+draw(r0, 200101);
+
+_ @1010;
+_ @1100;
+_ @sys.obj;
+_ @sys.llog;
+
+stars0 r7;
+stars0.n r6;
+stars0.n:=500;
+
+#w 768;
+w 1024;
+h 1024;
+
+new.stars {
+ # stars, count
+ stars0 _0;
+ count _1;
+ 
+ #elem.size=rtf0rgba
+ #r - radius [min, max]
+ #t - thetha [0, pi]
+ #p - phi    [0, 2pi]
+
+ elem.size 8;
+
+ size count*elem.size;
+ stars0:=buffer.new(u0, size,size);
+
+ i:=0;
+ while(i<count) {
+  offset elem.size*i;
+  l5:=i/count;
+
+  buffer.set8(u0, stars0,0, offset, 
+    rnd(u0)*w-w/2, rnd(u0)*h-h/2, rnd(u0), 1,
+    rnd(u0),rnd(u0),rnd(u0),1
+#    0.5+0.5*sin(i*pi*200), l5+0.5*sin(i*pi*112), round((l5*10)%2)*l5/5, 1
+#    0.5+0.5*sin(i*pi*200), l5+0.5*sin(i*pi*112), round((l5*10)%2)*l5/5, 1
+#    0.5+0.5*sin(i*pi*2000), 0.5+0.5*sin(i*pi*112), l5+0.5*sin(i*pi*12), 1
+  );
+
+  i+=1;
+ };
+};
+
+move.stars {
+ # stars, count
+ stars0 _0;
+ count _1;
+ elem.size 8;
+
+ i:=0; while(i<count) {
+  offset elem.size*i;
+  buffer.get4(u0, stars0,0,offset);
+  z o2;
+  o1-=dt*120*z;
+#  o2:=sin(t*5)*0.1+0.5;
+
+  o1:=if(o1>h/2, -h/2, o1);
+  o1:=if(o1<-h/2, h/2, o1);
+
+#  o1-=dt*120;
+#  o1:=if(o1>h/2/z, -h/2/z, o1);
+#  o1:=if(o1<-h/2/z, h/2/z, o1);
+  buffer.set4(u0, stars0,0,offset, o0,o1,o2,o3);
+  i+=1;
+ };
+};
+
+t+=dt;
+
+if (r0) {
+ new.stars(stars0, stars0.n);
+
+ llog.b(A.Stars3d);
+ llog.erase(u0, 0);
+ llog.printo(u0, S.stars0, 0, stars0,-1);
+ llog.e();
+};
+
+x:=350;
+y:=500;
+s:=1.5;
+
+k:=1;
+
+move.stars(stars0, stars0.n);
+
+x:=350;
+y:=500;
+s:=1.5;
+
+k:=1;
+
+
+
+k:=1;
+
+### 200101 stars3d.draw
+
+
+c rnd(u0);
+color(u0, c,c,c,c);
+rect(u0, 6, 0,0,10,10);
+rect(u0, 6, 10,-10,10,10);
+rect(u0, 6, 20,0,10,10);
+
+#rect(u0, 6, 0,0,w,h);
+
+
+vsh 200100;
+fsh 200101;
+gl.shader.use(vsh, fsh);
+
+_ @1010;
+_ @sys.node;
+_ @sys.obj;
+_ @1100;
+_ @util.gl.std;
+
+stars0 r7;
+stars0.n r6;
+
+attr.position 0;
+attr.color 1;
+dma0 0;
+stride 8;
+count stars0.n;
+
+buffer.dma(u0, dma0, stars0,0);
+gl.shader.attribute.dma(attr.position, dma0,0, 3,stride,count, 0,0);
+gl.shader.attribute.dma(attr.color, dma0,4, 4,stride,count, 0,0);
+node.ex.gl.draw(u0, 0, count);
+
+#_ @sys.llog;
+# llog.b(S.Stars3d);
+# llog.printo(r0, S.stars0, 0, stars0,-1);
+# llog.e();
+
+### 200100:S stars.vsh
+
+#define a_position a0
+#define a_color a1
+
+attribute vec4 a_position;
+attribute vec4 a_color;
+
+varying vec2 pointCenter;
+varying float pointSize;
+varying vec4 color;
+
+#define timer CC_Time[3]*0.5
+
+void main()
+{
+    mat3 rotation = mat3(
+        vec3( cos(timer),  sin(timer),  0.0),
+        vec3(-sin(timer),  cos(timer),  0.0),
+        vec3(        0.0,         0.0,  1.0)
+    );
+
+    mat4 m = CC_MVPMatrix;
+//    m[3][0] = timer;
+//    m[3][1] += 0.1*timer;
+//    m[3][2] = timer;
+//    m[3][3] += 2.;
+
+//  gl_Position = CC_MVPMatrix * vec4(rotation * a_position.xyz, 1.);
+//  gl_Position = CC_MVPMatrix * a_position;
+  
+  vec4 pos = a_position;
+
+//  pos.x *= pos.z;
+//  pos.y *= pos.z;
+
+  gl_Position = m * pos;
+//  gl_PointSize = (gl_Position.x+1.0)*10.0;//a_position.x * 1.0;
+//  gl_Position.z = a_position.z;
+  pointSize = 500.*a_position.z;
+//  gl_Position.x = 0.;//*= sin(10.*timer);
+//  pointSize = -1000000.*gl_Position.z;
+//  pointSize = 100.;
+  gl_PointSize = pointSize;
+  color = a_color;
+
+  float SCALE_FACTOR = 2.;
+  pointCenter = SCALE_FACTOR*(CC_MVMatrix * pos).xy;//vec2(250, 450);//gl_Position.xy;
+}
+
+### 200101:S stars.fsh
+
+precision highp float;
+
+varying vec2 pointCenter;
+varying float pointSize;
+varying vec4 color;
+
+//varying vec2 v_texCoord;
+
+//uniform sampler2D CC_Texture0;
+
+void main() {
+//  vec2 a = CC_Random01.xy*100.0+10000.0;
+//  gl_FragColor = texture2D(CC_Texture0, v_texCoord)*vec4(0.5,0.3,1.0,0.5);
+  vec2 offset = gl_FragCoord.xy - pointCenter;
+  float r2 = dot(offset, offset);
+  float sigma2 = 1.90*pointSize;
+  float b = exp(-r2 / (2.0 * sigma2));
+  float gSigma2 = 1.0*pointSize;
+  b += 1.0 * exp(-r2 / (2.0 * gSigma2));
+  b *= (max(0.0, 1.0-abs(offset.x+offset.y)) + max(0.0, 1.0-abs(offset.x-offset.y))) 
+     * 3.0 + 0.5;
+//  vec2 a = vec2(0.5)-offset/10.0;
+//b=offset.x/100.;
+//b=offset.x/768.;
+//b=pointCenter.x/768.;
+//b=gl_FragCoord.x/768.;
+//b+=.5;
+gl_FragColor = vec4(b, b, b, b)*color;
+}
+

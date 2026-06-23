@@ -1,0 +1,270 @@
+### 15110 os.main.panel
+# w,h
+
+r0:=k==0;
+
+#draw(r0, 15111);
+
+w:=p0;
+h:=p1;
+
+_ @1010;
+_ @1100;
+_ @sys.os;
+_ @os.monitor;
+_ @os.util0;
+
+memmon r1;
+memmon0 0;
+memmon1 0;
+memmon2 0;
+memmon3 0;
+netstat0 r3;
+clockbn 0;
+
+blk0 r7;
+
+_ @core.hud;
+
+# IPHONE [
+
+_ @sys.cpu;
+
+cpu.get.device.type(u0);
+device0=o0;
+
+is.ipad device0==cpu.device.type.ipad;
+is.iphone device0==cpu.device.type.iphone;
+
+# IPHONE ]
+
+if (r0) {
+ blk.x h;
+ new.hud.block1(blk0, blk.x,0, w,h, 1, 1, 10, 2,1, 0);
+
+# os.monitor.new.memory(memmon, 5,5,1, h-10,h-10);
+
+ new.node.common0(clockbn, 0,0,1, h,h, node.fid.by.name(u0, os.main.panel.clockbn), 0);
+
+
+ os.monitor.new.memory.v2(memmon0, 100,0,1, h,h);
+ os.monitor.new.battery.v2(memmon1, 200,0,1, h,h);
+# os.monitor.new.disk.v2(memmon2, 300,0,1, h,h);
+ os.monitor.new.total.nodes(memmon2, 300,0,1, h,h);
+ os.monitor.new.fps.v2(memmon3, 400,0,1, h,h);
+
+# os.net.status.view.new(netstat0, 100,-100,1, 200,h);
+};
+
+# livenotify test [
+
+_ @util.livenotify;
+
+lbn0 r2;
+ltb0 r4;
+
+if (r0) {
+ livenotify.button.count.new(lbn0, w-65,25,1);
+# node.prop.s.s(u0, lbn0, 0.5);
+# livenotify.table.notifications.new(ltb0, w-(768-565),0-h,1);
+};
+
+# livenotify test ]
+# button gui old [
+
+_ @1010;
+_ @sys.os;
+_ @os.basic;
+_ @os.util1;
+
+_ @sys.cpu;
+_ @sys.storage;
+
+bn0 r5;
+
+if (r0) {
+ w0 h-20;
+ x0 w-w0+w0/2;#30+15;#-800;
+ y0 0+h/2+2;
+ new.xbutton2(bn0, x0+0,y0,w0,h, ev.open.console, 0, CONSOLE, 0,0,0,0);
+# new.xbutton2(bn0, x0+0,y0,140,h, ev.open.console, 0, CONSOLE, 0,0,0,0);
+
+# node.prop.z.order.s(u0, lbn0, 1);
+ node.prop.z.order.s(u0, bn0, -1);
+};
+
+# SET VISIBLE [
+
+_ @os.util2;
+
+visible0 1;
+
+set.visible {
+ # en
+ en _0;
+ node.set.visible.stop(u0, blk0, en); # BG
+
+ node.set.visible.stop(u0, clockbn, en); # CLOCK
+ node.set.visible.stop(u0, bn1, en); # SAVE
+ node.set.visible.stop(u0, bn2, en); # RESET
+
+ node.set.visible.stop(u0, memmon0, en);
+ node.set.visible.stop(u0, memmon1, en);
+ node.set.visible.stop(u0, memmon2, en);
+ node.set.visible.stop(u0, memmon3, en);
+};
+
+# SET VISIBLE ]
+# BUTTON TIMER [
+
+open.console.canceled 0;
+
+timer0 0;
+
+if (timer0>0) {
+ timer0+=dt;
+};
+
+if (timer0>1) {
+ timer0:=0;
+ open.console.canceled:=1;
+ 
+ # toggle visible
+ visible0:=if(visible0,0,1);
+ set.visible(visible0);
+};
+
+# BUTTON TIMER ]
+# events [
+
+ide.common 15510;
+_ @ide.common;
+
+_ @dota.fly.box1;
+
+events.loop {
+ # ev
+ ev _0;
+
+ if (ev==ui.event.button.push) {
+  bid=o0;
+  xid=node.value.g(u0, bid,1);
+  if (xid==ev.open.console) {
+   timer0:=0.001;
+   open.console.canceled:=0;
+  };
+ };
+ 
+ if (ev==ui.event.button.pop) {
+  bid o0;
+  xid node.value.g(u0, bid,1);
+  timer0:=0;
+
+  if (xid==ev.open.console) {
+   if (open.console.canceled==0) {
+    cpu.debug.console.on(u0, -1);
+    events.push(u0, ide.pool,0, ev.ide.event.open.console, 0, 0,0,0);
+   };
+  };
+  if (xid==ev.save) {
+   cpu.formulas.save(u0, 0, 0);
+
+   storage.save.all.formulas(storage.t.data,70000); # todo
+
+   # Flybox
+   x0 node.prop.x.g(u0,bn1);
+   y0 node.prop.y.g(u0,bn1)/2;
+   fly.box1(x0,y0,0.75, rnd(u0)*100);
+  };
+  if (xid==ev.reset) {
+   cpu.reset(u0, 1000, 0);
+   cpu.set.frame.time(u0, 0); # not works?
+  };
+ };
+};
+
+events.xprocess(nid, events.loop, r2);
+
+#events.push(r0, ide.pool,0, ev.ide.event.open.console, 0, 0,0,0);
+
+qqq {
+process.events {
+ # ev
+ ev _0;
+   watch(ev);
+
+ if (ev==ev.ide.event.open.console) {
+  node.visible.s(u0, 0);
+ };
+};
+
+_ @sys.events;
+ev0 d0;
+ev0:=events.pop(u0, ide.pool,0);
+#watch(ev0);
+while(ev0) {
+watch(ev0);
+ process.events(ev0);
+  
+ ev0:=events.pop(u0, ide.pool, 0);
+};
+};
+
+
+#ev0 d0;
+#ev0:=events.pop(u0, ide.pool,0);
+#watch(ev0);
+
+# events ]
+# button gui old ]
+# buttons [
+
+
+bn1 l10;
+bn2 l11;
+
+if (r0) {
+# x0 510+w0/2;
+ x0 0;
+ y0 0;
+ w0 0;
+ h0 0;
+ dw 0;
+ x1 0;
+ # view.size
+ ww 0;
+ xx 0;
+ if (is.ipad) { 
+  last.bn.width 60;
+  w0:= 67;
+  h0:= 50;
+  x0:= w - w0 * 2 - last.bn.width;
+  y0:= 25+h0/2;
+  dw:= w0+10;
+  x1:=x0+dw;
+ };
+ if (is.iphone) {
+  last.bn.width 60;
+  xx:=100;
+  ww:=w-100*2;
+  w0:= 67;
+  h0:= 50;
+  x0:= xx + ww/4;# + w0/2;# + 10 + w0/2; #w0 * 2 - last.bn.width;
+  y0:= 5 + h0/2;
+  dw:= w0+10;
+  x1:= xx + ww*3/4;# + w0/2; #w - 100 - w0/2;
+ };
+ new.xbutton2(bn1, x1,y0,w0,h0, ev.save, 0, SAVE, 0,0,0,0);
+ new.xbutton2(bn2, x0,y0,w0,h0, ev.reset, 0, RESET, 0,0,0,0);
+};
+
+# buttons ]
+
+k:=1;
+
+### 15111 os.main.panel.draw
+
+color(u0, 1,1,1,1);
+rect(u0, 6, 0,0,w,h);
+
+

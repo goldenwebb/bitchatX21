@@ -1,0 +1,12 @@
+### 90800 os.basic.paint
+
+os.plant.tree 90860;
+os.test.forest 90850;
+
+new.plant.tree {
+ # hid, x,y,s, w,h, depth, options
+ _ @os.basic.ui;
+ depth _6;
+ new.node.common4(_0, _1,_2,_3, _4,_5, os.plant.tree, depth, _7, 0,0,0);
+};
+

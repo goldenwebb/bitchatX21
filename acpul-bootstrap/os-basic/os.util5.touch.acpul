@@ -1,0 +1,95 @@
+### 90250 os.util4.touch
+
+# touchy [
+
+touchy.vars {
+ e.pool0 16000;
+ e.pid0 view0;
+
+ clicked r1;
+ dx.max 5;
+ dy.max 5;
+
+ pressed r3;
+
+ # internal
+
+ x0 l10;
+ y0 l11;
+ xs l4;
+ ys l5; 
+
+ touch.id l8;
+ touch.b0 l9;
+};
+
+# touchy {_; _ vars;};
+
+touchy.step {
+ _ @sys.os;
+ _ @os.util2;
+
+event0 events.push(u0, e.pool0,e.pid0, _0, _1,_2, _3,_4);
+
+_ @sys.touch;
+_ @sys.events;
+
+touch.ev {
+ began {
+  # x,y, gx,gy
+
+  x0:=_2;
+  y0:=_3;
+  xs:=x0;
+  ys:=y0;
+
+  pressed:=1;
+  clicked:=1;
+
+  event0(ui.event.touch.began, nid,0, x0,y0);
+
+#  events.push(u0, ui.pool,owner.id, ui.event.button.push, nid,0, _2-x0,_3-y0);
+#  events.push(u0, errors.pool,cell0, ui.event.button.push, nid,0, x0,y0);
+#  node.z.order.s(u0, 10000);
+ };
+ moved {
+  # x,y, gx,gy
+
+  event0(ui.event.touch.move, nid,0, _2-x0,_3-y0);
+
+  x0:=_2;
+  y0:=_3;
+
+  # check clicked
+  if (abs(y0-ys)>dy.max) {
+   clicked:=0;
+  };
+
+ };
+ ended {
+  # x,y, gx,gy
+
+  pressed:=0;
+
+  event0(ui.event.touch.ended, nid,0, _2-x0,_3-y0);
+
+#  events.push(u0, errors.pool,cell0, ui.event.button.pop, nid,0, x0,y0);
+#  if (clicked) {
+#   events.push(u0, errors.pool,cell0, ui.event.button.click, nid,0, x0,y0);
+#  };
+#  node.z.order.s(u0, 0);
+ };
+};
+
+#if ((visible==1)+(pressed==0)) {
+
+ touch.rect2.lock(touch.id, 0,0,w,h);
+
+ _ @sys.touch.ev.process.once;
+ touch.b0:=1;
+ touch.ev.process.multi;
+#};
+
+};
+
+# touchy  ]

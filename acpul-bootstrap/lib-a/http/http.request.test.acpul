@@ -1,0 +1,79 @@
+### http.request.test
+
+_ @easy.start.new;
+_ @http.request;
+_ @sys.http;
+
+x:=100;
+y:=300;
+w:=200;
+h:=160;
+
+handle0 0;
+
+# HTTP REQUEST [
+
+http0 0;
+
+if (r0) {
+ req0=make.req.get(S.binance.host, S.binance.path.BTCUSDT);
+ http0:=new.http.request(0,160,1, 300,100, req0, handle0, 10, 0, 0, 0, 1);
+};
+
+# HTTP REQUEST ]
+# HTTP RESPONSE HTTP0 [
+
+res0.jo 0;
+res0.raw 0;
+res0.obj1 0;
+res0.reqid 0;
+
+http.evs {
+ # ev, o0... - event
+ if (_0==http.event.res) {
+  res0.jo:=o0;
+  res0.raw:=o1;
+  res0.obj1:=o2;
+  res0.reqid:=o3;
+ };
+};
+ui.event.process4(www.pool2,http0, http.evs);
+
+# HTTP RESPONSE HTTP0 ]
+# HTTP RESPONSE GROUP [
+
+res1.reqid 0;
+
+http.group.evs {
+ # ev, o0... - event
+ if (_0==http.event.res) {
+  res1.reqid:=o3;
+ };
+};
+ui.event.process4(www.pool3,handle0, http.group.evs);
+
+# HTTP RESPONSE GROUP ]
+# INFO [
+
+_ @4;
+
+info {
+lbl0 0; val0 0; ui.value4(lbl0,val0,0,0,1, S.TEST.http0, http0);
+
+lbl0 0; val0 0; ui.value4(lbl0,val0,0,20,1, S.res0.jo, res0.jo);
+lbl0 0; val0 0; ui.value4(lbl0,val0,0,40,1, S.res0.raw, res0.raw);
+lbl0 0; val0 0; ui.value4(lbl0,val0,0,60,1, S.res0.obj1, res0.obj1);
+lbl0 0; val0 0; ui.value4(lbl0,val0,0,80,1, S.res0.reqid, res0.reqid);
+
+lbl0 0; val0 0; ui.value4(lbl0,val0,0,100,1, S.res1.reqid, res1.reqid);
+};
+info;
+
+# INFO ]
+
+draw.fid(http.request.test.draw);
+
+### http.request.test.draw
+
+color(u0, 0.2,0.2,0.8,0.8);
+rect(u0, 6, 0,0,w,h);

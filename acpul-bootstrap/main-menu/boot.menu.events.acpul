@@ -1,0 +1,8 @@
+### boot.menu.events.exec
+
+# NEW - TODO: Refactor, see menu.apps
+
+  if (_0==boot.event.toggle.hn) {
+   toggle.hackernews;
+  };
+

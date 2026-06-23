@@ -1,0 +1,11 @@
+### process.events.button.push
+
+process.events.button.push {
+ # bn, fn
+ bn0 _0;
+ tb0=1; while(tb0) { tb0:=ui.event(bn0);
+  if (tb0==ui.event.button.push) {
+   _1;
+  };
+ };
+};

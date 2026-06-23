@@ -1,0 +1,113 @@
+### 900780 basic.ui.texture.stack
+# w,h, filters.array
+# (0) - textures
+
+# filters.array = filter, filter..
+
+r0:=k==0;
+
+_ @4;
+_ @900776;
+
+draw(r0, 900781);
+
+if ((w==0)+(h==0)) {
+ w:=p0;
+ h:=p1;
+};
+
+if (r0) {
+ textures0:=buffer.new(u0, 10,1000);
+ create.nodes;
+};
+
+create.nodes {
+ i:=0;
+ while(i<min(3,n)){
+  cid0 l0;
+  new.ui.shader.node2(cid0, 0,0,1, w,h, filter0);
+
+  tex0 node.value.g(u0, cid0,0);
+
+  buffer.set(u0, textures0,0,i, tex0);
+ };
+};
+
+node.value.s(u0, nid,0, textures0);
+
+k:=1;
+
+### 900781 basic.ui.texture.stack.draw
+
+rect(u0, 6, 0,0,w,h);
+
+
+### 900777 basic.ui.texture.stack.filters.inc
+
+filters.array { _;
+ new {
+  self:=buffer.new(u0, 10,1000);
+ };
+ get {
+  # i -> filter
+  buffer.get(u0, self,0,_0);
+ };
+ add {
+  # filter
+  buffer.append(u0, self,0, _0);
+ };
+};
+
+
+
+### 900799 basic.ui.test.texture.stack
+
+filters.array.inc 900777;
+
+filters.array.self l5;
+_ @filters.array.inc;
+
+test.texture.stack {
+ filters0 l1;
+ filters0:=buffer.new(u0, 10,1000);
+
+ f0 l3;
+ f1 l4;
+
+ filters.self f2;
+
+ filters.new;
+ filters.init(0,fsh,vsh);
+ 
+ f0:=filters.self;
+
+ filters.new;
+ filters.init(0,fsh,vsh);
+
+ f1:=filters.self;
+
+ buffer.append(u0, filters0,0, f0);
+ buffer.append(u0, filters0,0, f1);
+
+ new.ui.texture.stack(ts0, 0,0,1, w,h, filters0);
+
+ textures0 node.value.g(u0, ts0,0);
+
+ texi buffer.get(u0, textures0,0,_0);
+
+ node.texture.texi {
+  # tex0, texi
+  tex0 _0;
+  texi _1;
+  textures0 node.value.g(u0, _0,0);
+  buffer.get(u0, textures0,0,_1);
+ };
+
+# texi node.texture.texi(ts0, 0);
+
+ filters.self:=f0;
+ filters.add.texture(texi(1));
+ filters.self:=f1;
+ filters.add.texture(texi(0));
+};
+

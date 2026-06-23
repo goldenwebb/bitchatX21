@@ -1,0 +1,137 @@
+### 70300 ul.ui.windows
+
+ul.ui.window.header 70302;
+ul.ui.windows.list 70320;
+
+ul.ui.windows.bn0 70350;
+
+ul.ui.windows.edge0 70360;
+ul.ui.windows.wnd.control0 70370;
+
+ui.event.windows.move 1;
+ui.event.windows.edge0.move 2;
+
+ui.window.context {
+ _ @sys.obj;
+ 
+ a {
+  x 0;
+  y 1;
+  w 2;
+  h 3;
+ };
+
+ vg buffer.get(u0, isavar,0, _0);
+ vs buffer.set(u0, isavar,0, _0, _1);
+ 
+ #x.g buffer.get(u0, isavar,0, a.x);
+ x.g vg(a.x); x.s vs(a.x, _0);
+ y.g vg(a.y); y.s vs(a.y, _0);
+ w.g vg(a.w); w.s vs(a.w, _0);
+ h.g vg(a.h); h.s vs(a.h, _0);
+
+ xywh.s {x.s(_0); y.s(_1); w.s(_2); h.s(_3);};
+ xywh.g {
+  # x,y,w,h
+  _0:=wctx.x.g;
+  _1:=wctx.y.g;
+  _2:=wctx.w.g;
+  _3:=wctx.h.g;
+ };
+
+ new {
+  isavar:=buffer.new(u0, 100,100);
+ };
+
+ new1.xywh {
+  new;
+  xywh.s(__);
+ };
+};
+
+### 70320 ul.ui.windows.list
+
+### 70320 ul.ui.windows.list.draw
+
+### 70350 ul.ui.windows.button.custom.bn0
+# pid, w,h, param
+
+r0:=k==0;
+
+pid p0; 
+param p3;
+
+if (r0) {
+ w:=p1;
+ h:=p2;
+};
+
+draw(r0, 70351);
+
+type r8;
+type:=param;
+#watch(r8);
+
+# events [
+
+_ @1010;
+_ @sys.ul.ui;
+
+pressed r4;
+
+tb0 l7;
+tb0:=1;
+while(tb0) {
+ tb0:=ui.event(pid);
+ if (tb0==ui.event.button.push) {
+  pressed:=1;
+ };
+ if (tb0==ui.event.button.pop) {
+  pressed:=0;
+ };
+};
+
+# events ]
+
+t+=dt;
+#x:=sin(t)*100;
+
+#s:=4+sin(t*2)*2;
+#
+#:=rnd(u0)*3600;
+
+
+k:=1;
+
+### 70351 ul.ui.windows.button.custom.bn0.draw
+
+pressed r4;
+type r8;
+
+color(u0, 0.5,0,0,0.2);
+rect(u0, 6, 0,0,w,h);
+
+psize(u0,1);
+
+if(pressed, 
+ color(u0, 1,1,1,1),
+ color(u0, 0.2,1,0.5,1));
+
+глаз {
+ color(u0, 1,1,1,1);
+ circle(u0, 6, w/2,h/2, 10, 0, 20, 0);
+ color(u0, 0,0,0,1);
+ circle(u0, 6, w/2+sin(t*10)*0,h/2+cos(t*10)*h/10, 5, 0, 20, 0);
+# circle(u0, 6, 67,70, 20, 0, 20, 0);
+};
+
+if (type==0) {
+ rect(u0, 6, 1+w/4,1,w/2-2,h-2);
+ rect(u0, 6, 1,1+h/4,w-2,h/2-2);
+ глаз;
+};
+if (type==1) {
+ rect(u0, 6, 1,1+h/4,w-2,h/2-2);
+ глаз;
+};
+

@@ -1,0 +1,194 @@
+### rt0.texture.node.multisize
+# texures.max
+# 0:tex - active texture
+# 1:noclr - disable clear all textures
+
+textures.max p0;
+
+tex0 r1;
+
+_ @1010;
+_ @sys.node;
+_ @1100;
+_ @ul.ui;
+_ @sys.os;
+_ @os.basic.ui;
+_ @os.util0;
+_ @os.util2;
+_ @sys.cpu;
+_ @sys.obj;
+_ @basic.ui.shader.node3.inc;
+_ @sys.storage.ex;
+_ @dma.std;
+_ @sys.shader.ex;
+
+
+if (r0) {
+# tex0:=node.ex.texture.create(u0, w0,h0);
+ node.ex.child.draw.s(u0, 0);
+};
+
+
+#draw(r0, NNN(rt0.texture.node.draw));
+draw(r0, NNN(rt0.texture.node.multisize.draw));
+
+
+node.value.s(u0, nid,0, tex0);
+
+
+
+create.texture
+ # w,h -> tex0
+ node.ex.texture.create(u0, _0,_1);
+
+# TEXTURES [
+
+textures {
+ textures0 0;
+ 
+ texture.item {
+  w 0;
+  h 0;
+  tex 0;
+ };
+ itemsize 3;
+
+ init
+  textures0:=buffer.new(u0, textures.max*itemsize,textures.max*itemsize);
+};
+
+textures.get {
+ # i, out:w:h:tex
+ i _0;
+ _1:=buffer.get(u0, textures0,0,i*itemsize);
+ _2:=buffer.get(u0, textures0,0,i*itemsize+1);
+ _3:=buffer.get(u0, textures0,0,i*itemsize+2);
+};
+textures.set {
+ # i, w:h:tex
+ i _0;
+ buffer.set(u0, textures0,0,i*itemsize, _1);
+ buffer.set(u0, textures0,0,i*itemsize+1, _2);
+ buffer.set(u0, textures0,0,i*itemsize+2, _3);
+};
+
+textures.count
+ buffer.size(u0, textures0,0)/itemsize;
+
+textures.add {
+ # w,h -> tex
+ w0 _0; h0 _1;
+ tex0 0;
+ if (textures.count<textures.max) {
+  i=textures.count;
+  tex0:=create.texture(w0,h0);
+  textures.set(i, w0,h0,tex0);
+ };
+ tex0;
+};
+
+textures.find {
+ # w,h -> tex
+ w0 _0; h0 _1;
+ tex0=0;
+ found=0;
+ n=textures.count;
+ i=0;while(i<n){
+  w1 0; h1 0;
+  textures.get(i, w1,h1,tex0);
+  if ((w0==w1)*(h0==h1)) {
+   found:=tex0;
+   i:=n;
+  };
+  i+=1;
+ };
+ found;
+};
+
+if (r0) {
+ textures.init;
+};
+
+# TEXTURES ]
+
+dbg0 0;
+
+active.w 0;
+active.h 0;
+
+check {
+ tex1 0;
+ if ((w>0)*(h>0)) {
+  if ((active.w!=w)+(active.h!=h)) {
+   tex1:=textures.find(w,h);
+   if (tex1<=0) {
+    # not found
+    tex1:=textures.add(w,h);
+   };
+   if (tex1>0) {
+    tex0:=tex1;
+   };
+   active.w:=w;
+   active.h:=h;
+   dbg0:=textures.find.found;
+#   dbg0:=textures.find.tex0;
+#   dbg0+=1;
+#   dbg0:=tex1;
+  };
+ };
+};
+check;
+
+info {
+_ @4;
+x0 10;
+y0 50;
+lbl0 0; val0 0; ui.value4(lbl0,val0,x0,y0+10,0.5, A.rtm.w, w);
+lbl0 0; val0 0; ui.value4(lbl0,val0,x0,y0+0,0.5, A.rtm.h, h);
+lbl0 0; val0 0; ui.value4(lbl0,val0,x0,y0+20,0.5, A.rtm.tex.n, textures.count);
+#y0+=10; # crash?
+lbl0 0; val0 0; ui.value4(lbl0,val0,x0,y0+40,0.5, A.rtm.a.w, active.w);
+lbl0 0; val0 0; ui.value4(lbl0,val0,x0,y0+30,0.5, A.rtm.a.h, active.h);
+
+lbl0 0; val0 0; ui.value4(lbl0,val0,x0,y0+50,0.5, A.dbg0, dbg0);
+
+lbl0 0; val0 0; ui.value4(lbl0,val0,x0,y0+60,0.5, A.tex0, tex0);
+lbl0 0; val0 0; ui.value4(lbl0,val0,x0,y0+70,0.5, A.check.tex1, check.tex1);
+};
+#info;
+
+
+
+### rt0.texture.node.multisize.draw
+
+#w 500; h 500;
+
+#color(u0, 1,1,0,1);
+rect(u0, 2, 0,0, w,h);
+
+_ @4;
+_ @900776;
+_ @1100;
+_ @util.gl.std;
+
+_ @sys.obj.key;
+_ @sys.shader.ex;
+
+tex0 r1;
+
+if (tex0>0) {
+ draw.to.fbo;
+};
+
+noclr node.value.g(u0, nid,1);
+
+draw.to.fbo {
+ node.ex.gl.fbo(u0, tex0);
+ node.ex.gl.clear(noclr==0, 0,0,0,0);
+
+ node.ex.gl.child.draw(u0);
+
+ node.ex.gl.fbo(u0, -1);
+};
+
+gl.rect0.texture(5, 0,0, w,h, tex0);

@@ -1,0 +1,56 @@
+### sys.cpu.future
+
+# CPU EXT [
+
+cpu.is.formula.present {
+ # fid
+ fname0 0;
+ if (fname0==0) {
+  fname0:=buffer.new(u0, 100,10000);
+ };
+ cpu.get.formula.name(u0, 0, _0, fname0) > 0;
+};
+
+# CPU EXT ]
+
+cpu.is.iphone {
+ cpu.get.device.type(u0);
+ o0==cpu.device.type.iphone;
+# 1; 
+};
+
+cpu.is.ipad {
+ cpu.get.device.type(u0);
+ o0==cpu.device.type.ipad;
+};
+
+# EXTRA FID NAME NID [
+
+# Returns fid by name
+#cpu.get.fid.by.name
+# # name -> fid
+# io(_0, 5004xx, _1, 0,0,0);
+
+# Returns nids for fid
+cpu.get.nodes.for.formula
+ # bid, fid -> buf nids
+ io(_0, 500448, _1, _2, 0,0);
+
+# Returns first nid for fid
+cpu.get.first.node.for.formula
+ # fid -> nid
+ io(_0, 500449, _1, 0,0,0);
+
+
+#node.nid.for.formula cpu.get.first.node.for.formula.name(__); # alias
+
+cpu.get.first.node.for.formula.name {
+ # u0, name -> nid
+ fid1=NNN(_1);
+ nid1=cpu.get.first.node.for.formula(_0, fid1);
+ nid1;
+};
+
+# EXTRA FID NAME NID ]
+
+

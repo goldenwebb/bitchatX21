@@ -1,0 +1,160 @@
+### ui0.vstack
+# mode
+#  0 - sync.width
+#  1 - sync.width, auto.height
+# GAP.Y - gap
+# DIRECTION.Y - direction
+#  0 - up
+#  1 - down
+
+_ @ui0.xstack.common;
+
+# Just a list
+simple.list 0;
+
+# child limit to parent height by formula cell.h = h * weight / weights
+limit.to.parent.weights 0; 
+
+weight0 0;
+weights0 0;
+
+# Mode 0: simple list
+if (mode0 == 0) {
+ sync.width := 1;
+ simple.list := 1;
+};
+
+# Mode 1: common width
+if (mode0 == 1) {
+ sync.width := 1;
+ auto.height := 1;
+ simple.list := 1;
+};
+
+# Mode 2: common cell height with weights
+if (mode0 == 2) {
+ limit.to.parent.weights := 1;
+};
+
+gap.y = node.get.v(nid, GAP.Y);
+gap.y := if(gap.y<0,0,gap.y);
+direction0 = node.get.v0(nid, DIRECTION.Y, 1); # default: UP
+
+layout.nodes.vstack {
+ x0=0;
+ y0=0;
+ w0=w;
+
+ n=node.get.children.count(u0, nid);
+
+ # calc y min [
+
+ y0.min 99999999999;
+
+# n=3;
+ i=0; while(i<n) {
+  cid0=node.get.child.at(u0, nid, i);
+  if (direction0==1) {
+   y0-=node.get.h(u0, cid0)+gap.y;
+   y0.min:=if(y0<y0.min,y0,y0.min);
+# y0.min:=-100;
+  };
+  i+=1;
+ };
+
+# y0.min:=-100;
+
+ # calc y min ]
+
+ y0:=0;
+
+ weights1=0;
+
+ i=0; while(i<n) {
+  cid0=node.get.child.at(u0, nid, i);
+
+  # Sync width
+  if (sync.width) {
+   node.set.x(u0, cid0, x0);
+   node.set.w(u0, cid0, w0);
+  };
+
+  # Simple list
+  if (simple.list) {
+   if (direction0==0) {
+    node.set.y(u0, cid0, y0);
+    y0+=node.get.h(u0, cid0)+gap.y;
+   };
+   if (direction0==1) {
+    y0-=node.get.h(u0, cid0)+gap.y;
+    node.set.y(u0, cid0, y0-y0.min);
+   };
+  };
+
+  # Use weights
+  if (limit.to.parent.weights) {
+   weight0:=node.get.v(cid0, WEIGHT);
+   weights1+=weight0;
+
+   # Calc size for weight s = weights/cell.weight
+   if (weights0>0) {
+    h1=h0 * weight0/weight0;
+    node.set.w(u0, cid0, h1);
+    y0+=h1;
+   };
+
+   # Default size for no weights
+#   if (weights0<=0) {
+#    w1=w0/n;
+#    node.set.w(u0, cid0, w1);
+#    x0+=w1;
+#   };
+  };
+
+  i+=1;
+ };
+
+ weights0:=weights1;
+
+ # Auto height
+ if (auto.height) {
+  if (direction0==0) {
+   h:=y0;
+  };
+  if (direction0==1) {
+   h:=-y0.min;
+  };
+ };
+};
+
+layout.nodes.vstack;
+
+# PROCESS EVENTS ENTRIES [
+
+_ @sys.events;
+
+entry.ev {
+ # ev, o0... - event
+ x0 0;
+ y0 0;
+ if (_0==ui.event.touch.began) {
+  # nid,0, gx,gy
+  x0:=o2;
+  y0:=o3;
+ };
+ if (_0==ui.event.touch.move) {
+  # nid,0, dx,dy
+  dx=o2; dy=o3;
+#  x0+=_2;
+#  x+=dx;
+  y+=dy;
+ };
+ if (_0==ui.event.touch.end) {
+ };
+};
+
+ui.event.process4(ui.pool,nid, entry.ev);
+
+# PROCESS EVENTS ENTRIES ]
+
+# lbl0 0; val0 0; ui.value4(lbl0,val0,0,0,1, DX, dx);

@@ -1,0 +1,88 @@
+### 70128 ui.collection.cell.obj
+
+# base [
+
+ui.collection.cell.obj {
+ _ @sys.obj;
+
+# isavar l0;
+
+ vg buffer.get(u0, isavar,0, _0);
+ vs buffer.set(u0, isavar,0, _0, _1);
+ a {
+  nid 0;
+  i 1;
+  j 2;
+  show 3;
+  max 100;
+ };
+
+ nid.g vg(a.nid); nid.s vs(a.nid, _0);
+ i.g vg(a.i); i.s vs(a.i, _0);
+ j.g vg(a.j); j.s vs(a.j, _0);
+ show.g vg(a.show); show.s vs(a.show, _0);
+
+ new {
+  isavar:=buffer.new(u0, a.max,a.max);
+  show.s(0);
+ };
+};
+
+# base ]
+# type0 [
+
+ui.collection.cell.obj.type0 {
+ _ ui.collection.cell.obj;
+
+ vg1 buffer.get(u0, isavar,1, _0);
+ vs1 buffer.set(u0, isavar,1, _0, _1);
+ a1 {
+  fid 0;
+  p0 1;
+  p1 2;
+  obj0 8;
+  obj1 9;
+ };
+
+ fid.g vg1(a1.fid); fid.s vs1(a1.fid, _0);
+ p0.g vg1(a1.p0); p0.s vs1(a1.p0, _0);
+ p1.g vg1(a1.p1); p1.s vs1(a1.p1, _0);
+ obj0.g vg1(a1.obj0); obj0.s vs1(a1.obj0, _0);
+ obj1.g vg1(a1.obj1); obj1.s vs1(a1.obj1, _0);
+
+ new0 new;
+ new {
+  new0;
+  buffer.add(u0, isavar,10,1000);
+ };
+
+ init.test0 {
+  cv 70150; cv.p0 0; cv.p1 0;
+
+  fid.s(cv);
+  p0.s(cv.p0);
+  p1.s(cv.p1);
+ };
+};
+
+# type0 ]
+# type0.text [
+
+ui.collection.cell.obj.type0.text {
+ _ ui.collection.cell.obj.type0;
+
+ a1.text 10;
+
+ text.g vg1(a1.text); text.s vs1(a1.text, _0);
+
+ init.text0 {
+  cv 70152; cv.p0 0; cv.p1 0;
+
+  fid.s(cv);
+  p0.s(cv.p0);
+  p1.s(cv.p1);
+ };
+
+};
+
+# type0.text ]

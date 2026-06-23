@@ -1,0 +1,126 @@
+### 900750 basic.ui.value
+# mode
+#  0 - default 0.00
+#  1 - kb 1.2G
+# (0) - value
+# (1) - style
+
+r0:=k==0;
+
+_ @1010;
+_ @sys.node;
+
+_ @sys.os;
+_ @os.basic;
+_ @os.basic.ui;
+_ @os.util2;
+
+
+#node.value.s(u0, nid,0, 111);
+
+value0 r1;
+value0:=node.value.g(u0, nid,0);
+
+mode p0;
+
+draw(r0, 900751);
+
+style r2;
+style:=node.value.g(u0, nid,1);
+
+
+
+k:=1;
+
+### 900751 basic.ui.value.draw
+
+mode p0;
+
+
+#_ @4;
+_ @1010;
+_ @1100;
+_ @sys.obj;
+_ @sys.os;
+_ @os.basic;
+_ @os.basic.ui;
+
+_ @twobin.font.inc;
+
+_ @basic.ui.util;
+
+value0 r1;
+
+twobin.font.def8x4.txt0 {
+ begin;
+ cy:=0;
+};
+twobin.font.def8x4.txt0;
+
+twobin.font.scale h/8; #l3
+twobin.font.cursor.x l0;
+twobin.font.cursor.y l1;
+#twobin.font.cursor.y l1+110*sin((cursor.x+t*100)*0.01);
+#twobin.font.gap 10+5*rnd(u0);
+#twobin.font.gap 10+5*sin(sin(t*10)+cursor.x);
+twobin.font.gap 10;
+
+t0 l10;
+twobin.font.def8x4.print.buf0 t0;
+
+style r2;
+
+if (style == 0) {
+# bg color
+#color(u0, 0, 0.5, 0, 0.7);
+#color(u0, 0, 0.5, 0.8, 0.7);
+color(u0, 0.1, 0, 0.3, 0.2);
+rect(u0, 2, 0,0,w,h);
+
+# chars color
+#color(u0, 1, 0, 0, 0.7);
+psize(u0, 1);
+#color(u0, 1, 1, 0, 0.7);
+color(u0, 1, 0.3, 0.8, 0.7);
+};
+
+chars.color.white 1;
+if (style == 1) {
+ psize(u0, 1);
+ color(u0, 1, 1, 1, 1);
+};
+
+mode p0;
+
+# mode 0 : format 0.00 [
+
+if (mode == 0) { 
+ twobin.font.def8x4.print.v1(S.format.value0a, value0);
+};
+
+# mode 0 : format 0.00 ]
+# mode 1 : format 1.23G - 1024bytes T/G/M/K/bytes [
+
+if (mode == 1) {
+ twobin.font.def8x4.print.v1a.kb(S.format.value1024bytes, value0);
+};
+
+# mode 1 : format 1.23G - 1024bytes T/G/M/K/bytes ]
+# mode 2 : format 0 [
+
+if (mode == 2) { 
+ twobin.font.def8x4.print.v1(S.format.value0, value0);
+};
+
+# mode 2 : format 0 ]
+
+update.node.width {
+ _ @sys.node;
+ _ @os.util2;
+
+ node.prop.w.s(u0, nid,twobin.font.cursor.x);
+};
+
+update.node.width;
+
+

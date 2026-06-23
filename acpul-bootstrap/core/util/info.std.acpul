@@ -1,0 +1,40 @@
+### 1106 info.std
+
+# llog font [
+
+llog.font.dump.meta {
+ # font, b0
+ font0 _0;
+ b0 _1;
+
+# todo:
+ media.font.obj0.isavar font0;
+ media.font.obj0.pchar b0;
+ _ @util.media.font.obj;
+ _ media.font.obj0;
+
+ llog.pv(S.font, font0);
+ llog.pv(S.font.type, type);
+ llog.pv(S.font.count, count);
+ llog.pv3(S.font.min.xyz, min.x, min.y, min.z);
+ llog.pv3(S.font.max.xyz, max.x, max.y, max.z);
+
+ i:=0;
+ b0:=8; while(b0<buffer.size(u0, font0,1)) {
+
+  llog.pv(S.font.I, i);
+  llog.pv(S.font.charCode, infoChar.charCode);
+  llog.pv(S.font.texture, infoChar.texture);
+  llog.pv(S.font.position, infoChar.position);
+  llog.pv(S.font.length, infoChar.length);
+  llog.pv4(S.font.rect, infoChar.rect.min.x, infoChar.rect.min.y, infoChar.rect.max.x, infoChar.rect.max.y);
+#  llog.pv2(S.font.rect.min.xy, infoChar.rect.min.x, infoChar.rect.min.y);
+#  llog.pv2(S.font.rect.max.xy, infoChar.rect.max.x, infoChar.rect.max.y);
+
+  i+=1;
+  b0+=8;
+ };
+};
+
+# llog font ]
+

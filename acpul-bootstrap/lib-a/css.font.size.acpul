@@ -1,0 +1,27 @@
+### css.font.size
+
+# CSS [
+# https://jameshfisher.com/2024/03/12/a-formula-for-responsive-font-size/
+
+css {
+ # 00
+ width0 100;
+ # 0
+ calc _0;
+ # 1
+ rem _1*1;
+ vw _1*1;
+ px _2*1;
+ # 3
+ min.width _0>width0;
+ root { _;
+  font.size calc(rem(1) + vw(0.25));
+ };
+ p { _; font.size = rem(1.125); };
+ media if(min.width(px(740))) {
+  p { _; font_size = rem(1.25); };
+ };
+};
+
+# CSS ]
+

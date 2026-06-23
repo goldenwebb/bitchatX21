@@ -1,0 +1,72 @@
+### 1102 gl.std
+
+# review [
+
+node.ex.shader.attribute.dma0 
+ # attribute, dma,elementsize,count, normalized
+ node.ex.shader.attribute.dma(u0, _0, _1,0,_2,0,_3, 0,_4);
+
+gl.shader.attribute.buffer0 {
+ # attribute, dma, buffer,i, elementsize,count,normalized
+ buffer.dma(u0, _1, _2,_3);
+ node.ex.shader.attribute.dma0(_0, _1,_4,_5, _6);
+};
+
+gl.shader.attribute.dma
+ # attribute, dma,offset, elsize,stride,count, type,normalized
+ node.ex.shader.attribute.dma(u0, _0, _1,_2, _3,_4,_5, _6,_7);
+
+# review ]
+
+gl.shader.use 
+ # vsh, fsh
+ node.ex.shader.use(u0, _0, _1);
+
+gl.shader.uniform.texture
+ # uniform, tex, unit
+ node.ex.shader.uniform.texture(u0, _0, _1, _2);
+
+gl.shader.uniform.f1
+ # uniform, f
+ node.ex.shader.uniform.f1(u0, _0, _1);
+
+gl.shader.uniform.f2
+ # uniform, f0,f1
+ node.ex.shader.uniform.f2(u0, _0, _1,_2);
+
+gl.shader.uniform.f3
+ # uniform, f0,f1,f2
+ node.ex.shader.uniform.f3(u0, _0, _1,_2,_3);
+
+gl.shader.uniform.f4
+ # uniform, f0,f1,f2,f4
+ node.ex.shader.uniform.f4(u0, _0, _1,_2,_3,_4);
+
+gl.clear
+ # r,g,b,a
+ node.ex.gl.clear(u0, __);
+
+gl.blend
+ # a, b
+ display.gl.blend.func(u0, _0, _1);
+
+gl.draw
+ # mode, count
+ node.ex.gl.draw(u0, _0, _1);
+gl.fbo
+ # tex
+ node.ex.gl.fbo(u0, _0);
+
+gl.rect0
+ # mode, x,y, w,h
+ node.ex.gl.rect0(u0, _0, _1,_2,_3,_4);
+
+gl.rect0.texture {
+ # mode, x,y, w,h, tex
+ mode _0; x _1; y _2; w _3; h _4; tex0 _5;
+ gl.shader.use(70014,70015);
+ gl.shader.uniform.texture(0, tex0, 0);
+# gl.blend(u0, 1, 8);
+ gl.rect0(mode, x,y, w,h);
+};
+

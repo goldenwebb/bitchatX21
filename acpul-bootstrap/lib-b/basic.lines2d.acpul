@@ -1,0 +1,114 @@
+### basic.lines2d
+
+lines2d {
+# new {
+#  
+# };
+ figure1 {
+  # hid
+  sn1lines _0;
+  shader.set.uniformi.v2(sn1lines, A.lineXY, 0, -0.46,0.26);
+  shader.set.uniformi.v2(sn1lines, A.lineXY, 1, 0.46,0.26);
+  shader.set.uniformi.v2(sn1lines, A.lineXY, 2, 0,-0.5);
+  shader.set.uniformi.v2(sn1lines, A.lineXY, 3, -0.46,0.26);
+  shader.set.uniformi.v2.count(sn1lines, A.lineXY, 4);
+ };
+
+ figure1.color1 {
+  # hid
+  sn1lines _0;
+  shader.set.uniformi.v4(sn1lines, A.lineColor, 0, 1.2,1.2,0, 1);
+  shader.set.uniformi.v4(sn1lines, A.lineColor, 1, 1.2,0,1.2, 1);
+  shader.set.uniformi.v4(sn1lines, A.lineColor, 2, 0,1.2,0, 1);
+  shader.set.uniformi.v4(sn1lines, A.lineColor, 3, 0,0,1, 1);
+  shader.set.uniformi.v4.count(sn1lines, A.lineColor, 4);
+ };
+
+ figure2 {
+  # hid
+  sn1lines _0;
+  shader.set.uniformi.v2(sn1lines, A.lineXY, 0, -0.3,0.46);
+  shader.set.uniformi.v2(sn1lines, A.lineXY, 1, 0.46,0.46);
+  shader.set.uniformi.v2(sn1lines, A.lineXY, 2, 0.46,-0.46);
+  shader.set.uniformi.v2(sn1lines, A.lineXY, 3, -0.46,-0.46);
+  shader.set.uniformi.v2(sn1lines, A.lineXY, 4, -0.46,0.3);
+  shader.set.uniformi.v2(sn1lines, A.lineXY, 5, -0.3,0.46);
+  shader.set.uniformi.v2.count(sn1lines, A.lineXY, 6);
+ };
+ figure2.color1 {
+  # hid
+  sn1lines _0;
+  shader.set.uniformi.v4(sn1lines, A.lineColor, 0, 1.2,1.2,0, 1);
+  shader.set.uniformi.v4(sn1lines, A.lineColor, 1, 1.2,0,1.2, 1);
+  shader.set.uniformi.v4(sn1lines, A.lineColor, 2, 0,1.2,0, 1);
+  shader.set.uniformi.v4(sn1lines, A.lineColor, 3, 0,1,1, 1);
+  shader.set.uniformi.v4(sn1lines, A.lineColor, 4, 1.2,0,1, 1);
+  shader.set.uniformi.v4(sn1lines, A.lineColor, 5, 1,0,1, 1);
+  shader.set.uniformi.v4.count(sn1lines, A.lineColor, 6);
+ };
+
+ figure3.dialog {
+  # hid
+  sn1lines _0;
+  b 0-0.25;
+  t 0.36;
+  t1 0.24;
+  shader.set.uniformi.v2(sn1lines, A.lineXY, 0, -0.3,t);
+  shader.set.uniformi.v2(sn1lines, A.lineXY, 1, 0.46,t);
+  shader.set.uniformi.v2(sn1lines, A.lineXY, 2, 0.46,b);
+  shader.set.uniformi.v2(sn1lines, A.lineXY, 3, -0.2,b);
+  shader.set.uniformi.v2(sn1lines, A.lineXY, 4, -0.36,-0.46);
+  shader.set.uniformi.v2(sn1lines, A.lineXY, 5, -0.4,b);
+  shader.set.uniformi.v2(sn1lines, A.lineXY, 6, -0.46,b);
+  shader.set.uniformi.v2(sn1lines, A.lineXY, 7, -0.46,t1);
+  shader.set.uniformi.v2(sn1lines, A.lineXY, 8, -0.3,t);
+  shader.set.uniformi.v2.count(sn1lines, A.lineXY, 9);
+ };
+
+ figure3.color1 {
+  # hid
+  sn1lines _0;
+  shader.set.uniformi.v4(sn1lines, A.lineColor, 0, 1.2,1.2,0, 1);
+  shader.set.uniformi.v4(sn1lines, A.lineColor, 1, 1.2,0,1.2, 1);
+  shader.set.uniformi.v4(sn1lines, A.lineColor, 2, 0,1.2,0, 1);
+  shader.set.uniformi.v4(sn1lines, A.lineColor, 3, 0,1,1, 1);
+  shader.set.uniformi.v4(sn1lines, A.lineColor, 4, 1.2,0,1, 1);
+  shader.set.uniformi.v4(sn1lines, A.lineColor, 5, 1,0.8,0, 1);
+  shader.set.uniformi.v4(sn1lines, A.lineColor, 6, 0,1,1, 1);
+  shader.set.uniformi.v4(sn1lines, A.lineColor, 7, 0,1,0, 1);
+  shader.set.uniformi.v4(sn1lines, A.lineColor, 8, 1,1,1, 1);
+  shader.set.uniformi.v4.count(sn1lines, A.lineColor, 9);
+ };
+
+};
+
+new.lines2d
+ # hid, x,y,s, w,h
+ new.ui.shader.node3(_0, _1,_2,_3, _4,_5, 70014,28780); # neon.lines.dyn2 
+
+### basic.lines2d.test
+
+_ @basic.lines2d;
+
+lines2d.test0 {
+  figure2 {
+   # hid
+   sn1lines _0;
+   shader.set.uniformi.v2(sn1lines, A.lineXY, 0, -0.5,0);
+   shader.set.uniformi.v2(sn1lines, A.lineXY, 1, 0.1,0.2);
+   shader.set.uniformi.v2(sn1lines, A.lineXY, 2, 0.5,0.3);
+   shader.set.uniformi.v2.count(sn1lines, A.lineXY, 3);
+  };
+};
+
+lines2d.test0 { _;
+ sn1lines 0;
+
+ new.lines2d(sn1lines, 0,420,1, 300,300);
+
+ lines2d.figure1(sn1lines);
+# lines2d.test0.figure2(sn1lines);
+ lines2d.figure1.color1(sn1lines);
+
+ shader.set.uniform.v4(sn1lines, A.backgroundColorAdd, 0.0, -0.5, -0.9, 0);
+};

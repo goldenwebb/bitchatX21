@@ -1,0 +1,26 @@
+### 900588 os.tree1.test.node.child
+
+r0:=k==0;
+
+draw(r0, 900589);
+
+_ @os.tree0.inc;
+
+
+tree os.tree1;
+
+depth tree.depth;
+if (depth < 5) {
+ tree.new.node(r0, os.tree1.test.node, 0);
+};
+
+w:=100;
+h:=20;
+
+x:=depth*h;
+
+k:=1;
+
+### 900589 os.tree1.test.node.child.draw
+
+rect(u0, 6, 1,1,h-2,h-2);

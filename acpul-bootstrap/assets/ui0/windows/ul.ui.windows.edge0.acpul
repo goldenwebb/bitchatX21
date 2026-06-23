@@ -1,0 +1,149 @@
+### 70360 ul.ui.windows.edge0
+# oid, x,y,w,h, t, ctx0
+
+oid p0;
+x0 p1;
+y0 p2;
+w0 p3;
+h0 p4;
+ct p5;
+ctx0 p6;
+
+r0:=k==0;
+
+draw(r0, 70361);
+
+_ @1010;
+_ @sys.obj;
+_ @sys.ul.ui;
+_ @ui.windows;
+
+ui.window.context.isavar ctx0;
+wctx ui.window.context;
+
+w0:=wctx.w.g;
+h0:=wctx.h.g;
+
+corner.t {
+ left 1;
+ right 2;
+ bottom 3;
+ br 4;
+ bl 5;
+};
+
+#w:=w0;
+#h:=h0;
+w:=50;
+h:=50;
+
+x1 l15;
+y1 l14;
+
+#watch(ct);
+
+#if (r0) {
+ x1:=0;
+ y1:=0;
+
+ if (ct==corner.t.left) {
+  y1:=(h0-h)/2;
+ };
+ if (ct==corner.t.right) {
+  x1:=w0-w;
+  y1:=(h0-h)/2;
+ };
+ if (ct==corner.t.bottom) {
+  x1:=(w0-w)/2;
+  y1:=0;
+ };
+ if (ct==corner.t.br) {
+  x1:=w0-w;
+  y1:=0;
+ };
+
+ x:=x0+x1;
+ y:=y0+y1;
+#};
+
+
+id node.ex.this.id(u0);
+
+# touch [
+
+_ @sys.touch;
+
+pressed r3;
+prev.x l5;
+prev.y l6;
+
+touch.ev {
+ began {
+  # x,y, gx,gy
+  
+  pressed:=1;
+  
+  prev.x:=_2;
+  prev.y:=_3;
+ };
+ moved {
+  # x,y
+#  x+=_2-prev.x;
+#  y+=_3-prev.y;
+#  watch(_3-prev.y);
+  events.push(u0, ui.pool,oid, ui.event.windows.edge0.move, _2-prev.x,_3-prev.y,ct,0);
+  prev.x:=_2;
+  prev.y:=_3;
+ };
+ ended {
+  # x,y
+  pressed:=0;
+ };
+};
+
+touch.id r8;
+touch.b0 l7;
+
+_ @sys.touch.ev.process.once;
+
+#touch.rect(touch.id, 0-w/2,0-h/2,w,h);
+
+screen {
+ width 768;
+ height 1024;
+};
+
+if (pressed==0,
+ touch.rect(touch.id, 0,0,w,h),
+# touch.rect.screen(touch.id, 0,0,screen.width,screen.height));
+
+ touch.rect2.lock(touch.id, 0,0,screen.width,screen.height));
+
+touch.b0:=1;
+touch.ev.process.multi;
+
+# touch ]
+
+k:=1;
+
+### 70361 ul.ui.windows.edge0.draw
+
+color(u0, 0.5,0,0,0.2);
+
+if (r0==1) {
+ l0:=rnd(u0);
+ l1:=rnd(u0);
+ l2:=rnd(u0);
+ l3:=rnd(u0);
+};
+color(u0, l0,l1,l2,l3);
+
+pressed r3;
+if (pressed) {
+ color(u0, 0.0,0.9,0.5,0.5);
+};
+
+rect(u0, 6, 0,0,w,h);
+
+#rect(u0, 6, 0,0,100,100);
+

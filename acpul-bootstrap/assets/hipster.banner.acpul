@@ -1,0 +1,116 @@
+### 10025000 hipster.banner
+
+r0:=k==0;
+
+x:=10;
+y:=500;
+s:=0.5;
+
+draw(r0, 10025001);
+
+TMP.TEXT 11110000;
+_ @TMP.TEXT;
+
+fnt1 { _ text.options.info;
+ font0 r7;
+ fchars0 r6;
+ font.size 100;
+};
+if (r0) {
+ watch(fnt1.font0);
+};
+text.init(r0, fnt1, ADMIN);
+
+ul.ui 70100;
+_ @ul.ui;
+
+tl0 r1;
+tl1 r2;
+tl2 r3;
+tl3 r4;
+if (r0) {
+# new.text.label0(tl0, -100,200,1, ADMIN, 200);
+# new.text.label0(tl0, 0,0,1, USER, 100);
+# new.text.label0(tl0, 0,19,1, HIPSTER, 18);
+ new.text.label(tl1, 200,219,2.5, HAPPY.BIRTHDAY, 80, 1001,4,4, 0,10170203, 0);
+ new.text.label(tl2, 200,19,2.6, RUBEN, 70, 1001,4,4, 0,10170203, 0); 
+ new.text.label(tl3, 100,19,2.6, Kurazh, 100, 1001,4,4, 0,10170204, 0); 
+
+fsh0 10170202;
+fsh0 28373;
+fsh0 28374;
+
+acpu {
+ new.text.label(tl1, 330,219,1, Animation.CPU, 90, 0,0,0, 0,fsh0, 0);
+# new.text.label(tl2, 450,19,1, WELCOME, 100, 0,0,0, 0,fsh0, 0); 
+ new.text.label(tl2, 450,19,1, NEW.PROGRAMMING, 70, 0,0,0, 0,fsh0, 0); 
+ new.text.label(tl3, 450,19,1, NEW.GAMEDEV, 70, 0,0,0, 0,fsh0, 0); 
+
+};
+#acpu;
+avatar {
+ new.text.label(tl3, 450,419,1, WELCOME, 100, 0,0,0, 0,fsh0, 0); 
+ new.text.label(tl1, 230,219,1, vr.club.Avatar, 100, 0,0,0, 0,fsh0, 0);
+ new.text.label(tl2, 450,19,1, clubavatar.app, 70, 0,0,0, 0,fsh0, 0); 
+};
+#avatar;
+
+valentine {
+ fsh0 10170203;
+
+ new.text.label(tl3, 500,419,1.4, HAPPY, 90, 0,0,0, 0,fsh0, 0); 
+ new.text.label(tl1, 230,219,1.4, VALENTINE.DAY, 90, 0,0,0, 0,fsh0, 0);
+ new.text.label(tl2, 430,19,1.4, MY.LOVE, 90, 0,0,0, 0,fsh0, 0);
+};
+#valentine;
+valentine {
+ fsh0 10170203;
+
+ new.text.label(tl3, 500,419,1.4, HAPPY, 90, 0,0,0, 0,fsh0, 0); 
+ new.text.label(tl1, 230,219,1.4, VALENTINE.DAY, 90, 0,0,0, 0,fsh0, 0);
+# new.text.label(tl2, 430,19,1.4, MY.LOVE, 90, 0,0,0, 0,fsh0, 0);
+};
+#valentine;
+
+};
+
+#node.prop.s.s(u0, tl0, 2+1.8*sin(t));
+
+#node.prop.y.s(u0, tl1, 220+50*sin(t*3));
+#node.prop.y.s(u0, tl2, 20+50*sin(t*3.1+20));
+#node.prop.y.s(u0, tl3, 420+50*sin(t*3.2+55));
+
+t1 t*0.05;
+      
+sx 0-300;
+
+node.prop.y.s(u0, tl3, 310+50*sin(t1*3.2+55)-50+sx);
+node.prop.y.s(u0, tl1, 30+50*sin(t1*3)-100+sx);
+node.prop.y.s(u0, tl2, -150+50*sin(t1*3.1+20)-150+sx);
+
+
+
+t+=dt;
+
+k:=1;
+
+### 10025001 hipster.banner.draw
+
+color(u0, 0.2,0.3,0.7,0.5);
+#rect(u0, 6, 0,0, 1000,1000);
+
+# media.ft.text.dma(u0, font0,200, S.test.text777, 0,1,-1);
+# media.ft.text.dma(u0, font0,150, St.Patrick, 0,1,-1);
+# media.ft.text.dma(u0, font0,165, o.ACPU.o, 0,1,-1);
+# media.ft.text.dma(u0, font0,100, LIVE.COMMENT, 0,1,-1);
+# fchars1:=buffer.new(u0, 10000*3*4, 100000*3*4); # x,y,z [+ shape] ;
+# buffer.add(u0, fchars1, 1000*4, 100000*4); # char, texture, offs0,offs1
+# buffer.dma(u0, 0, fchars1,0);
+# buffer.dma(u0, 1, fchars1,1);
+
+# media.ft.text.dma(u0, font0,200, S.test.text777, 0,1,-1);
+# media.ft.text.dma(u0, font0,150, St.Patrick, 0,1,-1);
+# media.ft.text.dma(u0, font0,165, o.ACPU.o, 0,1,-1);
+# media.ft.text.dma(u0, font0,100, Live.Comment, 0,1,-1);
+
+# media.ft.draw(u0, 0,1,-1);

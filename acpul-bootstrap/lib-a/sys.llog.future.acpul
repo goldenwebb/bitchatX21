@@ -1,0 +1,40 @@
+### sys.llog.future
+
+# LLOG FUTURE [
+
+# Log begin and erase 
+llog.be {
+ # name
+ b(_0);
+ erase(r0, 0);
+};
+
+# Log value to path
+llog.ppv {
+ # path, name, value
+ b(_0); pv(_1, _2); e;
+};
+
+# Log object to path
+llog.ppo {
+ # path, name, mode, o,i
+ b(_0); po(_1, _2, _3,_4); e;
+};
+
+#llog.ppo0 {
+# # path, name, mode, o,i
+# ppo()
+#};
+
+# Log object to path
+llog.pps0 {
+ # path, name, o,i
+ b(_0); po(_1, 8, _2,_3); e;
+};
+
+llog.pps 
+ # path, name, o
+ pps0(_0, _1, _2,-1);
+
+# LLOG FUTURE ]
+

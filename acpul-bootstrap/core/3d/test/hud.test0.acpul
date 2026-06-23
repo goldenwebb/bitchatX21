@@ -1,0 +1,48 @@
+### 10179100 hud.test0
+
+r0:=k==0;
+
+draw(r0, 10179101);
+
+_ @1010;
+_ @sys.node;
+_ @sys.obj;
+_ @sys.llog;
+_ @1100;
+_ @core.hud;
+
+blk0 r3;
+if (r0) {
+ multi {
+  i:=0;while(i<20) {
+#   new.hud.block0(blk0, 200-0,200-i*100, 200+i*10,100);
+#   new.hud.block0(blk0, 200-0,200-i*100, 200-sin(i)*100,100);
+   new.hud.block0(blk0, 200-400*rnd(u0),200-400*rnd(u0), 200+rnd(u0)*100,100+rnd(u0)*100);
+#   new.hud.block0(blk0, 200-400*rnd(u0),200-400*rnd(u0), 200+rnd(u0)*100,100);
+#   new.hud.block0(blk0, 200-400*rnd(u0),200-400*rnd(u0), 100,100);
+   node.prop.s.s(u0, blk0, 0.1+1*rnd(u0));
+   i+=1;
+  };
+ };
+# multi;
+# new.hud.block0(blk0, -100,-100, 400,300);
+# new.hud.block0(blk0, 100,100, 100,500);
+# new.hud.block0(blk0, -100,-100, 401,303);
+ new.hud.block0(blk0, -100,-400, 401,303);
+};
+
+x:=300;
+y:=300;
+
+
+t+=dt;
+
+k:=1;
+
+### 10179101 hud.test0.draw
+
+color(u0, 0.5,0.25,0.1,0.5);
+rect(u0, 6, 0,0, 100,100);
+color(u0, 0,0.25,0.1,0.5);
+rect(u0, 6, 0,0, 20,20);
+rect(u0, 6, 80,80, 20,20);

@@ -1,0 +1,82 @@
+### 10125056 dma.array1
+
+#_ @1100;
+#_ @util.dma.std;
+
+dma.array1 { _;
+ def0000 { b0 l0; offset 0; elsize 1; max 10; };
+
+ #new.tail {}; # name? append, new, alloc, append, element
+  
+ total.size 1+elsize*max;
+ a.count offset+0;
+ a.data offset+1;
+ a.end offset+total.size;
+
+ init {
+  # dma
+  #dma.set(u0, _0, a.count,0);
+  dma.fill(u0, _0,offset,total.size, 0);
+ };
+
+ size
+  # dma
+  dma.get(u0, _0,a.count);
+ 
+ offset
+  # i
+  a.data+_0*elsize;
+
+
+ xappend0 {
+  # dma, v
+#  dma _0;
+  # fn, dma, v...
+  dma _1;
+  b0:=dma.get(u0, dma,a.count);
+#  llog.printv(u0, S.array1.count, b0);
+  if (b0<max) {
+   p a.data+b0*elsize;
+    
+#   dma.set(u0, dma,p,_1);
+   #_0(p,_0,_1,_2,_3,_4,_5,_6,_7,_8,_9); 
+   _0(p,__);
+
+   inc.count {
+    b0+=1;
+    dma.set(u0, dma,a.count, b0);
+   };
+   inc.count;
+  };
+ };
+ xset0 dma.set(u0, _2,_0, _3);
+ xset2 dma.set2(u0, _2,_0, _3,_4);
+ xset3 dma.set3(u0, _2,_0, _3,_4,_5);
+ xset4 dma.set4(u0, _2,_0, _3,_4,_5,_6);
+ append xappend0(xset0, __);
+ append2 xappend0(xset2, __);
+ append3 xappend0(xset3, __);
+ append4 xappend0(xset4, __);
+};
+ #dma.array(1, 10, 0);
+#dma.set2(dma.array);
+
+#  dma.array1 { b0 l0; offset 10; elsize 1; max 10; };
+#  _ @DMA.ARRAY1;
+#  textures dma.array1;
+#  textures.init(dma0);
+#  textures.append(dma0, 1);
+#  textures.append(dma0, 2);
+#  textures.append(dma0, 3);
+#  textures.append(dma0, 4);
+#  textures.append(dma0, 5);
+#  textures.append(dma0, 6);
+#  textures.append(dma0, 7);
+#  textures.append(dma0, 8);
+#  textures.append(dma0, 9);
+#  textures.append(dma0, 10);
+#  textures.append(dma0, 11);
+#  dma.array1 { b0 l0; offset textures.a.end; elsize 5; max 10; };
+
+#  textures.array;
+#  attributes.array;

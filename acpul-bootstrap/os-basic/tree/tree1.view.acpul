@@ -1,0 +1,25 @@
+### 900520 os.tree1.view
+# nid
+
+### 900521 os.tree1.view.draw
+
+### 900524 os.tree1.node
+# depth
+
+r0:=k==0;
+
+draw(r0, 900585);
+
+_ @1010;
+_ @sys.node;
+_ @sys.os;
+_ @os.basic;
+
+_ @os.tree0.inc;
+
+k:=1;
+
+### 900525 os.tree1.node.draw
+
+
+

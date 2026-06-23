@@ -1,0 +1,55 @@
+### 79200 core.hud.text0
+# w,h, type, text
+# type
+#  0 - simple
+#  1 - extra
+
+r0:=k==0;
+
+draw(r0, 79201);
+
+w:=p0;
+h:=p1;
+
+_ @1010;
+_ @1100;
+_ @sys.node;
+#_ @sys.touch;
+#_ @sys.events;
+_ @sys.obj;
+_ @sys.llog;
+_ @ul.ui;
+_ @util.dma.std;
+_ @core.hud;
+
+txt0 r1;
+tl0 r2;
+blk0 r3;
+
+type p2;
+
+if (type==0) {
+ text p3;
+
+ if (r0) {
+# dma.print0.v(txt0, S.format.cell.text0.empty, p0);
+# new.text.label(tl0, 0-40,0-20,1, txt0, 14, 0,0,0, 0,10170202, 0); 
+  new.hud.block1(blk0, 0,0, w,h, 1, 1, 10, 2,1);
+  new.text.label(tl0, 0-40,0-20,1, text, 14, 0,0,0, 0,10170202, 0); 
+ };
+};
+
+if (type==1) {
+ if (r0) {
+  # extra.params
+#  new.hud.block1(blk0, 0,0, w,h, 1, 1, 10, 2,1);
+  new.text.label(tl0, 0-40,0-20,1, text, 14, 0,0,0, 0,10170202, 0); 
+ };
+};
+
+
+### 79201 core.hud.text0.draw
+
+color(u0, 0.2,0.5,0.2,1.5);
+rect(u0, 6, 0,0, w,h);
+

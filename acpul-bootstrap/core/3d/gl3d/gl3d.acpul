@@ -1,0 +1,138 @@
+### 72100 gl3d
+
+gl3d {
+
+};
+
+# use [
+
+gl3d.test.main 10172000;
+
+# use ]
+# p3d [
+
+gl3d.p3d {
+ t {
+  cylinder 0;
+  sphere0 1;
+  plane 2;
+  disk 3;
+  lsystem 4;
+  torus 5;
+  subdivided.sphere 6;
+  klein.bottle 7;
+  trefoil.knot 8;
+  hemisphere 9;
+  icosahedron 10;
+  dodecahedron 11;
+  octahedron 12;
+  tetrahedron 13;
+  cube 14;
+  rock 15;
+  clone 16;
+
+  rotate 100;
+  translate 101;
+  scale 102;
+  merge 103;
+ };
+
+ create.mesh
+  # p0-p3
+  io(u0, 501100, _0,_1,_2,_3);
+ 
+ mesh.modify {
+  # type, id, p2-p7
+  io(u0, 501055, _4,_5,_6,_7);
+  io(u0, 501101, _0,_1,_2,_3);
+ };
+
+ # buf::p3d.mesh
+ # 0 - points * 3
+ # 1 - normals * 3
+ # 2 - tcoords * 2
+ # 3 - triangles * 3
+
+ mesh.get
+  # id -> buf::p3d.mesh
+  io(u0, 501102, _0, 0,0,0);
+
+
+ mesh.rotate
+  # id, radians, x,y,z
+  mesh.modify(t.rotate, _0, _1, _2,_3,_4, 0,0,0);
+
+ mesh.scale
+  # id, x,y,z
+  mesh.modify(t.scale, _0, _1,_2,_3, 0,0,0,0);
+
+ mesh.translate
+  # id, x,y,z
+  mesh.modify(t.translate, _0, _1,_2,_3, 0,0,0,0);
+
+ new.cylinder
+  # slices, stacks 
+  create.mesh(t.cylinder, _0,_1,0,0);
+ 
+ new.sphere
+  # slices, stacks
+  create.mesh(t.sphere0, _0,_1,0,0);
+
+ new.plane
+  # slices, stacks
+  create.mesh(t.plane, _0,_1,0,0);
+
+ new.disk
+  # p?
+  create.mesh(t.disk, -1,0,0,0);
+
+ new.torus
+  # slices, stacks, radius
+  create.mesh(t.torus, _0,_1,_2,0);
+
+ new.subdivided.sphere
+  # nsubd
+  create.mesh(t.subdivided.sphere, _0,0,0,0);
+
+ new.klein.bottle
+  # slices, stacks
+  create.mesh(t.klein.bottle, _0,_1,0,0);
+
+ new.trefoil.knot
+  # slices, stacks, radius
+  create.mesh(t.trefoil.knot, _0,_1,_2,0);
+
+ new.hemisphere
+  # slices, stacks
+  create.mesh(t.hemisphere, _0,_1,0,0);
+
+ new.icosahedron
+  create.mesh(t.icosahedron, 0,0,0,0);
+
+ new.dodecahedron
+  create.mesh(t.dodecahedron, 0,0,0,0);
+
+ new.octahedron
+  create.mesh(t.octahedron, 0,0,0,0);
+
+ new.tetrahedron
+  create.mesh(t.tetrahedron, 0,0,0,0);
+
+ new.cube
+  create.mesh(t.cube, 0,0,0,0);
+
+ new.rock
+  # seed, nsubdivisions
+  create.mesh(t.rock, _0,_1,0,0);
+
+ new.lsystem
+  # program.buf, slices, maxdepth
+  create.mesh(t.lsystem, _0,_1,_2,0);
+
+ clone
+  # src, dst
+  create.mesh(t.lsystem, _0,_1,0,0);
+
+};
+
+# p3d ]

@@ -1,0 +1,312 @@
+### 70420 ui.recurse.view.inc.acpul
+
+recurse.view { _;
+
+ reset.size {
+  w:=0;
+  h:=0;
+ };
+ update.size {
+  # w,h
+  w0 _0;
+  h0 _1;
+  w:=if(w<w0,w0,w);
+  h:=if(h<h0,h0,h);
+ };
+ update.node {
+  # nid
+  x0 d0; 
+  y0 d1;
+  w0 d2; 
+  h0 d3;
+  x0:=node.prop.x.g(u0, _0);
+  y0:=node.prop.y.g(u0, _0);
+  w0:=node.prop.w.g(u0, _0);
+  h0:=node.prop.h.g(u0, _0);
+  update.size(x0+w0,y0+h0);
+ };
+ calc.size {
+  # for item in children;
+ };
+ add.node {
+  # nid
+  nid0 _0;
+  update.node(nid0);
+ };
+ add.node.vertical {
+  # nid
+  nid0 _0;
+  gap _1;
+
+  node.prop.y.s(u0, _0, h + gap);
+
+  add.node(nid0);
+ };
+
+ add.children.vertical {
+  # dma, gap
+  dma10 _0;
+  gap _1;
+
+  id node.ex.this.id(u0);
+ 
+  reset.size;
+
+  dma.off(u0, dma10);
+  node.get.child.dma(u0, id, dma10);
+#  new.memory.view(l9, 200,60,1, dma10,-1, 0,0, 0,0);
+  i:=0;while(i<dma.size(u0,dma10)) {
+   nid dma.get(u0, dma10,i);
+#  node.prop.x.s(u0, nid, 0);
+   add.node.vertical(nid, gap);
+   i+=1;
+  };
+ };
+ add.children.vertical.d10 {
+  add.children.vertical(10, 0);
+ }
+
+# new.child {
+  # fid -> nid
+# };
+
+};
+
+
+### 70424 ui.test.recurse.view.acpul
+
+r0:=k==0;
+
+draw(r0, 70425);
+
+_ @1010;
+_ @sys.obj;
+_ @sys.node;
+_ @sys.ul.ui;
+_ @ui.views;
+_ @ui.recurse.view.inc;
+
+rv recurse.view;
+
+nid0 r1;
+nid1 r2;
+nid2 r3;
+
+
+if (r0) {
+# rv.reset.size;
+
+ nid0:=node.new.this.ex4(u0, ui.test.recurse.view.node0, 0, 0,0,0);
+# node.prop.w.g(u0, _0);
+# rv.add.node.vertical(nid0);
+ nid1:=node.new.this.ex4(u0, ui.test.recurse.view.node0, 1, 0,0,0);
+# rv.add.node.vertical(nid1);
+# node.prop.w.s(u0,);
+
+ nid2:=node.new.this.ex4(u0, ui.test.recurse.view.node1.fib, 10, 0,0,0);
+ nid2:=node.new.this.ex4(u0, ui.test.recurse.view.node1.fib, 50, 0,0,0);
+ nid2:=node.new.this.ex4(u0, ui.test.recurse.view.node1.fib, 20, 0,0,0);
+ nid2:=node.new.this.ex4(u0, ui.test.recurse.view.node1.fib, 20, 0,0,0);
+# nid2:=node.new.this.ex4(u0, ui.test.recurse.view.node1.fib, 20, 0,0,0);
+# nid2:=node.new.this.ex4(u0, ui.test.recurse.view.node1.fib, 20, 0,0,0);
+
+ rv.add.children.vertical.d10();
+};
+#watch(w);
+
+k:=1;
+
+### 70425 ui.test.recurse.view.acpul.draw
+
+color(u0, 0.5,0.5,0.1,0.2);
+rect(u0, 6, 0,0, w,h);
+
+### 70426 ui.test.recurse.view.node0
+
+
+r0:=k==0;
+
+draw(r0, 70427);
+
+w:=100;
+h:=25;
+
+k:=1;
+
+### 70427 ui.test.recurse.view.node0.draw
+
+color(u0, 0.5,0.1,0.5,0.5);
+rect(u0, 6, 0,0, w,h);
+
+### 70428 ui.test.recurse.view.node1.fib
+# N, level
+N p0;
+level p1;
+
+r0:=k==0;
+
+draw(r0, 70429);
+
+_ @1010;
+_ @sys.obj;
+_ @sys.node;
+_ @sys.ul.ui;
+_ @ui.views;
+_ @ui.recurse.view.inc;
+
+rv recurse.view;
+
+nid0 r1;
+
+if (r0) {
+ if (N>0) {
+  nid0:=node.new.this.ex4(u0, ui.test.recurse.view.node1.fib, N-1, level+1,0,0);
+  rv.add.children.vertical.d10();
+ };
+# y+=5*level;
+# x+=10*level;
+ y+=10;
+ x+=5;
+# y+=2;
+# x+=2;
+# x+=rnd(u0)*100-50;
+# y+=rnd(u0)*100-50;
+ if (N==0) {
+  h:=15;
+  w:=100;
+
+ };
+};
+
+#r2+=1;
+#r+=dt*10;
+r:=if(mod(N,20)==0,sin(t)*10,cos(t));
+#r:=sin(t);
+t+=dt;
+
+#w:=10;
+
+# touch [
+
+_ @sys.touch;
+
+pressed r5;
+touch.ev {
+ began {
+  # x,y 
+  pressed:=155;
+  watch(_0);
+ };
+ moved {
+  # x,y
+ };
+ ended {
+  # x,y
+  pressed:=0;
+ };
+};
+#s+=if(pressed, if(s<1.5, 0.01, 0), if(s>1, 0-0.01, 0));
+
+
+touch.id l10;
+touch.b0 l11;
+
+touch.rect(touch.id, 0,0,w,h);
+
+_ @sys.touch.ev.process.once;
+touch.b0:=1;
+touch.ev.process.multi;
+
+
+id node.ex.this.id(u0);
+
+#watch(pressed);
+if (pressed) {
+# watch(id); 
+};
+r4:=0;
+
+# touch ]
+
+
+k:=1;
+#watch(k);
+
+### 70429 ui.test.recurse.view.node1.fib.draw
+
+psize(u0, 1);
+
+color(u0, 0.1,0.5,0.1,0.5);
+rect(u0, 2, 0,0, w,h);
+
+if (r0) {
+  l0:=rnd(u0);
+  l1:=rnd(u0);
+  l2:=rnd(u0);
+  l3:=rnd(u0);
+};
+color(u0, l0,l1,l2,l3);
+
+pressed r5;
+if (pressed) {
+ color(u0, 0.1,1,0.1,1);
+};
+rect(u0, 6, 0,0, w,h);
+
+#if (pressed) {
+# psize(u0, 15);
+# color(u0, 0.1,1,0.1,1);
+# rect(u0, 2, 0,0, w,h);
+# r4+=1;
+#watch(r4);
+#};
+
+волосок {
+# x,y, x1,x2, y1,y2, d
+ x _0;y _1;x1 _2;y1 _3+5*sin(t*10+y);
+ x2 _4+10*sin(t*x/40);y2 _5+15*sin(t*y/10);
+ qbezier(u0, 3, x,y, x+x1,y+y1, x+x2,y+y2, 20);
+ x3 x+x2;
+ y3 y+y2;
+ circle(u0, 6, x3,y3, d, 0, 10, 0);
+};
+#color(u0, 0.9,0.3,0.8,1);
+d l0;
+d:=15;
+color(u0, 0.8,0.9,0,0.1);
+if (pressed) {
+ color(u0, 0.1,1,0.1,1);
+ d:=30;
+};
+
+волосок(20,95, 30,100, 0-100,80,d);
+#волосок(20,95, 30,100, 0-100,80,d);
+
+x0 l5;
+y0 l6;
+yspeed l7;
+xspeed l8;
+ymax 500;
+if (r0) {
+ yspeed:=rnd(u0)*10;
+};
+if (y0>ymax) {
+ y0:=0;
+ x0:=0;
+ yspeed:=rnd(u0)*10;
+ xspeed:=rnd(u0)*2;
+};
+y0+=yspeed;
+x0+=xspeed;
+psize(u0, 10);
+color(u0, l0,l1,l2,l3);
+point(u0, x0,y0);
+
+#_ @1010;
+#_ @sys.node;
+#id node.ex.this.id(u0);
+#watch(pressed);
+#if (pressed) {
+# watch(id); 
+#};
+

@@ -1,0 +1,88 @@
+### 15882 livelog.scroll
+# livelog0, view0
+# [node0]
+
+livelog0 p0;
+log0 livelog0;
+
+view0 p1;
+
+draw(r0, 15883);
+
+_ @1010;
+_ @sys.node;
+_ @sys.os;
+_ @os.basic;
+_ @os.basic.ui;
+_ @os.util0;
+_ @os.util2;
+_ @sys.obj;
+_ @sys.cpu;
+
+_ @livelog.common;
+_ @sys.livelog2;
+
+_ @sys.llog;
+
+#ll0 0+(livelog2.core!=livelog0);
+
+#llog.b(S.livelogAAA);
+#llog.printv(r0, LL, livelog0);
+#llog.e;
+
+#llog.b(S.livelog);
+#llog.erase(r0*ll0, 0);
+
+# NODES [
+
+node0 0;
+
+if (r0) {
+ node0:=new.livelog.node0(nid, livelog0, llog2.root);
+
+ node.value.s(u0, nid,0, node0);
+};
+
+# NODES ]
+# events [
+
+livelog.touch.pool 15880;
+
+_ @sys.events;
+
+tb0=1;
+while(tb0) {
+ tb0:=events.pop(u0, livelog.touch.pool,nid);
+ if (tb0==ui.event.touch.move) {
+#  watch(tb0);
+#  CREATURE0.SMILE 70802;
+#  node.new.this.ex4(u0, CREATURE0.SMILE, 200*rnd(u0),200*rnd(u0)+200, 0,0);
+  
+#  scrolling:=1;
+
+#  if (scroll.direction==options.sd.horizontal) {
+   x+=o2;
+#  };
+#  if (scroll.direction==options.sd.vertical) {
+   y+=o3;
+#  };
+  node.z.to.front(u0, view0, 0);
+#llog2.replace(u0, log0, VIEW0, view0);
+
+ };
+};
+
+llog2.replace(r0, log0, Scroll.x, X);
+llog2.replace(r0, log0, Scroll.Y, Y);
+
+#_ @4;
+#lbl0 0; val0 0; ui.value4(lbl0,val0,300,0,1, VIEW0, view0);
+
+# events ]
+
+#llog.e();
+
+### 15883 livelog.scroll.draw
+
+color(u0, 0.5,0.5,1,0.8);
+rect(u0, 2, 0,0,w,h);

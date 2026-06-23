@@ -1,0 +1,45 @@
+### sys.storage.ex
+
+_ @sys.storage;
+
+storage.list.files1 {
+ # type,pool,id -> files
+ t _0; pool _1; id _2;
+ files0 = buffer.new(u0, 100,1000000);
+ buffer.dma(u0, 0, files0,0);
+ storage.list.files(0, t,pool,id);
+ files0;
+};
+
+storage.list.pools
+ # type
+ storage.list.files1(_0,-1,-1);
+
+
+# sys.storage [
+
+storage.get.file.name {
+ # bid, store,pool,id,i, mode
+ io(u0, 500514, _4, _5, 0,0);
+ io(u0, 500560, _0, _1,_2,_3);
+};
+
+# sys.storage ]
+
+### sys.storage.ex.test
+
+_ @sys.storage.ex;
+
+test1 {
+ files0 = storage.list.files1(0, storage.t.data,file.pool,file.id);
+
+ pools0 = storage.list.pools(storage.t.sound);
+};
+
+test2 {
+# storage.get.file.name(bid, store,pool,id,i, mode);
+ bid 0;
+ pool 1; id 12; i 1;
+ mode 0;
+ fname = storage.get.file.name(bid, storage.t.sound, pool,id,i, mode);  
+};

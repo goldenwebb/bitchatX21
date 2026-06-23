@@ -1,0 +1,183 @@
+### 900701 basic.ui.util
+aaaa 1111;
+
+twobin.font.def8x4.print.v0 {
+ # v
+ _ @util.dma.std;
+ dma.print1.v(buf0, S.format.value0, _0);
+ n:=buffer.size(u0, buf0,0);
+# n:=10;
+ i:=0; while(i<n) {
+  c d0;
+  c:=buffer.get(u0, buf0,0, i);
+
+  is c==_0+48; # ascii '0'
+
+  C if (is(_0)) {_1;};
+
+  C(0, X0);
+  C(1, X1);
+  C(2, X2);
+  C(3, X3);
+  C(4, X4);
+  C(5, X5);
+  C(6, X6);
+  C(7, X7);
+  C(8, X8);
+  C(9, X9);
+
+#  xx0 48;
+#  if (is(0)) {X0;};
+#  if (c==0+xx0) {X0;};
+#  if (c==1+xx0) {X1;};
+#  if (c==2+xx0) {X2;};
+#  if (c==3+xx0) {X3;};
+#  if (c==4+xx0) {X4;};
+#  if (c==5+xx0) {X5;};
+#  if (c==6+xx0) {X6;};
+#  if (c==7+xx0) {X7;};
+#  if (c==8+xx0) {X8;};
+#  if (c==9+xx0) {X9;};
+#  if (c<0) X;
+  i+=1;
+ };
+};
+
+twobin.font.def8x4.print.v0sp {
+ # v
+ v0(__); SP;
+};
+
+twobin.font.def8x4.print.v1 {
+ # format, v
+ _ @util.dma.std;
+ dma.print1.v(buf0, _0, _1);
+ n:=buffer.size(u0, buf0,0);
+# n:=10;
+ i:=0; while(i<n) {
+  c d0;
+  c:=buffer.get(u0, buf0,0, i);
+
+  is c==_0+48; # ascii '0'
+
+  C if (is(_0)) {_1;};
+
+  C(0, X0);
+  C(1, X1);
+  C(2, X2);
+  C(3, X3);
+  C(4, X4);
+  C(5, X5);
+  C(6, X6);
+  C(7, X7);
+  C(8, X8);
+  C(9, X9);
+
+  if (c==45) {MINUS;c:=48;};
+  if (c==46) {DOT;c:=48;};
+
+  if ((c<48)*(c>48+10)) {
+   SP;
+  };
+
+#  xx0 48;
+#  if (is(0)) {X0;};
+#  if (c==0+xx0) {X0;};
+#  if (c==1+xx0) {X1;};
+#  if (c==2+xx0) {X2;};
+#  if (c==3+xx0) {X3;};
+#  if (c==4+xx0) {X4;};
+#  if (c==5+xx0) {X5;};
+#  if (c==6+xx0) {X6;};
+#  if (c==7+xx0) {X7;};
+#  if (c==8+xx0) {X8;};
+#  if (c==9+xx0) {X9;};
+#  if (c<0) X;
+  i+=1;
+ };
+};
+
+# print kbytes [
+
+twobin.font.def8x4.print.v1a.kb {
+ # fmt, v
+ value0 = _1;
+
+ k = 0;
+ while ((value0 > 1024)*(k<6)) {
+  value0 /= 1024;
+  k += 1;
+ };
+
+ v1(_0, value0);
+#  SP;
+#  if (k==0) {B;};
+ if (k==1) {K;};
+ if (k==2) {M;};
+ if (k==3) {G;};
+ if (k==4) {T;};
+ if (k==5) {P;};
+};
+
+# print kbytes ]
+# twobin putv [
+
+twobin.font.def8x4.putv.x {
+ # v
+ v _0;
+ if(v==0){X0};
+ if(v==1){X1};
+ if(v==2){X2};
+ if(v==3){X3};
+ if(v==4){X4};
+ if(v==5){X5};
+ if(v==6){X6};
+ if(v==7){X7};
+ if(v==8){X8};
+ if(v==9){X9};
+};
+
+# putv2 [
+
+twobin.font.def8x4.putv2 {
+ # v, prec0,prec1
+ prec0 _1;
+ prec1 _2;
+
+ x10 d0;
+ n d1;
+ v d2;
+  
+ v:=_0;
+
+ if (v<0) {
+  MINUS;
+  v:=-v;
+ };
+
+ x10:=10;
+ n:=0;
+ while ((v>x10)+(n<min(prec0,20))) {
+  x10*=10;
+  n+=1;
+ };
+ while (x10>1) {
+  x10/=10;
+  putv.x(mod(floor(v/x10), 10));
+ };
+
+# # if (fract(v)*prec1) {
+# # while (fract(v)>0)
+ if (prec1) {
+  DOT;
+  n:=0;
+  while (n<min(prec1,20)) {
+   v:=v*10;
+   putv.x(mod(floor(v), 10));
+   n+=1;
+  };
+ };
+};
+
+# putv2 ]
+# twobin putv ]

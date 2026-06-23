@@ -1,0 +1,64 @@
+data.cell.class {
+
+ # own node id
+ owner.nid {};
+
+ # texture 0 with main view
+ texture0 {};
+
+ text {};
+ object.maps {};
+ arrays {};
+
+};
+
+sample0 {
+
+ r0:=k==0;
+
+ _ @data.cell.class.extends;
+
+ data.cell.setup {
+  owner.nid:=node.id;
+ };
+
+ k:=1;
+ 
+ # DRAW
+
+ draw {
+  _ @data.cell.draw;
+
+  data.cell.render.to.texture0.begin;
+
+  data.cell.render.to.texture0.end;
+ };
+
+};
+
+
+@decorator
+ block.context {
+  in {
+   text {};
+   ast {};
+  };
+  out {
+   text {};
+   ast {};
+  };
+
+  parser {};
+ };
+
+ prism {
+  in
+  out
+  transform
+ };
+
+};
+
+@decorator.extends child parent parent parent ... {
+  
+};

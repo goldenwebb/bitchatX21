@@ -1,0 +1,159 @@
+### acpu.menu
+
+# ACPU menu
+
+_ @1111;
+
+_ @sys.llog2;
+
+_ @sys.storage.ex;
+_ @dma.std;
+
+menuview0 0;
+
+mll0 0;
+
+# MENU INIT
+
+if (r0) {
+ mll0:=llog2.new(u0, MENU);
+ llog2.set.splitter(u0, mll0, 1);
+
+ llog2.log(u0, mll0, llog2.root, HN.Hello2022);
+
+ startup;
+
+};
+
+if (w*h*(menuview0==0)) {
+ new.livelog.view(menuview0, 0,0,1, w,h, mll0);
+};
+
+dbg0 0;
+
+_ @sys.cpu;
+_ @sys.cpu.future;
+
+_ @hackernews;
+
+# MENU ADD ITEM [
+
+add.menu.item0 {
+ # path, id, name, fid
+ PATH _0;
+ id0 _1;
+ name0 _2;
+ fid _3;
+
+ llog2.set.attribute.v(u0, mll0, PATH, SUBNODE, NNN(acpu.menu.item.view));
+
+ llog2.set.attribute.v(u0, mll0, PATH, MENU.ID, id0);
+ llog2.set.attribute.v(u0, mll0, PATH, A.menu.item.name, name0);
+ llog2.set.attribute.v(u0, mll0, PATH, MENU.FID, fid);
+};
+
+# Add menu item with formula id
+add.menu.item.fid {
+ # name, id, p, fid
+ fid0 _3;
+
+ if (cpu.is.formula.present(fid0)) {
+  add.menu.item0(_0, _1, _2);
+ };
+};
+
+# Add menu item with formula name
+add.menu.item.name {
+ # name, id, p, nfid
+ fid0=NNN(_3);
+ if (fid0>0) {
+  add.menu.item0(_0, _1, _2, fid0);
+ };
+};
+
+# MENU ADD ITEM ]
+
+startup {
+ add.menu.item0(CLOSE_APPS, ID.close, CLOSE.APPS);
+
+ add.menu.item.name(A3D, ID.APP, A3D, a3d.node);
+
+ add.menu.item.name(WINAMP, ID.APP, WINAMP, winamp);
+ add.menu.item.name(PLAYER, ID.player, PLAYER, acpu.player);
+
+
+ add.menu.item.name(BITCHAT, ID.APP, BITCHAT, bitchat.run);
+
+
+ add.menu.item.name(POMODORO, ID.APP, POMODORO, acpu.pomodoro);
+
+
+# add.menu.item.name(PAINT, ID.paint, PAINT, paint);
+ add.menu.item.name(PAINT, ID.APP, PAINT, paint);
+
+ add.menu.item.name(ALBUM, ID.APP, ALBUM, A.album);
+
+ add.menu.item.name(ADA, ID.APP, ADA, ada.test);
+
+ add.menu.item.name(MAGAZINE, ID.MAGAZINE, MAGAZINE, xen.magazine);
+
+ add.menu.item.name(GOURCE, ID.APP, GOURCE, A.acpu.gource);
+
+
+ add.menu.item.name(RESUME, ID.APP, RESUME, resume.bubbles.test);
+
+ add.menu.item.name(WALLET, ID.wallet, WALLET, gl3d.test.main);
+
+
+ add.menu.item.fid(DOTA, ID.dota, DOTA1, 3202);
+# dbg0:=add.menu.item.fid.check;
+# add.menu.item.name(DOTA, ID.dota, DOTA1, hn.hackernews.view);
+# dbg0:=add.menu.item.name.fid0 ;
+# dbg0:=NNN(acpu.menu);
+
+ add.menu.item.name(DOTA_TEST, ID.dota.test, DOTA.TEST, dota.test.main);
+
+ add.menu.item.name(CHAT, ID.chat, CHAT, gpt.chat.test);
+# add.menu.item0(VIDEO, ID.video, VIDEO);
+ add.menu.item.name(HIPSTER, ID.hipster, HIPSTER, hipster.banner);
+# add.menu.item.name(HERO, ID.hero, HERO, Herolessus);
+ add.menu.item.name(HERO, ID.hero, HERO, nebula);
+
+ add.menu.item.name(STARS, ID.stars, STARS, stars3d.default);
+
+ add.menu.item.name(BOOTLOADER, ID.bootloader, BOOTLOADER, bootloader);
+
+# add.menu.item0(CORE, ID.core, ACPU.CORE);
+ add.menu.item.fid(INTRO, ID.intro, INTRO, boot.startup.intro);
+ add.menu.item.fid(HN, ID.hackernews, Hackernews, hn.hackernews.view);
+# add.menu.item0(NODES, ID.game.nodes, Game.nodes);
+
+# add.menu.item0(CHAT_ACPU, ID.chat.acpu, CHAT.ACPU);
+ add.menu.item.name(FILES, ID.files, FILES, acpu.files);
+
+
+# add.menu.item0(RESET_STOR, ID.reset.local.store, RESET.LOCAL.STORE);
+ add.menu.item0(RESET, ID.reset, RESET);
+};
+
+#lbl0 0; val0 0; ui.value4(lbl0,val0,-200,0,1, A.dbg0, dbg0);
+
+
+
+
+_ @sys.display;
+
+if (cpu.is.ipad*(display.is.landscape)) {
+#if (display.is.landscape) {
+# node.z.to.front(u0, nid,0);
+};
+
+#_ @easy.start;
+
+draw(r0, NNN(acpu.menu.draw));
+
+### acpu.menu.draw
+
+color(u0, 1,1,0,1);
+#rect(u0, 6, 0,0, w,h);
+

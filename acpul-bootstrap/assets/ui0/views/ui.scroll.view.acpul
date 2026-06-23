@@ -1,0 +1,35 @@
+### 70410 ui.scroll.view.inc.acpul
+
+scroll.view {
+ content.size {
+  w 1000;
+  h 1000;
+ };
+ content.view.rect {
+  x 0;
+  y 0;
+  w 100;
+  h 100;
+ };
+ children {
+  content L0;
+  frontend L1;
+ };
+ add.node(nid);
+
+ view.rect.s {
+
+ };
+};
+
+
+
+# ui.scroll.view.acpul
+
+# ui.scroll.view.acpul.draw
+
+
+
+# ui.test.scroll.view.acpul
+
+# ui.test.scroll.view.acpul.draw

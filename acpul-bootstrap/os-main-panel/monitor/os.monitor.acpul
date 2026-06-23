@@ -1,0 +1,102 @@
+### 15200 os.monitor
+
+#bbb 55;
+
+_ @1010;
+_ @sys.node;
+os.util0 90200;
+_ @os.util0;
+
+os.monitor.view.memory 15210;
+os.monitor.view.disk 15210;
+os.monitor.view.battery 15210;
+os.monitor.view.performance 15210;
+os.monitor.view.nodes 15210; # processes, threads, tasks, nodetree
+
+os.monitor.view.new {
+ # hid, x,y,s, w,h, view
+ _0:=node.new.this.ex4(u0, _6, _4,_5, 0,0);
+ node.prop.x.s(u0, _0, _1);
+ node.prop.y.s(u0, _0, _2);
+ node.prop.s.s(u0, _0, _3);
+};
+
+os.monitor.new.memory
+ # hid, x,y,s, w,h
+ os.monitor.view.new(__, os.monitor.view.memory);
+
+# V2 [
+
+
+os.monitor.view.new2 {
+ # hid, x,y,s, w,h, view
+ new.node.common0(__, 0);
+# _0:=node.new.this.ex4(u0, _6, 0,0, 0,0);
+# node.prop.x.s(u0, _0, _1);
+# node.prop.y.s(u0, _0, _2);
+# node.prop.s.s(u0, _0, _3);
+# node.prop.w.s(u0, _0, _4);
+# node.prop.h.s(u0, _0, _5);
+};
+
+os.net.status.indicator.new {
+ # hid, x,y,s, w,h, type
+# os.monitor.view.new2();
+ _0:=node.new.this.ex4(u0, os.net.status.indicator, _6, 0,0,0);
+ node.prop.x.s(u0, _0, _1);
+ node.prop.y.s(u0, _0, _2);
+ node.prop.s.s(u0, _0, _3);
+ node.prop.w.s(u0, _0, _4);
+ node.prop.h.s(u0, _0, _5);
+};
+
+
+
+os.monitor.view.v2 15300;
+
+os.monitor.mon {
+ memory 0;
+ battery 1;
+ disk 2;
+ fps 3;
+ total.nodes 4;
+};
+
+os.monitor.new.memory.v2
+ # hid, x,y,s, w,h
+ new.node.common0(__, os.monitor.view.v2, os.monitor.mon.memory);
+
+os.monitor.new.battery.v2
+ # hid, x,y,s, w,h
+ new.node.common0(__, os.monitor.view.v2, os.monitor.mon.battery);
+
+os.monitor.new.disk.v2
+ # hid, x,y,s, w,h
+ new.node.common0(__, os.monitor.view.v2, os.monitor.mon.disk);
+
+os.monitor.new.total.nodes
+ # hid, x,y,s, w,h
+ new.node.common0(__, os.monitor.view.v2, os.monitor.mon.total.nodes);
+
+os.monitor.new.fps.v2
+ # hid, x,y,s, w,h
+ new.node.common0(__, os.monitor.view.v2, os.monitor.mon.fps);
+
+os.net.status.view 15400;
+os.net.status.indicator 15410;
+
+os.net.status.view.new
+ # hid, x,y,s, w,h
+# l15+=1;
+ os.monitor.view.new2(__, os.net.status.view);
+
+#aaa 12345;
+
+# V2 ]
+
+
+### 15220 os.monitor.performance
+
+### 15230 os.monitor.battery
+
+

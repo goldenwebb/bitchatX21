@@ -1,0 +1,104 @@
+### 70370 ul.ui.windows.wnd.control0
+# oid, wctx
+
+r0:=k==0;
+
+draw(r0, 70371);
+
+oid p0;
+wctx0 p1;
+
+_ @1010;
+_ @sys.ul.ui;
+_ @ui.windows;
+_ @sys.obj;
+
+ui.window.context.isavar wctx0;
+wctx ui.window.context;
+
+w0 wctx.w.g;
+h0 wctx.h.g;
+
+id node.ex.this.id(u0);
+
+#ctx0 r7;
+
+q @ul.ui.windows.edge0;
+corner q.corner;
+
+w:=w0;
+h:=h0;
+
+y:=-h0;
+
+# edges [
+
+if (r0) {
+ i:=0; while(i<5) {
+  node.new.this.ex8(u0, ul.ui.windows.edge0, id, 0,0,w,h, i+1, wctx0, 0);
+  i+=1;
+ };
+};
+
+# edges ]
+
+move.edge {
+ # ct, dx,dy
+ ct _0;
+ dx _1;
+ dy _2;
+
+ x0 d0;
+ y0 d1;
+
+ x0:=wctx.x.g;
+ y0:=wctx.y.g;
+
+ if (ct==corner.t.left) {
+  x0+=dx;
+  w-=dx;
+ };
+ if (ct==corner.t.right) {
+  w+=dx;
+ };
+ if (ct==corner.t.bottom) {
+  y0+=dy;
+  h-=dy;
+ };
+ if (ct==corner.t.bl) {
+  x0+=dx;
+  w-=dx;
+  y0+=dy;
+  h-=dy;
+ };
+ if (ct==corner.t.br) {
+  w+=dx;
+  y0+=dy;
+  h-=dy;
+ };
+ wctx.x.s(x0);
+ wctx.y.s(y0);
+ wctx.w.s(w);
+ wctx.h.s(h);
+};
+
+tb0 l7;
+
+tb0:=1; while(tb0) { tb0:=ui.event(id);
+ if (tb0==ui.event.windows.edge0.move) {
+  dx o0;
+  dy o1;
+  ct o2;
+  move.edge(ct, dx,dy);
+#  watch(dx);
+ };
+};
+
+k:=1;
+
+
+### 70371 ul.ui.windows.wnd.control0.draw
+
+color(u0, 0.5,0,0,0.2);
+rect(u0, 6, 0,0,w,h);
+

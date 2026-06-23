@@ -1,0 +1,154 @@
+### ide.metrics.inc
+
+# METRICS [
+
+_ @sys.display;
+
+display.metrics {
+ vw 768; vh 1024;
+ portrait.w 768;
+ portrait.h 1024;
+
+ step {
+  display.scalled.size(vw,vh);
+  portrait.w:=min(vw,vh);
+  portrait.h:=max(vw,vh);
+ };
+};
+
+display.metrics.step();
+
+ide.metrics.step();
+
+h0 h;
+w0 w;
+
+param.w 600;
+param.h 400;
+
+yoffs = 0;
+
+if (cpu.is.iphone) {
+ if (display.is.landscape) { 
+#  param.h:=300;
+  yoffs:=90;
+  s:=0.75-0.10;
+ };
+};
+
+w0 = display.metrics.portrait.w;
+h0 = min(display.metrics.portrait.h, param.h);
+
+
+# DYNAMIC SIZES [
+
+sz1 {
+ toolbar.h 10;
+ toolbar.w 10;
+ files.w 100;
+};
+
+mmodes {
+ ipad.sz {
+  toolbar.w 300;
+  toolbar.h 70;
+  files.w 300;
+#  code.w ;
+ };
+ iphone.sz {
+  toolbar.w 300;
+  toolbar.h 110;
+  files.w 200;
+ };
+};
+
+# SYNC TO DEVICE [
+
+metrics.sync.sz {
+ # metrics
+ sz1.toolbar.h:=_0.toolbar.h;
+ sz1.toolbar.w:=w0;
+ sz1.files.w:=_0.files.w;
+};
+
+if(cpu.is.ipad, 
+ metrics.sync.sz(mmodes.ipad.sz), 
+ metrics.sync.sz(mmodes.iphone.sz));
+
+# SYNC TO DEVICE ]
+
+# DYNAMIC SIZES ]
+
+ide.metrics {
+ _ display.metrics;
+
+ step {
+ };
+
+ toolbar {
+  
+  # devices
+#  ipad.sz {
+#   h 70;
+#  };
+#  sz0 ipad.sz; 
+
+  x 0;
+  y sources.h + yoffs;
+  w sz1.toolbar.w;
+#  h 70;
+#  h sz0.h;
+  h sz1.toolbar.h;
+ };
+ toolbar.portrait {
+  x toolbar.x;
+  y toolbar.y;
+  w toolbar.w;
+  h toolbar.h;
+ };
+ toolbar.landscape {
+
+ };
+ editor {
+  x 0;
+  y 0+yoffs;
+  w max(w0-sources.w,300);
+  h h0-toolbar.h;
+ };
+ sources {
+  x editor.w;
+  y 0+yoffs;
+  w sz1.files.w;
+  h h0-toolbar.h;
+ };
+ sources.portrait {
+  x sources.x;
+  y sources.y;
+  w sources.w;
+  h sources.h;
+ };
+ sources.landscape {
+
+ };
+ switch {
+  x sources.x;
+  y sources.y;
+  w sources.w;
+  h 60;
+ };
+ errors {
+  x 0;
+  y 0-errors.h;
+  w w0;
+  h 200;
+ };
+};
+
+metrics0 ide.metrics;
+
+
+# todo
+#  init.metrics.ipad;
+#  init.metrics.iphone;
+
+# METRICS ]

@@ -1,0 +1,410 @@
+### hackernews
+
+_ @1010;
+_ @1100;
+_ @sys.node;
+_ @sys.obj;
+_ @sys.net;
+
+_ @ul.ui;
+#_ @ui.collection;
+_ @util.dma.std;
+
+_ @sys.events;
+_ @sys.os;
+_ @os.basic;
+_ @os.util2;
+
+_ @sys.livelog2;
+_ @sys.llog;
+
+hn.hackernews.view 789000;
+hn.hackernews.node 789010;
+
+new.hackernews.view
+ # hid, x,y,w,h
+ _0:=node.new.p4.xyswh(u0, hn.hackernews.view, _1,_2,1,_3,_4, 0,0,0,0);
+
+
+
+### hackernews.inc
+
+_ @hackernews;
+_ @hackernews.http;
+
+shaders1.text0.vsh 29000;
+
+new.text.label1b
+ # hid, x,y,s, text, size
+#  new.text.label(_0, _1,_2,_3, _4, _5, 0,0,0, shaders1.text0.vsh,29011, 0);
+#  new.text.label(_0, _1,_2,_3, _4, _5, 1001,3,9, shaders1.text0.vsh,29011, 0);
+ new.text.label(_0, _1,_2,_3, _4, _5, 1001,1,1, shaders1.text0.vsh,29012, 0);
+
+
+
+### 789000 hackernews.view
+
+_ @ide.common;
+_ @hackernews.inc;
+
+draw(r0, 789001);
+
+node.z.to.front(r0, nid,0);
+
+llog.b(S.hackernews);
+llog.erase(r0, 0);
+
+hn.maxitems 0;
+
+log0 0;
+livelog0 log0;
+
+log0.w 500;
+log0.h 500;
+
+log0.w = w;
+log0.h = h;
+
+_ @sys.cpu;
+_ @sys.cpu.future;
+
+if (r0) {
+ log0:=llog2.new(u0, Hackernews);
+ llog2.set.splitter(u0, log0, 1);
+ llog2.log(u0, log0, llog2.root, HN.Hello2022);
+ llog2.log(u0, log0, Hackernews, Hello2022);
+# llog2.log(u0, log0, Hackernews1, Hello2023);
+# llog2.log(u0, log0, Hackernews, Hello2024);
+# llog2.log(u0, log0, Hackernews, Hello2025);
+# llog2.log(u0, log0, EEE1s, Hello2022);
+
+# new.livelog.view(log0, 0,0,1, 500,500, log0);
+
+ max.requests if(cpu.is.iphone, 1, 10);
+ llog2.set.attribute.v(u0, livelog0,OPTIONS.MaxRequests, Count, max.requests);
+ llog2.set.attribute.v(u0, livelog0,OPTIONS.MaxRequests, LLOG.ATTR.FID, 789012);
+ llog2.set.attribute.v(u0, livelog0,OPTIONS.MaxRequests, LLOG.ATTR.NAME, Count);
+
+ llog2.set.attribute.v(u0, livelog0,OPTIONS.Requests, Count, 0);
+ llog2.set.attribute.v(u0, livelog0,OPTIONS.Requests, LLOG.ATTR.FID, 789012);
+ llog2.set.attribute.v(u0, livelog0,OPTIONS.Requests, LLOG.ATTR.NAME, Count);
+
+ llog2.set.attribute.v(u0, livelog0,OPTIONS.Ready, Count, 0);
+ llog2.set.attribute.v(u0, livelog0,OPTIONS.Ready, LLOG.ATTR.FID, 789012);
+ llog2.set.attribute.v(u0, livelog0,OPTIONS.Ready, LLOG.ATTR.NAME, Count);
+
+};
+
+if (r0) {
+# hn.req.maxitems;
+ hn.req.stories;
+};
+
+#if (if(r0,1,r1>15)) {
+# r1:=0;
+# hn.req.maxitems;
+#};
+
+r1+=dt;
+
+create.stories {
+ # json
+ json _0;
+ nstories = jobj.arr.count(json, jobj.this);
+ llog.pv(A.nstories, nstories);
+# nstories := min(nstories, 100);
+# nstories := min(nstories, 60);
+# nstories := min(nstories, 30);
+# nstories := min(nstories, 10);
+ i=0; while(i<nstories) {
+  jstory.id = jobj.arr.jo.g(json, jobj.this, i);
+#  llog.po(Story, 0, jstory.id,-1);
+  storyid = jobj.buf.g(jstory.id, jobj.this, storyid);
+#  llog.po(Story, 0, storyid,-1);
+
+#  llog2.log(u0, log0, Story, storyid);
+  lnode0 = llog2.log(u0, log0, storyid, storyid);
+
+  llog2.set.attribute.v(u0, log0, lnode0, SUBNODE, hn.hackernews.node);
+
+  i+=1;
+ };
+};
+
+loaded 0;
+
+# events [
+
+_ @sys.events;
+
+www.process.events {
+ tb0=1; while(tb0>0) {
+  tb0:=events.pop(u0, www.pool,0);
+  if (tb0==http.event.res) {
+   json = o0;
+   raw = o1;
+
+   if (loaded==0) {
+    llog.erase(u0, 0);
+   };
+
+   obj1 o2;
+   http.id o3;
+   llog.b(A.RESP);
+
+#   llog.pv(A.http.res.json, json);
+#   llog.po(A.http.res.json, 0, json,-1);
+#   llog.pv(A.http.res.raw, raw);
+#   llog.po(A.http.res.raw, 0+8+16, raw,-1);
+
+   llog.e;
+
+   llog.b(A.RESP.INFO);
+
+#   if (obj1==S.hn.get.maxitems) {
+#    hn.maxitems:=str.parse.value(0, raw, 0,0);
+#
+#    hn.req.item(hn.maxitems);
+##    llog.pv(A.url.path.item, 0, txt0);
+#   };
+#   if (obj1==PATH.get.item) {
+##   llog.pv(A.http.res.v, hn.maxitems);
+#   };
+   if (obj1==HN.Stories) {
+    create.stories(json);
+    llog2.log(u0, log0, Stories.RAW, raw);
+   };
+   llog.e;
+   if (obj1==HN.Stories) {
+    loaded:=1;
+#    new.livelog.view(log0, 0,0,0.5, 500,2000, log0);
+    new.livelog.view(log0, 0,0,1, log0.w,log0.h, log0);
+   };
+
+  };
+ };
+};
+www.process.events;
+
+#    hn.req.item(hn.maxitems);
+#    hn { _; req.item(maxitems); };
+#    hn{ _; req.item(maxitems); };
+#    hn.{ req.item(maxitems); };
+#    hn.( req.item(maxitems); );
+#    hn.( req.item(maxitems); )();
+#    hn.( req.item(maxitems); )(maxitems=1);
+#    hn req.item(maxitems); ;
+
+
+# events ]
+
+_ @4;
+#val0 0; ui.value1(val0,0,0,0.5,hn.maxitems);
+val0 0; ui.value1(val0,w-100,h-32,0.5, h);
+ui.value.style(val0, 1);
+
+llog.e;
+
+# HN HTTP ]
+
+
+### 789001 hackernews.view.draw
+
+color(u0, 1,66/256,0,0.8);
+#rect(u0, 2, 0,0,w,h);
+
+
+
+### 789010 hackernews.node
+# llog,lnode
+
+livelog0 p0;
+lnode0 p1;
+
+_ @hackernews.inc;
+
+draw(r0, 789011);
+w:=160;
+t+=dt;
+
+
+ready r1;
+
+llog.b(S.hackernews);
+llog.b(Hackernews.node);
+
+reload 0;
+
+lname0 0;
+
+if (r0) {
+
+ lname0 := livelog2.get.name(u0, livelog0,lnode0, lname0);
+ 
+# llog.b(A.Hackernews.node);
+#    llog.po(A.name, 0+8, id,-1);
+#
+# llog.e;
+
+ reload := 1;
+};
+
+sync {
+ reload := 0;
+
+ id lname0;
+ hn.req.topic(id);
+};
+
+#reqs0 0;
+
+# LLOG2 UTIL [
+
+llog2.set.attribute.v.add {
+ # u0, lid, path|node, attr -> v
+ v = llog2.get.attribute.v(_0, _1,_2, _3);
+ v += _4;
+ llog2.set.attribute.v(_0, _1,_2, _3, v);
+};
+
+llog2.set.attribute.v.sub
+ # u0, lid, path|node, attr -> v
+ add(_0, _1,_2, _3, -_4);
+
+# LLOG2 UTIL ]
+
+if (reload) {
+ max.requests = llog2.get.attribute.v(u0, livelog0,OPTIONS.MaxRequests, Count);
+ requests.count = llog2.get.attribute.v(u0, livelog0,OPTIONS.Requests, Count);
+ if (requests.count < max.requests) {
+  sync;
+
+  requests.count += 1;
+  llog2.set.attribute.v(u0, livelog0,OPTIONS.Requests, Count, requests.count);
+ };
+# llog.pv(A.max.requests, max.requests);
+# llog.pv(A.requests.count, max.requests);
+};
+
+www.process.events {
+ tb0=1; while(tb0>0) {
+  tb0:=events.pop(u0, www.pool,0);
+  if (tb0==http.event.res) {
+   json = o0;
+   raw = o1;
+
+   obj1 o2;
+   http.id o3;
+   llog.b(A.RESPAAA);
+
+   if (obj1==lname0) {
+    ready:=1;
+
+    llog2.set.attribute.v.sub(u0, livelog0,OPTIONS.Requests, Count, 1);
+    llog2.set.attribute.v.add(u0, livelog0,OPTIONS.Ready, Count, 1);
+
+#   if (obj1==PATH.get.item) {
+
+#   llog.pv(A.http.res.json, json);
+#   llog.po(A.http.res.json, 0, json,-1);
+#   llog.pv(A.http.res.raw, raw);
+#   llog.po(A.http.res.raw, 0+8+16, raw,-1);
+
+   type0 = jobj.buf.g(json, A.type, type0);
+#   llog.po(A.s0, 0+8+16, type0,-1);
+
+#   lbl0 0; val0 0; ui.value4(lbl0,val0,0,30,1, type0, 0);
+   
+   tl0.type 0;
+   new.text.label1b(tl0.type, 0,30,1, type0, 16);
+
+   # comment
+#   text0 = jobj.buf.g(json, A.text, text0);
+#   if (text0>0) {
+#    lbl0=0; val0=0; ui.value4(lbl0,val0,0,55,1, text0, 0);
+#   };
+
+   # story
+   title0 = jobj.buf.g(json, A.title, title0);
+   if (title0>0) {
+#    lbl0=0; val0=0; ui.value4(lbl0,val0,0,55,1, title0, 0);
+    tl1.title 0;
+    new.text.label1b(tl1.title, 0,50,1, title0, 20);
+   };
+
+   };
+
+   llog.e;
+  };
+ };
+};
+
+www.process.events;
+
+_ @4;
+#lbl0 0; val0 0; ui.value4(lbl0,val0,200,30,1, lname0, 0);
+#val0 0; ui.value1(val0,w-50,h-32,0.5, lname0);
+#ui.value.style(val0, 1);
+
+# lbl0 0; val0 0; ui.value4(lbl0,val0,0,50,0.5, id, 0);
+
+#lbl0 0; val0 0; ui.value4(lbl0,val0,200,30,1, REQS, reqs0);
+
+llog.e;
+llog.e;
+
+h:=70;
+#w:=300;
+w:=1200;
+#w:=1;
+
+#_ @sys.display;
+#display.scalled.size(w,h-100);
+
+
+### 789011 hackernews.node.draw
+
+
+ready r1;
+
+if (ready==0) {
+q sin(t*3)*0.5+0.5;
+color(u0, 0.9*q,0.9*q,0.5*(1-q),0.5);
+#rect(u0, 6, 0,0,100,15);
+q sin(t*3)*0.5+0.5;
+rect(u0, 6, 0,0,w*(1-q),24);
+};
+if (ready==1) {
+ color(u0, 1,1,0,1);
+ triangle(u0, 6, 0,0, 20,0, 10,15);
+};
+
+
+### 789012 hackernews.node.attr.v
+# livelog,lnode, attr
+
+livelog0 p0;
+lnode0 p1;
+attr0 p2;
+
+draw(r0, 789013);
+
+_ @hackernews;
+
+value0 = llog2.get.attribute.v(u0, livelog0,lnode0, attr0);
+
+h:=14;
+
+_ @4;
+lbl0 0; val0 0; ui.value4(lbl0,val0,0,22,1, attr0, value0);
+
+
+### 789013 hackernews.node.attr.v.draw
+
+color(u0, 0.5,0.5,0,0.5);
+rect(u0, 6, 0,0, h,h);
+
+### 789014 hackernews.node.attr.v.graph
+# livelog,lnode, attr
+
+### 789015 hackernews.node.attr.v.graph.draw

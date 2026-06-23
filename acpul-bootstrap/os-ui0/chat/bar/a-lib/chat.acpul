@@ -1,0 +1,140 @@
+### chat
+
+# search.bar 15650;
+
+# search0 0;
+# search0:=node.new.this.ex(r0, ide.search.bar, p0);
+
+
+chat.input.bar 15652;
+
+new.chat.bar {
+ # x,y,s, w,h, v
+ chat0 0;
+ _ @basic.ui;
+ new.node.common4(chat0, _0,_1,_2, _3,_4, chat.input.bar, _5, 0,0,0);
+ chat0;
+};
+
+
+
+
+### chat.test
+
+new.chat.bar(r0);
+
+
+
+### chat.inc0
+
+_ @1010;
+_ @1100;
+_ @sys.node;
+_ @sys.obj;
+
+_ @ul.ui;
+_ @ui.collection;
+_ @util.dma.std;
+
+_ @sys.events;
+_ @sys.os;
+_ @os.basic;
+_ @os.util2;
+
+_ @sys.livelog2;
+_ @sys.llog;
+
+_ @ide.common;
+
+_ @sys.obj.volatile;
+
+_ @core.hud;
+
+_ @os.util0;
+_ @os.util1;
+_ @basic.ui;
+
+
+
+### chat.inc1.text
+
+# TEXT [
+
+text.is.empty
+ # text
+ obj.is.empty(u0, _0,-1);
+
+text.clear
+ # text
+ obj.clear(u0, _0);
+
+#text.is.empty(text0);
+#text.clear(text0);
+
+# TEXT ]
+# TEXT EQ 0 [
+
+# Compare buf0,0 and buf1,0
+# Input buffer or string
+text.eq0 {
+ # buf0, buf1 -> res
+ buf0 _0;
+ buf1 _1;
+ res=obj.cmp(u0, 0, buf0,0, buf1,0)==0;
+
+ # INFO [
+
+ index 0;
+ index+=1;
+
+# llog.b(EQ);
+# llog.pv2(I.RES, index, res);
+# llog.po(EQ.buf0, 0+8, buf0,0);
+# llog.po(EQ.buf1, 0+8, buf1,0);
+# llog.e;
+
+ # INFO ]
+
+ res;
+};
+
+# TEXT EQ 0 ]
+
+
+
+
+#
+#
+#
+
+### chat.search.results
+
+#collection
+
+### chat.search.results.text
+
+### chat.search.results.files
+
+### chat.history
+
+### chat.i18n
+
+S.cmd.desc.gpt Ask Chat GPT;
+
+### example.cmp.search
+
+test1 {
+ obj.cmp(u0, 0, A,0, A,0);
+ obj.cmp(u0, 0, A,0, B,0);
+
+ obj.cmp(u0, 0, buf0,0, buf1,0);
+ #obj.search(u0, 0, buf0,0, buf1,0);
+ results1=obj.search(u0, 0, A.string.for.the.search12.the.the.thesis,0,0, the,0);
+
+ #obj.cmp(u0, 0, results,0, S.f,0);
+ llog.po(SEARCH.RESULTS, 0+8, results1,-1);
+};
+
+if (r0) {
+ test1;
+};

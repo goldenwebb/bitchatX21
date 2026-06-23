@@ -1,0 +1,17 @@
+### cell2
+
+cell2 {
+ _ @sys.obj;
+
+ nid 0;
+ i 0;
+ j 0;
+ show 0;
+
+ # serialize
+ pack 0;
+ unpack 0;
+};
+
+# redirect
+cell cell2;

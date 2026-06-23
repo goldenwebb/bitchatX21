@@ -1,0 +1,59 @@
+### basic.sphere2d
+
+new.sphere2d {
+ # hid, x,y,s, w,h
+ new.ui.shader.node3(_0, _1,_2,_3, _4,_5+1, 70014,28820); # 
+ shader.set.uniform.v(_0, A.colorMode, 1);
+ shader.set.uniform.v4(_0, A.backgroundColor, 0,1,0,1);
+ shader.set.uniform.v4(_0, A.sphereColor, 1,0,1,1.5);
+ shader.set.uniform.v3(_0, A.sphereSpeColor, 0.1,0.1,0.0);
+ shader.set.uniform.v(_0, A.sphereType, 1);
+ shader.set.uniform.v(_0, A.sphereIor, 0.1);
+ shader.set.uniform.v(_0, A.sphereRou, 0.0);
+ shader.set.uniform.v(_0, A.sphereSize, 3.55);
+};
+
+
+### basic.sphere2d.test
+
+_ @basic.sphere2d;
+
+sphere2d.test0 {
+ sn3sphere 0;
+ new.sphere2d(sn3sphere, 0,420,1, 300,300);
+};
+
+sphere2d.test1 {
+ w 400;
+ h 400;
+ n 5;
+ m 5;
+ i=0;
+ while(i<n) {
+  j=0;
+  while(j<m) {
+   w0 w/n;
+   h0 h/m;
+   x0 w0*i;
+   y0 h0*j;
+   new.sphere2d(sn3sphere, x0,y0+300,1, w0,h0);
+#   shader.set.uniform.v4(sn3sphere, A.backgroundColor, rnd(u0),rnd(u0),rnd(u0),rnd(u0));
+#   shader.set.uniform.v4(sn3sphere, A.sphereColor, rnd(u0),rnd(u0),rnd(u0),rnd(u0));
+
+   shader.set.uniform.v4(sn3sphere, A.backgroundColor, 0,0,0,0);
+   shader.set.uniform.v4(sn3sphere, A.sphereColor, rnd(u0),rnd(u0),rnd(u0),1);
+   shader.set.uniform.v3(sn3sphere, A.sphereSpeColor, rnd(u0),rnd(u0),rnd(u0));
+   shader.set.uniform.v(sn3sphere, A.sphereType, rnd(u0)>0.5);
+   shader.set.uniform.v(sn3sphere, A.sphereIor, rnd(u0)*20);
+   shader.set.uniform.v(sn3sphere, A.sphereRou, rnd(u0));
+   j+=1;
+  };
+  i+=1;
+ };
+};
+
+
+
+### basic.sphere3d ?
+
+### basic.sphere3d.test ?

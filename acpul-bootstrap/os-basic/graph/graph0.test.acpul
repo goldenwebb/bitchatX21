@@ -1,0 +1,124 @@
+### 90380 os.graph0.test
+
+r0:=k==0;
+
+draw(r0, 90381);
+
+_ @1010;
+_ @sys.node;
+_ @sys.os;
+_ @os.basic;
+_ @os.graph0.inc;
+
+os.graph0.test.add 90388;
+
+node.new.this.ex(r0, os.graph0.test.add, 0);
+
+node.new.this.ex(r0, os.graph0.test.inc, 0);
+
+x:=100;
+y:=100;
+
+t+=dt;
+
+k:=1;
+
+### 90381 os.graph0.test.draw
+
+_ @1010;
+_ @sys.os;
+_ @os.basic;
+_ @twobin.font.inc;
+
+twobin.font.scale l3;
+twobin.font.cursor.x l0;
+twobin.font.cursor.y l1;
+twobin.font.gap 10;
+
+twobin.font.def8x4.txt0 {
+ begin;
+ scale:=3;
+ G;R;A;P;H;
+ T;E;S;T;
+};
+twobin.font.def8x4.txt0;
+
+### 90388 os.graph0.test.add
+
+r0:=k==0;
+
+draw(r0, 90389);
+
+_ @1010;
+_ @sys.obj;
+_ @sys.node;
+_ @sys.os;
+_ @os.basic;
+_ @os.graph0.inc;
+
+graph0 r7;
+values0 r2;
+
+count0 100;
+
+graph.view.new {
+ _ os.graph0;
+ graph0:=node.new.this.ex8(r0, os.graph0.view, S.graph0.test.line2d, mode.line2d, style.default, values0,count0, 0);
+# graph0:=node.new.this.ex8(r0, os.graph0.view, S.graph0.test.line2d, os.graph0.mode.line2d, os.graph0.style.default, values0,100, 0);
+ values0:=node.value.g(u0, graph0,0);
+};
+
+if (r0) {
+ graph.view.new;
+};
+
+values.update {
+ # values, (a,b)
+ values0 _0;
+ a _1;
+ b _2;
+ c _3;
+ n:=count0;
+ i:=0; while(i<n) {
+  buffer.set(u0, values0,0,i, sin(t+i*a)*b+c*rnd(u0));
+#  buffer.set(u0, values0,0,i, sin(t+i*a)*b+c*sin(t+i*a*)/2);
+  i+=1;
+ };
+};
+#if (r0) {
+#values.update(values0, 0.1, 100, 10);
+values.update(values0, 0.5+sin(t*5), 10, 10);
+#};
+
+node.prop.w.s(u0, graph0,400);
+#node.prop.h.s(u0, graph0,200);
+
+k:=1;
+
+### 90389 os.graph0.test.draw.add
+
+
+_ @1010;
+_ @sys.os;
+_ @os.basic;
+_ @twobin.font.inc;
+
+twobin.font.scale l3;
+twobin.font.cursor.x l0;
+twobin.font.cursor.y l1;
+twobin.font.gap 10;
+
+psize(u0, 3);
+color(u0, 1,0,0,1);
+
+twobin.font.def8x4.txt0 {
+ cursor.y:=30;
+
+ begin;
+ scale:=2;
+ G;R;A;P;H;T;E;S;T;
+ A;D;D;
+};
+twobin.font.def8x4.txt0;
+
+#rect(u0, 6, 0,0,1000,1000);

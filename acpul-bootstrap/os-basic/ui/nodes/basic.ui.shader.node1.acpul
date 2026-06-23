@@ -1,0 +1,242 @@
+### 900772 basic.ui.shader.node1.inc
+
+basic.ui.shader.node1 900774;
+
+# NODE1 [
+
+new.ui.shader.node.t
+ # hid, x,y,s, w,h, mode, vsh, fsh, tex
+ new.node.common8(_0, _1,_2,_3, _4,_5, basic.ui.shader.node1, _6, _7, _8, 1, _9, 0,0,0, 0,0,0,0);
+
+new.ui.shader.node.tt
+ # hid, x,y,s, w,h, mode, vsh, fsh, tex0,tex1
+ new.node.common8(_0, _1,_2,_3, _4,_5, basic.ui.shader.node1, _6, _7, _8, 2, _9, _10, 0,0, 0,0,0,0);
+
+new.ui.shader.node.ttt
+ # hid, x,y,s, w,h, mode, vsh, fsh, tex0,tex1,tex2
+ new.node.common8(_0, _1,_2,_3, _4,_5, basic.ui.shader.node1, _6, _7, _8, 3, _9,_10,_11, 0, 0,0,0,0);
+
+new.ui.shader.node.tttt
+ # hid, x,y,s, w,h, mode, vsh, fsh, tex0,tex1,tex2,tex3
+ new.node.common8(_0, _1,_2,_3, _4,_5, basic.ui.shader.node1, _6, _7, _8, 3, _9,_10,_11,_12, 0,0,0,0);
+
+new.ui.shader.node.f
+ # hid, x,y,s, w,h, mode, vsh, fsh, v0
+ new.node.common8(_0, _1,_2,_3, _4,_5, basic.ui.shader.node1, _6, _7, _8, 4, _9,_10, 0,0, 0,0,0,0);
+
+new.ui.shader.node.ff
+ # hid, x,y,s, w,h, mode, vsh, fsh, v0,v1
+ new.node.common8(_0, _1,_2,_3, _4,_5, basic.ui.shader.node1, _6, _7, _8, 5, _9,_11, 0,0, 0,0,0,0);
+
+new.ui.shader.node.fff
+ # hid, x,y,s, w,h, mode, vsh, fsh, v0,v1,v2
+ new.node.common8(_0, _1,_2,_3, _4,_5, basic.ui.shader.node1, _6, _7, _8, 6, _9,_12, 0,0, 0,0,0,0);
+
+new.ui.shader.node.ffff
+ # hid, x,y,s, w,h, mode, vsh, fsh, v0,v1,v2,v3
+ new.node.common8(_0, _1,_2,_3, _4,_5, basic.ui.shader.node1, _6, _7, _8, 7, _9,_13,0,0, 0,0,0,0);
+
+new.ui.shader.node.f2
+ # hid, x,y,s, w,h, mode, vsh, fsh, v0,v1
+ new.node.common8(_0, _1,_2,_3, _4,_5, basic.ui.shader.node1, _6, _7, _8, 12, _9,_10, 0,0, 0,0,0,0);
+
+
+# NODE1 ]
+
+
+### 900774 basic.ui.shader.node1
+
+# mode, vsh, fsh, param.type, params...
+# [0] - tex0
+
+param.t {
+ none 0;
+ t 1; # tex0
+ tt 2; # tex0, tex1
+ ttt 3; # tex0, tex1, tex2
+ tttt 4; # tex0, tex1, tex2, tex3
+ f 5; # v
+ ff 6; # v0, v1
+ fff 7; # v0, v1, v2
+ ffff 8; # v0, v1, v2, v3
+ tf 9; # tex0, v0
+ tff 10; # tex0, v0, v1
+ tfff 10; # tex0, v0, v1, v3
+ ttf 11; # tex0, tex1, v0
+ ttff 11; # tex0, tex1, v0, v1
+
+ f2 12; # v0,v1
+};
+
+pp.type p3;
+
+pp.t.tex0 p4;
+pp.tt.tex1 p5;
+pp.ttt.tex2 p6;
+pp.tttt.tex3 p7;
+
+pp.f.v0 p4;
+pp.ff.v1 p5;
+pp.fff.v2 p6;
+pp.ffff.v3 p7;
+
+pp.tf.tex0 p4;
+pp.tf.v0 p5;
+pp.tff.v1 p6;
+pp.tfff.v2 p7;
+
+pp.ttf.tex0 p4;
+pp.ttf.tex1 p5;
+pp.ttf.v0 p6;
+pp.ttff.v1 p7;
+
+pp.f2.v0 p4;
+pp.f2.v1 p5;
+
+vsh0 r1;
+fsh0 r2;
+
+vsh0:=p1;
+fsh0:=p2;
+
+draw(r0, 900775);
+
+_ @1010;
+_ @sys.node;
+
+_ @sys.os;
+_ @os.basic;
+_ @os.basic.ui;
+_ @os.util2;
+
+mode p0;
+
+tex0 r3;
+
+if (mode==0) {
+  
+};
+
+tex0fbo u22; # cache common texture
+
+if (mode==1) {
+
+ if ((tex0==0)*(w>0)*(h>0)) {
+  tex0:=node.ex.texture.create(u0, w,h);
+  node.value.s(u0, nid,0, tex0);
+
+  if (rnd(u0)>0.9) {
+   tex0fbo:=tex0;
+  };
+ };
+
+};
+
+
+
+### 900775 basic.ui.shader.node1.draw
+
+_ @1010;
+_ @sys.node;
+_ @sys.obj;
+_ @1100;
+_ @util.gl.std;
+_ @sys.display;
+
+#nn @900770;
+
+nn @basic.ui.shader.node1;
+
+pt nn.param.t; 
+pp nn.pp;
+
+ptype nn.pp.type;
+
+mode p0;
+
+vsh0 r1;
+fsh0 r2;
+
+tex0 r3;
+
+tex0fbo u22;
+
+if (mode==0) {
+# gl.shader.use(70014,70020);
+ gl.shader.use(vsh0,fsh0);
+
+ gl.rect0(5, 0,0, w,h);
+};
+
+#drawing rnd(u0)<0.5;
+#drawing tex0==tex0fbo;
+drawing 1;
+
+if (drawing==0) {
+  
+ gl.rect0.texture(5, 0,0, w,h, tex0fbo);
+};
+
+if ((mode==1)*(tex0!=0)*drawing) {
+ l0:=node.ex.is.this.drawing(u0);
+ if (l0==0) {
+  node.ex.gl.fbo(u0, tex0);
+  node.ex.gl.clear(u0, 0,0,0,0);
+#  node.ex.gl.clear(u0, rnd(u0),rnd(u0),rnd(u0),1);  
+
+  gl.shader.use(vsh0,fsh0);
+  
+  stex gl.shader.uniform.texture(_0, _1, _0);
+  sf gl.shader.uniform.f1(_0, _1);
+
+  if (ptype==pt.t) {
+   stex(0, pp.t.tex0);
+#   gl.shader.uniform.texture(0, pp.t.tex0, 0);
+  };
+  if (ptype==pt.tt) {
+#   watch(pp.t.tex0);
+#   watch(pp.tt.tex1);
+   gl.shader.uniform.texture(0, pp.t.tex0, 0);
+   gl.shader.uniform.texture(1, pp.tt.tex1, 1);
+  };
+  if (ptype==pt.ttt) {
+   gl.shader.uniform.texture(0, pp.t.tex0, 0);
+   gl.shader.uniform.texture(1, pp.tt.tex1, 1);
+   gl.shader.uniform.texture(2, pp.ttt.tex2, 2);
+  };
+  if (ptype==pt.tttt) {
+  };
+  if (ptype==pt.f) {
+  };
+  if (ptype==pt.ff) {
+  };
+  if (ptype==pt.fff) {
+  };
+  if (ptype==pt.ffff) {
+  };
+  if (ptype==pt.tf) {
+  };
+  if (ptype==pt.tff) {
+  };
+  if (ptype==pt.tfff) {
+  };
+  if (ptype==pt.ttf) {
+  };
+  if (ptype==pt.ttff) {
+  };
+
+
+
+  if (ptype==pt.f2) {
+   gl.shader.uniform.f2(0, pp.f2.v0, pp.f2.v1);
+  };
+
+#  gl.shader.uniform.f2(0, 100, 100);
+  gl.rect0(5, 0,0, w,h);
+
+  node.ex.gl.fbo(u0, -1);
+ };
+ gl.rect0.texture(5, 0,0, w,h, tex0);
+};
+
+# gl.fbo(tex0);

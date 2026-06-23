@@ -1,0 +1,227 @@
+### 90200 os.util0
+
+# METRICS [
+
+screen.size0 {
+ w:=768;
+ h:=1024;
+};
+
+center.always {
+ x:=w/2;
+ y:=h/2;
+};
+
+center.up {
+ if (r0) {
+  always;
+ };
+};
+
+# METRICS ]
+# COMMON [
+
+nid node.ex.this.id(u0);
+
+node.fid.by.name
+ # u0, sid
+ io(_0, 502130, _1, 0, 0,0);
+
+NNN node.fid.by.name(u0, _0);
+
+# COMMON ]
+
+#run.app {
+# node.new.this.ex(r0, neo.ui.main, 0);
+#};
+#run.app;
+
+#test1 {
+# _ @twobin.font.inc;
+# node.new.this.ex(r0, twobin.font.test, 0);
+#};
+#test1;
+
+# IDE [
+
+ide.new1 {
+ # r0
+ r0 _0;
+ _ @sys.os;
+ _ @os.main;
+
+ if (r0) {
+  os.main.panel.new(l0, 0,925,1, 768,100);
+ };
+
+ system.monitor.init(0, 940);
+
+ if (r0) {
+  os.main.ide.new(r0, 0,525,1, 600,400);
+ };
+};
+
+# IDE ]
+# util node [
+
+new.node.common0 {
+ # hid, x,y,s, w,h, node, p0
+ _0:=node.new.this.ex(u0, _6, _7); 
+ node.prop.x.s(u0, _0, _1);
+ node.prop.y.s(u0, _0, _2);
+ node.prop.s.s(u0, _0, _3);
+ node.prop.w.s(u0, _0, _4);
+ node.prop.h.s(u0, _0, _5);
+};
+
+new.text.common0 {
+ # hid, x,y,s, w,h, text
+ util.text 10170201;
+ _0:=node.new.this.ex(u0, util.text, _6); 
+ node.prop.x.s(u0, _0, _1);
+ node.prop.y.s(u0, _0, _2);
+ node.prop.s.s(u0, _0, _3);
+ node.prop.w.s(u0, _0, _4);
+ node.prop.h.s(u0, _0, _5);
+# new.node.common0(_0,_1,_2,_3,_4,_5, util.text ,_6)
+};
+
+# util node ]
+# util buffer [
+
+buffer.shr { # shift.right
+ # u0, buffer,i
+ u0 _0;
+ buf0 _1;
+ i0 _2;
+ dma0 0;
+ buffer.dma(u0, dma0, buf0,i0);
+ dma.copy(u0, dma0,0, 0,1, dma.size(u0, dma0)-1);
+ dma.off(u0, dma0);
+};
+
+buffer.set.size {
+ # u0, buffer,i, size
+ u0 _0;
+ buf0 _1;
+ i0 _2;
+ size0 _3;
+ dma0 0;
+ buffer.dma(u0, dma0, buf0,i0);
+ dma.strip.size(u0, dma0, size0);
+ dma.off(u0, dma0);
+};
+
+#buffer.clone {
+# # u0, buffer,i
+# u0 _0;
+# buf0 _1;
+# i0 _2;
+# dma0 0;
+# dma1 1;
+# buf1 0;
+# buffer.dma(u0, dma0, buf0,i0);
+# n dma.size(u0, dma0);
+# buf1:=buffer.new(u0, n,n);
+# buffer.dma(u0, dma1, buf1,0);
+# dma.copy(u0, dma1,0, dma0,0, n);
+# dma.off(u0, dma0);
+# dma.off(u0, dma1);
+# buf1;
+#};
+
+buffer.set3 {
+ # u0, buf,i,offs, v0,v1,v2
+ u24=_3;
+ buffer.set2(_0, _1,_2,u24, _4,_5);
+ buffer.set(_0, _1,_2,u24+2, _6);
+};
+
+buffer.set0.str0 { 
+ # buf,i, str
+ buf0 _0;
+ i _1;
+ dma0 0;
+ dma1 1;
+ buffer.dma(u0, dma0, buf0,i);
+ dma.off(u0, dma1);
+ dma.set(u0, dma1,0, _2);
+ dma.print(u0, dma0, S.format.str, dma1);
+ dma.off(u0, dma0);
+};
+ 
+buffer.add0.str0 {
+ # buf, str
+ buf0 _0;
+ str0 _1;
+ buffer.add(u0, buf0, -1,-1);
+ buffer.set0.str0(buf0, buffer.count(u0, buf0)-1, str0);
+};
+
+# BUFFER SPLIT [
+
+#
+# buffer split with \n
+#
+buffer.split {
+ # u0, buf,i
+ dma0 0;
+ buffer.dma(_0, dma0, _1,_2);
+ dma.split(_0, 0, dma0, 0,0,0,0);
+};
+
+#
+# buffer split with char
+#
+buffer.split1.chr {
+ # u0, buf,i, chr,repeat
+ # repeat
+ #  0 - no repeat
+ #  1 - repeat
+ dma0 0;
+ buffer.dma(_0, 0, _1,_2);
+ dma.split(_0, 1, dma0, _3, 0,0,0);
+};
+
+#
+# buffer split with obj
+#
+buffer.split2 {
+ # u0, buf,i, obj,i
+ dma0 0;
+ buffer.dma(_0, 0, _1,_2);
+ dma.split(_0, 2, dma0, _3,_4, 0,0);
+};
+
+# BUFFER SPLIT ]
+# buffer.copy0 [
+
+buffer.copy0 {
+ # u0, dst,i, src,i
+ u0 _0;
+ dst _1;
+ dst.i _2;
+ src _3;
+ src.i _4;
+
+ buffer.dma(u0, 0, src,src.i);
+ buffer.dma(u0, 1, dst,dst.i);
+ dma.copy(u0, 1,0, 0,0, dma.size(u0, 0)); 
+};
+
+# buffer.copy0 ]
+# BUFFER TRIM [
+
+buffer.trim.left.eol {
+ # text
+ buf0 = buffer.clone(u0, text0,0);
+ i = buffer.size(u0, buf0,0)-1;
+ if (buffer.get(u0, buf0,0,i)==10) {
+  buffer.set.size(u0, buf0,0, i);
+  i -= 1;
+ };
+ buf0;
+};
+
+# BUFFER TRIM ]
+# util buffer ]

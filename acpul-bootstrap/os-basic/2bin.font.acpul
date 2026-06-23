@@ -1,0 +1,424 @@
+### 90100 2bin.font.inc
+
+twobin.font.test 90102;
+
+# ABCDEFGHI j K l MNOP q RST u V w X y Z
+
+twobin.font { _;
+ # scale
+ # gap
+ # cursor.{x,y}
+ def8x4 {
+  s scale;
+  cx cursor.x;
+  cy cursor.y;
+  l line(u0, 3, cx+_0*s,cy+_1*s, cx+_2*s,cy+_3*s);
+#  l {psize(u0,1);triangle(u0, 6, cx+_0*s,cy+_1*s, cx+_2*s,cy+_3*s, cx+_2*s-5,cy+_3*s+5+sin(t*10)*10);};
+#  l {psize(u0,1);triangle(u0, 6, cx+_0*s,cy+_1*s, cx+_2*s,cy+_3*s, cx+_2*s+5,cy+_3*s+1*s;};
+  cursor.next.sym {
+   # x,y
+   x _0;
+   cx+=x*s+gap;
+  };
+  begin {
+   cx:=0;
+  };
+  upper {
+    A {
+     l(0,0, 0,8); 
+     l(4,0, 4,8);
+     l(0,8, 4,8); 
+     l(0,4, 4,4);
+     cursor.next.sym(4,8);
+    };
+    B {
+     l(0,0, 0,8); 
+     l(4,0, 4,4);
+     l(0,4, 4,4); 
+     l(0,0, 4,0);
+     cursor.next.sym(4,8);
+    };
+    C {
+     l(0,0, 0,8); 
+     l(0,8, 4,8);
+     l(0,0, 4,0);
+     cursor.next.sym(4,8);
+    };
+    D {
+     l(0,0, 0,4); 
+     l(0,4, 4,4);
+     l(4,0, 4,8); 
+     l(0,0, 4,0);
+     cursor.next.sym(4,8);
+    };
+    E {
+     l(0,0, 0,8); l(0,0, 4,0);
+     l(0,4, 4,4); l(0,8, 4,8);
+     cursor.next.sym(4,8);
+    };
+    F {
+     l(0,0, 0,8); 
+     l(0,4, 4,4); l(0,8, 4,8);
+     cursor.next.sym(4,8);
+    };
+    G {
+     l(0,0, 0,8); 
+     l(0,8, 4,8); 
+     l(0,0, 4,0);
+     l(4,0, 4,4);
+     cursor.next.sym(4,8);
+    };
+    H {
+     l(0,0, 0,8); 
+     l(4,0, 4,8); 
+     l(0,4, 4,4);
+     cursor.next.sym(4,8);
+    };
+    I {
+     l(2,0, 2,8); 
+     cursor.next.sym(4,8);
+    };
+    J {
+     l(0,0, 0,4); 
+     l(0,0, 4,0); 
+     l(4,0, 4,8); 
+     cursor.next.sym(4,8);
+    };
+    K {
+     l(0,0, 0,8); 
+     l(0,4, 4,8); 
+     l(0,4, 4,0); 
+     cursor.next.sym(4,8);
+    };
+    L {
+     l(0,0, 0,8); 
+     l(0,0, 4,0); 
+     cursor.next.sym(4,8);
+    };
+    M {
+     l(0,0, 0,8); 
+     l(4,0, 4,8);
+     l(0,8, 2,4); 
+     l(2,4, 4,8);
+     cursor.next.sym(4,8);
+    };
+    N {
+     l(0,0, 0,8); l(0,8, 4,0); l(4,0, 4,8);
+     cursor.next.sym(4,8);
+    };
+    O {
+     l(0,0, 0,8); l(4,0, 4,8);
+     l(0,0, 4,0); l(0,8, 4,8);
+     cursor.next.sym(4,8);
+    };
+    P {
+     l(0,0, 0,8); l(4,4, 4,8);
+     l(0,8, 4,8); l(0,4, 4,4);
+     cursor.next.sym(4,8);
+    };
+    Q {
+     l(0,0, 0,8); l(4,0, 4,8);
+     l(0,0, 4,0); l(0,8, 4,8);
+     l(2,2, 5,-1);
+     cursor.next.sym(4,8);
+    };
+    R {
+     l(0,0, 0,8); 
+     l(0,8, 4,8);
+     l(0,4, 4,4); 
+     l(4,4, 4,8);
+     l(0,4, 4,0);
+     cursor.next.sym(4,8);
+    };
+    S1 {
+     l(0,0, 4,1); 
+          l(4,1, 4,3);
+               l(4,3, 0,5);
+                    l(0,5, 0,7);
+                         l(0,7, 4,8);
+     cursor.next.sym(4,8);
+    };
+    S {
+     l(0,1, 0,0); 
+     l(4,8, 4,7); 
+     l(0,0, 4,0); 
+          l(4,0, 4,4);
+               l(4,4, 0,4);
+                    l(0,4, 0,8);
+                         l(0,8, 4,8);
+     cursor.next.sym(4,8);
+    };
+    T {
+     l(2,0, 2,8); 
+     l(0,8, 4,8); 
+     cursor.next.sym(4,8);
+    };
+    U {
+     l(0,0, 0,8); 
+     l(4,0, 4,8); 
+     l(0,0, 4,0); 
+     cursor.next.sym(4,8);
+    };
+    V {
+     l(0,8, 2,0); 
+     l(2,0, 4,8); 
+     cursor.next.sym(4,8);
+    };
+    W {
+     l(0,0, 0,8); 
+     l(4,0, 4,8);
+     l(0,0, 2,4); 
+     l(2,4, 4,0);
+     cursor.next.sym(4,8);
+    };
+    X {
+     l(0,0, 4,8); 
+     l(0,8, 4,0);
+     cursor.next.sym(4,8);
+    };
+    Y {
+     l(0,8, 2,4); 
+     l(2,4, 4,8);
+     l(2,4, 2,0); 
+     cursor.next.sym(4,8);
+    };
+    Z {
+     l(0,0, 4,8); 
+     l(0,8, 4,8);
+     l(0,0, 4,0);
+     cursor.next.sym(4,8);
+    };
+  };
+  lower { # task.new
+   a {};
+   b {};
+   c {};
+   d {};
+   e {};
+   r {};
+   g {};
+  };
+  numbers { # task.new
+   one {};
+   two {};
+   three {};
+   four {};
+   five {};
+   six {};
+   seven {};
+   eight {};
+   nine {};
+   zero {};
+  };
+  numbers1 {
+   X0 {
+    l(0,0, 0,8); 
+    l(4,0, 4,8); 
+    l(0,0, 4,0);
+    l(0,8, 4,8);
+    l(0,0, 4,8);
+    cursor.next.sym(4,8);
+   };
+   X1 {
+    l(4,0, 4,8); 
+    cursor.next.sym(4,8);
+   };
+   X2 {
+    l(0,0, 0,4); 
+    l(4,4, 4,8);
+    l(0,0, 4,0);
+    l(0,4, 4,4);
+    l(0,8, 4,8);
+    cursor.next.sym(4,8);
+   };
+   X3 {
+    l(0,0, 4,0); 
+    l(0,4, 4,4); 
+    l(0,8, 4,8); 
+    l(4,0, 4,8); 
+    cursor.next.sym(4,8);
+   };
+   X4 {
+    l(0,4, 0,8); 
+    l(0,4, 4,4); 
+    l(4,0, 4,8); 
+    cursor.next.sym(4,8);
+   };
+   X5 {
+    l(4,0, 4,4); 
+    l(0,4, 0,8);
+    l(0,0, 4,0);
+    l(0,4, 4,4);
+    l(0,8, 4,8);
+    cursor.next.sym(4,8);
+   };
+   X6 {
+    l(4,0, 4,4); 
+    l(0,0, 0,8);
+    l(0,0, 4,0);
+    l(0,4, 4,4);
+    l(0,8, 4,8);
+    cursor.next.sym(4,8);
+   };
+   X7 {
+    l(0,8, 4,8); 
+    l(4,8, 0,0);
+    cursor.next.sym(4,8);
+   };
+   X8 {
+    l(0,0, 4,0); 
+    l(0,0, 0,8);
+    l(0,8, 4,8);
+    l(4,0, 4,8);
+    l(0,4, 4,4);
+    cursor.next.sym(4,8);
+   };
+   X9 {
+    l(0,0, 4,0); 
+    l(0,4, 0,8);
+    l(0,8, 4,8);
+    l(4,0, 4,8);
+    l(0,4, 4,4);
+    cursor.next.sym(4,8);
+   };
+  };
+
+  symbols { # task.new
+   dot {};
+   comma {};
+   quote {};
+   minus {};
+   plus {};
+   underscore {};
+   brace.l {};
+   brace.r {};
+   space {};
+  };
+  symbols1 {
+   DOT {
+    l(0,0, 1,0);
+    l(0,0, 0,1);
+    l(1,0, 1,1);
+    l(0,1, 1,1);
+    cursor.next.sym(4,8);
+   };
+   COMMA {
+    l(1,1, -1,-1);
+    cursor.next.sym(4,8);
+   };
+   QUOTE {
+
+   };
+   MINUS {
+    l(0,4, 4,4);
+    cursor.next.sym(4,8);
+   };
+   PLUS {
+    l(0,4, 4,4);
+    l(2,2, 2,6);
+    cursor.next.sym(4,8);
+   };
+   UNDERSCORE {
+    l(0,0, 4,0);
+    cursor.next.sym(4,8);
+   };
+   BRACE.L {
+
+   };
+   BRACE.L {
+
+   };
+   SP {
+    cursor.next.sym(4,8);
+   };
+  };
+
+  _ upper;
+  _ numbers1;
+  _ symbols1;
+ };
+};
+
+
+
+### 90102 2bin.font.test
+
+r0:=k==0;
+
+draw(r0, 90103);
+
+y:=150;
+
+k:=1;
+
+### 90103 2bin.font.test.draw
+
+_ @90100;
+
+twobin.font.def8x4.scale 3;
+twobin.font.def8x4.cursor.x l0;
+twobin.font.def8x4.cursor.y l1;
+twobin.font.def8x4.gap 10;
+
+psize(u0, 3);
+color(u0, 1,1,1,1);
+
+twobin.font.def8x4.begin;
+twobin.font.def8x4.A;
+twobin.font.def8x4.B;
+twobin.font.def8x4.C;
+twobin.font.def8x4.D;
+twobin.font.def8x4.E;
+twobin.font.def8x4.F;
+twobin.font.def8x4.G;
+twobin.font.def8x4.H;
+twobin.font.def8x4.I;
+twobin.font.def8x4.J;
+twobin.font.def8x4.K;
+twobin.font.def8x4.L;
+twobin.font.def8x4.M;
+twobin.font.def8x4.N;
+twobin.font.def8x4.O;
+twobin.font.def8x4.P;
+twobin.font.def8x4.Q;
+twobin.font.def8x4.R;
+twobin.font.def8x4.S;
+twobin.font.def8x4.T;
+twobin.font.def8x4.U;
+twobin.font.def8x4.V;
+twobin.font.def8x4.W;
+twobin.font.def8x4.X;
+twobin.font.def8x4.Y;
+twobin.font.def8x4.Z;
+twobin.font.def8x4.DOT;
+twobin.font.def8x4.COMMA;
+twobin.font.def8x4.MINUS;
+twobin.font.def8x4.PLUS;
+twobin.font.def8x4.UNDERSCORE;
+
+ # EXP SLOW COMPILE BAD [
+
+ putv.xx {
+  v _0;
+  putv.x(mod(floor(v/10), 10));
+  putv.x(mod(v,10));
+ };
+
+ putv.xxx {
+  v _0;
+  putv.x(mod(floor(v/100), 10));
+  putv.xx(mod(v, 100));
+ };
+
+ putv1 {
+  v _0;
+#  putv.xx(l0);
+  if (v<10){putv.x(floor(v));};
+  if ((v>=10)*(v<100)){putv.xx(v);};
+#  if (v>=100) {putv.xx(99);};
+  if ((v>=100)*(v<1000)){putv.xxx(v);};
+  if (v>=1000) {putv.xxx(999);};
+ };
+
+ # EXP SLOW COMPILE BAD ]
+

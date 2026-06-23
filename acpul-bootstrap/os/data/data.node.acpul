@@ -1,0 +1,27 @@
+data.node.class {
+
+ new {
+  
+ };
+
+ obj {
+
+ };
+
+ tree {
+
+ };
+
+ view {
+
+ };
+
+ touch {
+
+ };
+
+ sound {
+
+ };
+
+};

@@ -1,0 +1,338 @@
+### 7350 bot
+
+r0:=k==0;
+
+draw(r0, 7351);
+
+# box2d main [
+
+_ @1010;
+_ @sys.box2d;
+#box2d.reset(r0);
+_ @sys.llog;
+
+gravity.x 0;
+gravity.y 0-1;
+
+b2d.world r15;
+
+if (r0) {
+ b2d.world:=box2d.world(u0, gravity.x, gravity.y);
+};
+
+velocity.iteractions 8;
+position.iteractions 3;
+
+box2d.step(u0, b2d.world, 1/60, velocity.iteractions, position.iteractions);
+
+# box2d main ]
+# box2d new body [
+
+if (r0) {
+ # body0 - circle [
+
+ ib0 { _ box2d.default.dynamic.body.info;
+  x 100;
+  y 200;
+  damping.linear 0;
+  gravity.scale 100;
+ };
+ b0 l0;
+ b0:=box2d.body.create2(r0, b2d.world, ib0); 
+ 
+ b0s0 l1;
+ b0s0:=box2d.shape.create.circle(u0);
+ box2d.shape.set.radius(u0, b0s0, 10);
+
+ b0f0 l2;
+ box2d.fixture.def(u0, 0.2, 0, 0, 0);
+ b0f0:=box2d.fixture.create(u0, b0, b0s0);
+ box2d.fixture.filter.collision(u0, b0f0, 1,2+1, 0);
+
+ # body0 - circle ]
+ # body1 - polygon [
+
+ ib1 { _ box2d.default.static.body.info;
+  x 100;
+  y 100;
+  angle 0;
+ };
+ b1 l3;
+ b1:=box2d.body.create2(r0, b2d.world, ib1); 
+
+ b1s1 l4;
+ b1s1:=box2d.shape.create.polygon(u0);
+ box2d.shape.polygon.box(u0, b1s1, 50, 15);
+
+ b1f1 l5;
+ box2d.fixture.def(u0, 0.2, 0, 0, 0);
+ b1f1:=box2d.fixture.create(u0, b1, b1s1);
+ box2d.fixture.filter.collision(u0, b1f1, 1,1+2, 0);
+
+ # body1 - polygon ]
+
+ dump {
+  llog.b(S.box2d.new.body);
+  llog.erase(u0, 0);
+  llog.p(WARNING.box2d.reset.r0.is.needed); # ??? maybe?
+  llog.p(LLOG.b.p.pv.e.test);
+  llog.pv(S.b0, b0);
+  llog.pv(S.b0s0, b0s0);
+  llog.pv(S.b0f0, b0f0);
+  llog.p(S.nice);
+  llog.p(GG);
+  llog.e();
+ };
+ dump;
+};
+
+# box2d new body ]
+# box2d event [
+
+if (r0) {
+ _ @sys.llog;
+ llog.b(S.box2d.event);
+ llog.erase(r0, 0);
+ llog.e();
+};
+process.events {
+ _ @sys.llog;
+ llog 0;
+ llog.b(S.box2d.event);
+ llog.pv(S.event.handle, b2d.world);
+ if (_0==1) {
+  llog.pv(S.box2d.e.begin.contact, _0);
+  llog.pv(S.box2d.ev.bodyA, o0);
+  llog.pv(S.box2d.ev.fixtureA, o1);
+  llog.pv(S.box2d.ev.bodyB, o2);
+  llog.pv(S.box2d.ev.fixtureB, o3);
+ };
+ if (_0==2) {
+  llog.pv(S.box2d.e.end.contact, _0);
+ };
+ if (_0==1) {
+  bd0 r12;
+  bd1 r11;
+  bd0:=o0;
+  bd1:=o2;
+  box2d.body.get.position(u0, bd0);
+  l0:=box2d.body.get.angle(u0, bd0);
+  llog.pv2(S.box2d.bodyA.position, o0, o1);
+  llog.pv(S.box2d.bodyA.angle, l0);
+
+#  box2d.body.set.transform(u0, bd0, o0,o1+10, l0);
+#  box2d.body.set.transform(u0, bd1, o0,o1+250, l0+1*pi);
+  box2d.body.get.linear.velocity(u0, bd1);
+  llog.pv2(S.box2d.bodyA.linear.velocity, o0, o1);
+  box2d.body.set.linear.velocity(u0, bd1, o0,0+50+10*rnd(u0));
+  l0:=box2d.body.get.angular.velocity(u0, bd1);
+  llog.pv(S.box2d.bodyA.angular.velocity, l0);
+#  box2d.body.set.angular.velocity(u0, bd1, l0-1);
+  
+  # tests api:5250 [
+
+  events.push(u0, 5250,0, 1, 0,0,0,0);
+
+  # tests api:5250 ]
+ };
+ llog.e();
+};
+
+_ @sys.events;
+ev0 r14;
+ev0:=events.pop(u0, box2d.e.pool, b2d.world);
+while(ev0) { 
+ process.events(ev0);
+  
+ ev0:=events.pop(u0, box2d.e.pool, b2d.world);
+};
+
+# box2d event ]
+# new [
+
+_ @1010;
+_ @sys.node;
+
+GRASS 7354;
+node.new.this.ex(r0, GRASS, 0);
+
+# new ]
+
+s:=2;
+k:=1;
+
+### 7351 bot.draw
+
+color(u0, 1,1,1,1);
+rect(u0, 6, 0,0,11,11);
+
+b2d.world r15;
+
+_ @1010;
+_ @sys.box2d;
+l0:=box2d.world.draw(u0, b2d.world);
+#watch(l0);
+
+### 7354 bot.grass
+
+r0:=k==0;
+
+draw(r0, 7355);
+
+_ @1010;
+_ @sys.node;
+
+NODE 7356;
+node.new.this.ex(r0, NODE, 0);
+
+k:=1;
+
+### 7355 bot.grass.draw
+
+fcolor {
+# filter color
+ jungle {
+ # a, sun level
+  sun.level _1;
+  #sin(r0, pi * _0);
+  color(u0, sun.level*0.8, sun.level, 0, _0);
+ };
+ grass {
+ # a, sun level
+  sun.level _1;
+  #sin(r0, pi * _0);
+  color(u0, sun.level*0.1, sun.level, 0, _0);
+ };
+};
+
+fcolor.jungle(0, 0.0877);
+bigrect
+ rect(u0, 6, 0,0, 768,1024);
+
+#bigrect();
+
+### 7356 bot.grass.node
+
+r0:=k==0;
+
+draw(r0, 7357);
+
+_ @1010;
+_ @sys.node;
+
+TREE 7358;
+#node.new.this.ex(r0, TREE, 1);
+
+k:=1;
+
+### 7357 bot.grass.node.draw
+
+earth {
+ color(u0, 0.2,0.8,0.2,0.5);
+ radius 100;
+ circle(u0, 6, 0,0, radius,0, 50, 0);
+}
+#earth;
+
+### 7358 bot.grass.tree
+
+r0:=k==0;
+
+draw(r0, 7359);
+
+_ @1010;
+_ @sys.node;
+_ @sys.llog;
+
+if (r0) {
+ TREE 7358;
+ if (0) {
+  llog.pv(S.level, p0);
+  llog.pv(S.r0, r0);
+  llog.pv(S.k, k);
+ };
+ if (p0<7) {
+  l0:=node.new.this.ex(r0, TREE, p0+1);
+# q0 rnd(u0)*2.5+0.9;
+# q1 rnd(u0)*2.5+0.9;
+  #q0 1.0-rnd(r0)*0.2;
+  #q1 1.0-rnd(r0)*0.2;
+  q0 1.5;
+  q1 1.5;
+  node.prop.x.s(u0, l0, 100);
+  node.prop.y.s(u0, l0, 100);
+  node.prop.s.s(u0, l0, 0.7);
+  node.prop.r.s(u0, l0, 35*q0);
+  l0:=node.new.this.ex(r0, TREE, p0+1);
+  node.prop.x.s(u0, l0, 100);
+  node.prop.y.s(u0, l0, 100);
+  node.prop.s.s(u0, l0, 0.7);
+  node.prop.r.s(u0, l0, 0-35*q1);
+ };
+# };
+};
+if (r0) {
+  r3:=r;
+  r4:=rnd(u0)*0.5+0.5;
+};
+r:=r3+sin(t)*10*r4;
+t+=dt;
+#r+=0.1;
+
+random_scale {
+ if (p0>5) {
+  if (r0) {
+   l12:=rnd(u0);
+  };
+  s:=0.5+sin(t*l12*10)*0.2;
+ };
+};
+#random_scale;
+
+k:=1;
+
+### 7359 bot.grass.tree.draw
+
+bot.grass.draw 7355;
+bgd @bot.grass.draw;
+#bgd.fcolor.grass(0, 1.1877*p0);
+bgd.fcolor.grass(0, 0.8877);
+#color(u0, 1,0,p0*0.1,1);
+
+vx 100;
+vy 100;
+psize(u0, 10 * s / p0);
+#psize(u0, 20);
+if (p0<6) {
+# line(u0, 2, 0,0, vx,vy);
+# color(u0, 0.5,0.4,0.2,1);
+ cbezier(u0, 3, 0,0, 25,100, 100,25, 100,100, 10);
+# cbezier(u0, 3, 0,0, 100,25, 25,100, 100,100, 100);
+};
+
+px0 l10;
+px1 l11;
+if (r0) {
+ px0:=rnd(u0);
+ px1:=rnd(u0);
+};
+md0 1;
+md1 0;
+if (p0>5) {
+ if (md0==1) {
+  radius 100*p0/10;
+  color(u0, px0,px1*p0*0.1,1,1);
+  #color(u0, 1,p0*0.1,0.7,1);
+  circle(u0, 6, sin(p0*10)*50+50,sin(p0*80)*50+50, radius*2,0, 50, 0);
+  color(u0, 1,0,p0*0.1,1);
+  circle(u0, 6, 0,0, radius,0, 50, 0);
+  color(u0, p0*0.1,1,0,1);
+  circle(u0, 6, 0,0, radius/2,0, 50, 0);
+ };
+ if (md1==1) {
+  #color(u0, 1,0,p0*0.1,1);
+  triangle(u0, 6, 0,0, 100,100, 500,300);
+  triangle(u0, 6, 0,0, 100,100, 300,500);
+ }
+}
+

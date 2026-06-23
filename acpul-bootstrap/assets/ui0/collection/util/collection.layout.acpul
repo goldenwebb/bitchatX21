@@ -1,0 +1,57 @@
+### ul.ui.collection.util.layout
+
+# layout [
+
+c0 {
+ x l9;
+ y l10;
+ w l11;
+ h l12;
+};
+
+grid.w o.grid.width.g;
+grid.h o.grid.height.g;
+
+layout.init {
+ c0.w:=grid.w;
+ c0.h:=grid.h;
+};
+
+layout.init;
+
+layout.cell {
+ # c0, i,j
+ _0.x:=_1*grid.w;
+ _0.y:=h-_2*grid.h-grid.h;
+# llog.pv4(S.map.cell.xywh, c0.x,c0.y,c0.w,c0.h);
+};
+
+layout.cell.vec1d.vertical {
+ # c0, i
+ _0.x:=0;
+ _0.y:=h-_1*grid.h-grid.h;
+ _0.w:=w;
+ _0.h:=grid.h;
+#   llog.pv2(S.ui.cell.layout, _1, grid.h);
+};
+
+layout.cell.vec1d.horizontal {
+ # c0, i
+ _0.x:=_1*grid.w;
+ _0.y:=0;
+ _0.w:=grid.w;
+ _0.h:=h;
+};
+
+layout.cell.vec1d { _;
+ # rect,i
+ if (scroll.direction==info.sd.vertical) {
+  layout.cell.vec1d.vertical(_0, _1);
+ };
+ if (scroll.direction==info.sd.horizontal) {
+  layout.cell.vec1d.horizontal(_0, _1);
+ };
+};
+
+# layout ]
+

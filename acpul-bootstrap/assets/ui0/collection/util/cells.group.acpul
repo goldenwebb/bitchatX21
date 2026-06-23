@@ -1,0 +1,86 @@
+### ul.ui.collection.util.cells.group
+
+#
+# TODO: refactor map to map.ex and cells.group use _ map;
+#
+
+
+# MAP FUTURE [
+#
+# it.key.new.dma {
+#  # u0, map,it, id, dma
+#  it.key.new(_0, _1,_2, _3);
+#  it.dma(_0, _4, _1,_2);
+# };
+#
+
+map.key.new.v {
+ # u0, map:it, key, v
+ it.key.new.dma(_0, _1,_2, _3, 0);
+ dma.set(u0, 0,0, _4);
+ dma.off(u0, 0);
+};
+
+map.key.new.v2 {
+ # u0, map:it, key, v0:v1
+# it.key.new.dma(_0, _1,_2, _3, 0);
+# dma.set2(u0, 0,0, _4,_5);
+# dma.off(u0, 0);
+};
+
+map.key.erase {
+ # u0, map:it, key
+ it.key(_0, _1,_2, _3);
+ it.map.erase(_0, _1,_2, 0);
+};
+
+map.for.each {
+ # u0, map:i, fn
+ u0 _0;
+ map0 _1;
+ i0 _2;
+ found=it.begin(u0, map0,i0);
+ while(found > -1) {
+  it.dma(u0, 0, map0,i0);
+  _3(map0,i0);
+#   llog.printo(u0, S.ui.cells.group, 0, dma0,-1);
+  found:=it.next(u0, map0,i0);
+ };
+ dma.off(u0, 0);
+};
+
+# MAP FUTURE ]
+
+cells.group { _;
+ isavar 0;
+ new {
+  isavar:=map.new(u0, 10,10);
+ };
+ check {
+  # cid
+  it.key(u0, isavar,0, _0)==-1;
+ };
+ add {
+  # cid, nid
+  it.key.new.dma(u0, isavar,0, _0, dma0);
+  dma.set(u0, dma0,0, _1);
+  dma.off(u0, dma0);
+ };
+ delete {
+  # cid
+  it.key(u0, isavar,0, _0);
+  it.map.erase(u0, isavar,0, 0);
+ };
+
+ for.each {
+  # cb
+  l0:=it.begin(u0, cells.group.isavar,0);
+  while(l0>-1) {
+   it.dma(u0, dma0, cells.group.isavar,0);
+   _0(cells.group.isavar,0);
+#   llog.printo(u0, S.ui.cells.group, 0, dma0,-1);
+   l0:=it.next(u0, cells.group.isavar,0);
+  };
+ };
+};
+

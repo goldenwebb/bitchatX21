@@ -1,0 +1,385 @@
+### ui.value5.inc
+
+ui.dbg.layer u12;
+
+_ @ui0.xstack.inc;
+
+ui.value5 {
+ view0 0;
+ vstack0 0;
+ index0 0;
+ hstack0 0;
+ graph.height0 0;
+};
+
+# Beginning new group values
+ui.value5.start {
+ # val0, x:y:s:w:h, target:nid
+ #. target nid - attach to target node
+ view0:=_0;
+ if (view0==0) {
+  new.node.common0(view0, _1,_2,_3, _4,_5, node.fid.by.name(u0, A.ui.value5.group.view), _6);
+  _0:=view0;
+ };
+ vstack0:=node.get.v(view0, VSTACKpokemonbee123);
+ index0:=0;
+};
+
+# Add name:value to the group
+ui.value5.v {
+ # name, v
+ name _0;
+ v _1;
+
+ if (vstack0>0) {
+
+ index0+=1;
+
+#lbl0 0; val0 0; ui.value4(lbl0,val0,0,120,1, A.vstack0, vstack0);
+#lbl0 0; val0 0; ui.value4(lbl0,val0,0,140,1, A.index0, index0);
+#lbl0 0; val0 0; ui.value4(lbl0,val0,0,100,1, A.cell0, cell0);
+#lbl0 0; val0 0; ui.value4(lbl0,val0,0,200,1, name, v);
+
+ # Use vstack0.$name for map items
+ cell0=node.get.v(vstack0, name); 
+
+ lbl0=0; val0=0;
+ if (cell0<=0) {
+   hstack0:=xstack.add.hstack(vstack0, 0,0,1, 100,20, 1);
+
+   # Set vstack0.$name
+   if (name>0) {
+    node.set.v(vstack0, name, hstack0); 
+   };
+
+   ui.value4(lbl0,val0,0,0,1, name, v);
+   xstack.add.div0(hstack0, lbl0, 300,150);
+   xstack.add.div0(hstack0, val0, 300,150);
+   node.set.v(hstack0, UI5.LBL, lbl0);
+   node.set.v(hstack0, UI5.VAL, val0);
+ };
+ if (cell0>0) {
+   lbl0:=node.get.v(cell0, UI5.LBL);
+   val0:=node.get.v(cell0, UI5.VAL);
+   ui.value4(lbl0,val0,0,0,1, name, v);
+ };
+ };
+};
+
+# Graph add name:value
+ui.value5.graph {
+ # name, v
+ name _0;
+ v _1;
+
+ _ @nodes;
+ _ @nodes.inc.node2;
+ _ @nodes.graph0.util;
+ _ @os.util2;
+ _ @sys.events;
+
+ if (vstack0>0) {
+
+ # Use vstack0.$name for map items
+ cell0=node.get.v(vstack0, name); 
+
+ h0 50;
+
+ if (cell0<=0) {
+  hstack0:=xstack.add.hstack(vstack0, 0,0,1, 100,h0, 1);
+
+  # Set vstack0.$name
+  if (name>0) {
+   node.set.v(vstack0, name, hstack0); 
+  };
+  lbl0=0;ui.label00(lbl0, 0,0,1,100,10, 0,0, name);
+  xstack.add.div0(hstack0, lbl0, 300,h0);
+  node.set.v(hstack0, UI5.LBL, lbl0);
+
+  graph0=new.node0(u0, nodes.graph0, 0,0,1,300,h0*2, 0,0,0,0);
+  xstack.add.div0(hstack0, graph0, 300,h0);
+  node.set.v(hstack0, UI5.GRAPH, graph0);
+
+  node.anchor.point.s1(u0, graph0, 0,0);
+ };
+ if (cell0>0) {
+  graph0=node.get.v(cell0, UI5.GRAPH);
+  nodes.graph.add.v(graph0, v);
+ };
+ };
+};
+
+# Graph add name:value if changed
+ui.value5.graph.diff {
+ # name, v
+ name _0;
+ v _1;
+ if (vstack0>0) {
+
+ cell0=node.get.v(vstack0, name);
+ apply=0;
+ apply=if(cell0<=0, 1, node.get.v(cell0, UI5.GRAPH.PREV.V)!=v);
+# if (cell0<=0) {
+#  apply:=1;
+# };
+# if (cell0>0) {
+#  prev.v=node.get.v(cell0, UI5.GRAPH.PREV.V);
+#  if (prev.v!=v) {
+#   apply:=1;
+#  };
+# };
+
+ if (apply) {
+  ui.value5.graph(__);
+  #ui.value5.graph(CELL, cell0);
+  node.set.v(cell0, UI5.GRAPH.PREV.V, v);
+ };
+};
+
+### ui.value5.up
+
+_ @ui.value5.inc;
+
+ui.value5.xywh {
+ # x:y:w:h
+ ui.value5.v(A.X, _0);
+ ui.value5.v(A.Y, _1);
+ ui.value5.v(A.W, _2);
+ ui.value5.v(A.H, _3);
+};
+
+ui.value5.node.xywh {
+ # nid
+ nid _0;
+ x node.get.x(u0, nid);
+ y node.get.y(u0, nid);
+ w node.get.w(u0, nid);
+ h node.get.h(u0, nid);
+ ui.value5.xywh(x,y,w,h);
+};
+
+ui.value5.node.xyswh {
+ # nid
+ nid _0;
+ s node.get.s(u0, nid);
+ xywh(nid);
+ ui.value5.v(A.S, s);
+};
+
+ui.value5.node0 {
+ # nid
+ nid _0;
+ ui.value5.v(A.NID, nid);
+ ui.value5.node.xyswh(nid);
+};
+
+### ui.value5.layer
+# u12: common debug layer
+
+u12:=nid;
+
+_ @help.inc1;
+
+if (r0) {
+ display.scalled.size(w,h);
+};
+
+sn0 0;
+if ((sn0==0)*w*h) {
+ # create bg
+# new.ui.shader.node3(sn0, 0,0,1, w,h, 70014,29177); # dota.eff.screeen74
+};
+
+#node.set.z.order(u0, nid, 10000);
+#node.z.to.front(u0, nid, 0);
+#node.z.to.front(u0, sn0, 0);
+# new.ui.shader.node3(sn0, 102,102,1, 246,246, 70014,29243); # space.bg43
+
+#x+=1;
+
+### ui.value5.test
+
+_ @help.inc1;
+_ @ui.value5.inc;
+
+sn0 0;
+if (r0) {
+ new.ui.shader.node3(sn0, 100,100,1, 50,50, 70014,29177); # dota.eff.screeen74
+ new.ui.shader.node3(sn0, 102,102,1, 46,46, 70014,29243); # space.bg43
+};
+
+val0 0; ui.value5.start(val0, 210,50,1, 300,300, sn0);
+ui.value5.v(TEST1, 123);
+ui.value5.v(TEST2, rnd(u0));
+i+=1;
+ui.value5.v(I, i);
+ui.value5.v(sin.I, sin(i));
+if (mod(i,30)==0) {
+ui.value5.graph(G.sin.I, sin(i/10));
+};
+#ui.value5.graph(G.sin.I, rnd(u0));
+
+
+
+### ui.value5.group.view
+# target
+
+target0 p0;
+
+# ## ui.value5.group.view22
+
+# like suggestion.note.view
+
+_ @help.inc1;
+_ @ui.value5.inc;
+_ @ui0.scroll.inc;
+_ @suggestion.inc;
+
+if (r0) {
+ w:=50;
+ h:=50;
+};
+
+enable.scroll 0; # todo: use scaled or scrolled with header
+
+scroll0 0;
+vstack0 0;
+hstack0 0;
+
+line0 0;
+sn0 0;
+
+create.bg {
+ new.ui.shader.node3(sn0, 0,0,1, w,h, 70014,29177); # dota.eff.screeen74
+# new.ui.shader.node3(sn0, 0,0,1, w,h, 70014,29243); # space.bg43
+# new.ui.shader.node3(sn0, 0,0,1, w,h, 70014,29244); # bg.value44
+ node.set.z.order(u0, sn0, 0);
+};
+
+inited 0;
+if (r0) {
+ inited:=0;
+};
+
+if ((inited==0)*w*h) {
+ # create bg
+ create.bg;
+ inited:=1;
+
+ # add vstack
+ create.stack;
+
+ # add target
+ if (target0) {
+  new.suggestion.line1(line0, 100,100,1,100,100, 32, target0, nid);
+ };
+
+#  node.anchor.point.s1(u0, nid, 0.5,0.5);
+# node.set.z.order(u0, nid, -100);
+};
+
+# move to debug layer
+node.change.parent(u0, ui.dbg.layer, line0);
+node.change.parent(u0, ui.dbg.layer, nid);
+
+create.stack {
+ if (enable.scroll) {
+  scroll0:=new.scroll(0,0,1, w,h, 1);
+ };
+
+ vstack0:=new.vstack(0,0,1, w,h, 1);
+ node.set.v(vstack0, GAP.Y, 5);
+# node.set.v(vstack0, DIRECTION.Y, 0); # up
+# node.set.v(vstack0, DIRECTION.Y, 1); # down
+
+ if (enable.scroll) {
+  scroll.add(scroll0, vstack0);
+ };
+ #
+#
+# hstack0:=xstack.add.hstack(vstack0, 0,0,1, 100,200, 1);
+#
+# sn0 0;
+# new.ui.shader.node3(sn0, 0,0,1, 100,100, 70014,29156); # dota.map.water
+# div0=xstack.add.div0(hstack0, sn0, 300,150);
+};
+
+h:=node.get.h(u0, vstack0);
+
+node.set.wh(u0, scroll0, w,h);
+node.set.wh(u0, vstack0, w,h);
+
+#if (r0!=0) {
+if (((node.get.h(u0, sn0)!=h)+(node.get.w(u0, sn0)!=w))*(h>0)) {
+ node.set.lt(u0, sn0, 0.001);
+ create.bg;
+};
+#};
+
+#if ((node.get.h(u0, sn0)!=h)+(node.get.w(u0, sn0)!=w)) {
+info {
+ lbl0 0; val0 0; ui.value4(lbl0,val0,10,30,0.5, W, w);
+ lbl0 0; val0 0; ui.value4(lbl0,val0,10,10,0.5, H, h);
+};
+#info;
+#cell0=node.get.child.at(u0, vstack0,0);
+#lbl0 0; val0 0; ui.value4(lbl0,val0,0,0,1, A.vstack00, vstack0);
+#lbl0 0; val0 0; ui.value4(lbl0,val0,0,20,1, A.cell00, cell0);
+#lbl0 0; val0 0; ui.value4(lbl0,val0,0,20,1, W, w);
+
+node.set.v(nid, VSTACKpokemonbee123, vstack0); # unique name
+
+_ @touch.tool.default.scale0;
+
+draw.fid(ui.value5.group.view.draw);
+
+if ((node.get.children.count(u0, target0)<0)+(target0==0)) {
+ node.set.lt(u0, line0,0.001);
+# s:=0.1;
+ lt:=0.0001;
+};
+
+#if (r0) {
+# lt:=5;
+#};
+
+# DBG [
+
+dbg0 0;
+dbg1 0;
+
+#dbg0:=rnd(u0);
+#dbg0:=target0;
+#dbg1:=node.get.children.count(u0, target0);
+
+#if (dbg1==0) {
+## dbg(0);
+# dbg1:=node.get.children.count(u0, 12345);
+# dbg1:=node.get.children.count(u0, target0);
+#};
+
+
+infodbg {
+ lbl0 0; val0 0; ui.value4(lbl0,val0,x0,y0+0,0.5, A.dbg0, dbg0);
+ lbl0 0; val0 0; ui.value4(lbl0,val0,x0,y0+10,0.5, A.dbg1, dbg1);
+ lbl0 0; val0 0; ui.value4(lbl0,val0,x0,y0+20,0.5, A.nid, nid);
+ lbl0 0; val0 0; ui.value4(lbl0,val0,x0,y0+30,0.5, A.rnd, rnd(u0));
+};
+#infodbg;
+
+# DBG ]
+
+#s:=if(r0,0.1,s);
+#s:=0.1;
+
+#x+=rnd(u0)*10;
+#y+=rnd(u0)*10;
+
+
+### ui.value5.group.view.draw
+
+#psize(u0, 5);
+#rect(u0, 2, 0,0,500,500);
+color(u0, 0,0,0.1,0.9);
+rect(u0, 6, 0,0,w,h);
+

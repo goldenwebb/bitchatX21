@@ -1,0 +1,31 @@
+### 1100 util
+
+util.dma.std 1101;
+util.dma.array 10125056;
+util.gl.std 1102;
+util.map.std 1104;
+util.livenotify 1105;
+util.info.std 1106;
+util.media.font.obj 1107;
+util.scroller.std 1108;
+
+util.i18n 70700;
+
+#core.vg 10125000; 
+
+ul.ui 70100;
+
+core.gl3d 72100;
+core.stars3d 200000;
+core.particles 78000;
+
+core.aline 76000;
+
+core.hud 79000;
+
+core.wallet 100000;
+
+core.test.common 900000;
+
+
+

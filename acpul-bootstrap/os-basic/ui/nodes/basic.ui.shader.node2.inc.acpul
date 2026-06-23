@@ -1,0 +1,156 @@
+### 900776 basic.ui.shader.node2.inc
+
+# ACPUL 1.1 OBJECT/ARRAY [
+#
+#filter {
+#  vsh;
+#  fsh;
+#  params: [{
+#    tex0, v0
+#  }];
+#};
+#
+# ACPUL 1.1 OBJECT/ARRAY ]
+
+filter {
+ _ @sys.obj;
+
+ self=0; # !!! must 'self=0' # todo: bugfix compiler 'self 0'
+
+ a {
+  id 0;
+  vsh 1;
+  fsh 2;
+  params 4; # [param] #
+  params.count 3; # !hotfix params reset!
+ };
+
+ param.a {
+  id 0;
+  type 1;
+  v0 2;
+  v1 3;
+  v2 4;
+  v3 5;
+  SZ 8;
+ };
+ param.type {
+  texture 0;
+  f1 1;
+  f2 2;
+  f3 3;
+  f4 4;
+ };
+
+ vg buffer.get(u0, self,0, _0);
+ vs buffer.set(u0, self,0, _0, _1);
+
+ id.g vg(a.id); id.s vs(a.id, _0);
+ vsh.g vg(a.vsh); vsh.s vs(a.vsh, _0);
+ fsh.g vg(a.fsh); fsh.s vs(a.fsh, _0);
+ params.count.g vg(a.params.count); params.count.s vs(a.params.count, _0);
+
+ params.count.inc params.count.s(params.count.g+1);
+
+ new {
+  self:=buffer.new(u0, 1000,1000);
+  params.count.s(0);
+ };
+ init {
+  # id, vsh,fsh
+  id.s(_0);
+  vsh.s(_1);
+  fsh.s(_2);
+ };
+
+ add.param {
+  # id, type, v0,v1,v2,v3
+  id _0; type _1; v0 _2; v1 _3; v2 _4; v3 _5;
+
+  n d0;
+
+  n:=params.count.g;
+
+  o a.params+n*param.a.SZ;
+  buffer.set(u0, self,0, o+param.a.id, id);
+  buffer.set(u0, self,0, o+param.a.type, type);
+  buffer.set4(u0, self,0, o+param.a.v0, v0,v1,v2,v3);
+
+  params.count.s(n+1);
+ };
+
+ get.param {
+  # i -> (id, type, v0,v1,v2,v3)
+  i _0;
+  id _1; type _2; v0 _3; v1 _4; v2 _5; v3 _6;
+
+  o a.params+i*param.a.SZ;
+ 
+  id:=buffer.get(u0, self,0, o+param.a.id);
+  type:=buffer.get(u0, self,0, o+param.a.type);
+  v0:=buffer.get(u0, self,0, o+param.a.v0);
+  v1:=buffer.get(u0, self,0, o+param.a.v1);
+  v2:=buffer.get(u0, self,0, o+param.a.v2);
+  v3:=buffer.get(u0, self,0, o+param.a.v3);
+ };
+
+ get.type
+  # i -> type
+  buffer.get(u0, self,0, a.params + _0*param.a.SZ+param.a.type);
+
+ get.v0
+  # i -> v0
+  buffer.get(u0, self,0, a.params + _0*param.a.SZ+param.a.v0);
+ get.v1
+  # i -> v1
+  buffer.get(u0, self,0, a.params + _0*param.a.SZ+param.a.v1);
+ get.v2
+  # i -> v2
+  buffer.get(u0, self,0, a.params + _0*param.a.SZ+param.a.v2);
+ get.v3
+  # i -> v3
+  buffer.get(u0, self,0, a.params + _0*param.a.SZ+param.a.v3);
+
+ add.texture
+  # tex
+  add.param(0, param.type.texture, _0, 0,0,0);
+
+ add.f1 
+  # v0
+  add.param(0, param.type.f1, _0, 0,0,0);
+
+ add.f2 
+  # v0,v1
+  add.param(0, param.type.f2, _0,_1, 0,0);
+
+ add.f3
+  # v0,v1,v2
+  add.param(0, param.type.f3, _0,_1,_2, 0);
+
+ add.f4
+  # v0,v1,v2,v3
+  add.param(0, param.type.f4, _0,_1,_2,_3);
+};
+
+filter.test {
+ filter.new;
+ filter.id.s(1);
+ filter.vsh.s(0);
+ filter.fsh.s(0);
+ filter.add.texture(tex0);
+ filter.add.f1(0);
+ filter.add.f2(0,1);
+ filter.add.f3(0,1,2);
+ filter.add.f4(0,1,2,3);
+};
+
+basic.ui.shader.node2 900778;
+
+new.ui.shader.node2
+ # hid, x,y,s, w,h, mode, filter
+ new.node.common4(_0, _1,_2,_3, _4,_5, basic.ui.shader.node2, _4,_5, _6, _7);
+
+
+new.ui.shader.texture1
+ # hid, x,y,s, w,h, mode, filters
+ new.node.common4(_0, _1,_2,_3, _4,_5, basic.ui.shader.node2, _4,_5, _6, _7);

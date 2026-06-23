@@ -1,0 +1,32 @@
+### 1111 easy.start.new
+
+_ @4;
+#_ @os.basic;
+_ @os.util0;
+
+_ @sys.livelog2;
+_ @sys.llog;
+
+_ @sys.events;
+
+# DRAW FID - TODO: move to cpu [
+
+draw0000 draw(__);
+
+draw draw0000(__);
+
+draw.fid
+ # fid
+ draw0000(r0, node.fid.by.name(r0, _0));
+
+# DRAW FID - TODO: move to cpu ]
+
+_ @ide.common;
+
+### 1112 easy.start.new1
+
+_ @easy.start.new;
+
+_ @os.util2;
+_ @basic.ui.shader.node3.inc;
+_ @sys.shader.ex;

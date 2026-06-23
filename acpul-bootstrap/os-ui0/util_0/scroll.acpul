@@ -1,0 +1,170 @@
+### ui0.scroll.inc
+
+new.scroll {
+ # x,y,s, w,h, mode -> hid
+ _ @basic.ui;
+ hid0 0;
+ new.node.common0(hid0, _0,_1,_2, _3,_4, NNN(ui0.scroll), _5);
+ hid0;
+};
+
+scroll.add {
+ # scroll, node
+ scroll0 _0;
+ node0 _1;
+ if (scroll0) {
+  content0=node.value.g(u0, _0,0);
+  node.change.parent(u0, content0, node0);
+  node.set.v(node0, VIEW.OWNER, scroll0);
+ };
+};
+
+### ui0.scroll
+# 0: scroll content
+
+_ @help.inc1;
+
+draw.fid(ui0.scroll.draw);
+
+content0 0;
+
+if (r0) {
+ new.node.common0(content0, 0,0,1, 100,100, NNN(ui0.scroll.content), 0);
+ node.value.s(u0, nid,0, content0);
+};
+
+cx0=node.value.g(u0, content0,0);
+cy0=node.value.g(u0, content0,1);
+cw0=node.value.g(u0, content0,2);
+ch0=node.value.g(u0, content0,3);
+
+ox0 0;
+oy0 0;
+
+node.set.x(u0, content0, ox0-cx0);
+node.set.y(u0, content0, oy0-cy0);
+
+#lbl0 0; val0 0; ui.value4(lbl0,val0,0,0,1, S.scroll, nid);
+
+# TOUCH [
+
+_ @sys.touch;
+
+#visible 1;
+
+pressed 0;
+clicked 0;
+
+touch.ev {
+ x0 0;
+ y0 0;
+
+ began {
+  # x,y, gx,gy
+
+  x0:=_2;
+  y0:=_3;
+#  xs:=x0;
+#  ys:=y0;
+
+  pressed:=1;
+  clicked:=1;
+ };
+ moved {
+  # x,y, gx,gy
+
+  ox0+=_2-x0;
+  x0:=_2;
+  oy0+=_3-y0;
+  y0:=_3;
+
+#  xp = x0;
+#  yp = y0;
+
+  # check clicked
+#  if ((abs(_3-ys)>dy.max)+(abs(_2-xs)>dx.max)) {
+#   clicked:=0;
+#   moving:=1;
+#  };
+#  if (moving) {
+#   x+=_2-x0;
+#   y+=_3-y0;
+#   x0:=_2;
+#   y0:=_3;
+#  };
+ };
+ ended {
+  # x,y, gx,gy
+
+  pressed:=0;
+  #moving:=0;
+
+#  click.ended;
+ };
+
+};
+
+_ @touch.ex;
+
+#if ((visible==1)+(pressed==1)) {
+ touch1.rect3(0,0,w,h, touch.ev);
+#};
+
+#touch.rect2.lock(touch.id, 0,0,w,h);
+
+#_ @sys.touch.ev.process.once;
+#touch.b0:=1;
+#touch.ev.process.multi;
+
+# TOUCH ]
+
+### ui0.scroll.draw
+
+color(u0, 1,1,0,1);
+#rect(u0, 6, 0,0,w,h);
+#rect(u0, 2, 0,0,w,h);
+
+
+
+### ui0.scroll.content
+# 0: cx
+# 1: cy
+# 2: cw
+# 3: ch
+
+_ @help.inc1;
+
+draw.fid(ui0.scroll.content.draw);
+
+cx0 0;
+cy0 0;
+cw0 0;
+ch0 0;
+
+update.bbox {
+ node.get.bounding.box(u0, -2, 0); # -2 children only
+ cx0:=o0;
+ cy0:=o1;
+ cw0:=o2;
+ ch0:=o3;
+};
+update.bbox;
+
+info {
+ lbl0 0; val0 0; ui.value4.nobbox(lbl0,val0,0,0,1, CX, cx0);
+ lbl0 0; val0 0; ui.value4.nobbox(lbl0,val0,0,20,1, CY, cy0);
+ lbl0 0; val0 0; ui.value4.nobbox(lbl0,val0,0,40,1, CW, cw0);
+ lbl0 0; val0 0; ui.value4.nobbox(lbl0,val0,0,60,1, CH, ch0);
+};
+#info;
+
+node.value.s(u0, nid,0, cx0);
+node.value.s(u0, nid,1, cy0);
+node.value.s(u0, nid,2, cw0);
+node.value.s(u0, nid,3, ch0);
+
+
+### ui0.scroll.content.draw
+
+color(u0, 0,1,1,1);
+#rect(u0, 2, 0,0,w,h);

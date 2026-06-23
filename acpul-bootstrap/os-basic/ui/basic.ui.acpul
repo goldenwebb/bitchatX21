@@ -1,0 +1,206 @@
+### basic.ui.ex
+
+_ @os.basic.ui;
+_ @basic.ui.shader.node1.inc;
+l12;
+
+### 900700 basic.ui
+
+basic.ui.util 900701;
+basic.ui.label 900710;
+basic.ui.bytes 900720;
+basic.ui.ip.port 900730;
+basic.ui.time 900740;
+basic.ui.value 900750;
+
+basic.ui.shader.node 900770;
+
+basic.ui.shader.node1.inc 900772;
+basic.ui.shader.node2.inc 900776;
+
+basic.ui.shader.node3 900784;
+
+basic.ui.texture.stack 900780;
+
+basic.ui.tests 900790;
+basic.ui.tests.node2 900792;
+
+# util node [
+
+new.node.common4 {
+ # hid, x,y,s, w,h, node, p0,p1,p2,p3
+ _0:=node.new.this.ex4(u0, _6, _7,_8,_9,_10); 
+ node.prop.x.s(u0, _0, _1);
+ node.prop.y.s(u0, _0, _2);
+ node.prop.s.s(u0, _0, _3);
+ node.prop.w.s(u0, _0, _4);
+ node.prop.h.s(u0, _0, _5);
+};
+
+new.node.common8 {
+ # hid, x,y,s, w,h, node, p0,p1,p2,p3, p4,p5,p6,p7
+ _0:=node.new.this.ex8(u0, _6, _7,_8,_9,_10, _11,_12,_13,_14); 
+ node.prop.x.s(u0, _0, _1);
+ node.prop.y.s(u0, _0, _2);
+ node.prop.s.s(u0, _0, _3);
+ node.prop.w.s(u0, _0, _4);
+ node.prop.h.s(u0, _0, _5);
+};
+
+# util node ]
+
+new.ui.label
+ # hid, x,y,s, w,h, mode, style, text
+ new.node.common4(_0, _1,_2,_3, _4,_5, basic.ui.label, _6, _7, _8, 0);
+
+new.ui.shader.node
+ # hid, x,y,s, w,h, mode, vsh, fsh
+ new.node.common4(_0, _1,_2,_3, _4,_5, basic.ui.shader.node, _6, _7, _8, 0);
+
+# LABEL [
+
+ui.label00 {
+ # hid, x,y,s,w,h, mode, style, text
+ hid _0;
+ x _1; y _2; s _3; w _4; h _5;
+ mode _6;
+ style _7;
+ text _8;
+ if (hid==0) {
+  new.ui.label(hid, x,y,s, w,h, mode, style, text);
+ };
+ # todo update text [
+ # if (text.updated) {
+ #  label.update.text(hid, text);
+ # };
+ # todo update text ]
+};
+
+# LABEL ]
+# value [
+
+new.ui.value {
+ # hid, x,y,s, w,h, mode
+ new.node.common4(_0, _1,_2,_3, _4,_5, basic.ui.value, _6, 0,0,0);
+};
+
+new.ui.value00 {
+ # hid, mode
+ if (_0==0) {
+  _0:=node.new.this.ex4(u0, basic.ui.value, _1, 0,0,0); 
+ };
+};
+
+ui.value.set.xyswh {
+ # hid, x,y,s, w,h
+ node.prop.x.s(u0, _0, _1);
+ node.prop.y.s(u0, _0, _2);
+ node.prop.s.s(u0, _0, _3);
+ node.prop.w.s(u0*(_4>0), _0, _4);
+ node.prop.h.s(u0*(_5>0), _0, _5);
+};
+
+ui.value.style {
+ # hid, style
+ node.value.s(u0, _0,1, _1);
+};
+
+ui.value00 {
+ # hid, x,y,s,w,h, v, mode
+ hid _0;
+ x _1; y _2; s _3; w _4; h _5;
+ v _6;
+ mode _7;
+
+# if (hid==0) {
+#  new.ui.value(hid, x,y,s, w,h, mode);
+# };
+
+ new.ui.value00(hid, mode);
+ ui.value.set.xyswh(hid, x,y,s,w,h);
+
+ node.value.s(u0, hid,0, v);
+};
+
+ui.value0 {
+ # hid, x,y,s,w,h v
+ value00(__, 0);
+};
+
+ui.value1 {
+ # hid, x,y,s, v
+ value0(_0, _1,_2,_3,0,32, _4);
+};
+
+ui.value2 {
+ # hid, v
+ value0(_0, 0,0,1,32,32, v);
+};
+
+ui.value.kb0 {
+ # hid, x,y,s,w,h v
+ value00(__, 1);
+};
+
+# value3 print TEXT NAME
+
+ui.value3 {
+ # hid0,hid1, x,y,s,w,h, text, v
+ hid0 _0; hid1 _1;
+ x _2; y _3; s _4; w _5; h _6;
+ text _7;
+ v _8;
+ ui.label00(hid0, x,y,s,w,h, 0,0, text);
+ ui.value0(hid1, x,y,s,w,h, v);
+ tw node.prop.w.g(u0, hid0);
+ gap 7;
+ node.prop.x.s(u0, hid1, x+(tw+gap)*s);
+};
+
+# Format '0.00'
+ui.value4
+ # hid0,hid1, x,y,s, text, v
+ ui.value3(_0,_1, _2,_3,_4,100,14, _5, _6);
+
+# Format '0' '11' '-1'
+ui.value30 {
+ # hid0,hid1, x,y,s,w,h, text, v
+ hid0 _0; hid1 _1;
+ x _2; y _3; s _4; w _5; h _6;
+ text _7;
+ v _8;
+ ui.label00(hid0, x,y,s,w,h, 0,0, text);
+ ui.value00(hid1, x,y,s,w,h, v, 2);
+ tw node.prop.w.g(u0, hid0);
+ gap 7;
+ node.prop.x.s(u0, hid1, x+(tw+gap)*s);
+};
+
+# Format 'label' '0' 
+ui.value40
+ # hid0,hid1, x,y,s, text, v
+ ui.value30(_0,_1, _2,_3,_4,100,14, _5, _6);
+
+ui.value4.nobbox {
+ # lbl0, val0, x:y:s, name, v
+ lbl0 _0;
+ val0 _1;
+ ui.value4(lbl0,val0,_2,_3,_4, _5, _6);
+ node.no.bbox(u0, lbl0); node.no.bbox(u0, val0);
+};
+
+# TESTS VALUE [
+
+#lbl0 0;
+#ui.label00(lbl0, 0,0,1,100,100, 0,0, TEXT.TEXT.TEXT);
+
+#lbl0 0; val0 0;
+#ui.value3(lbl0,val0, 0,0,1,100,14, random, rnd(u0)*100);
+
+#lbl0 0; val0 0;
+#ui.value4(lbl0,val0, 0,0,1, random, rnd(u0)*100);
+
+# TESTS VALUE ]
+
+# value ]
+

@@ -1,0 +1,129 @@
+### touch.tool2.inc
+
+new.node.touch.tool2.click0
+ # nid, x:y:s:w:h
+ new.node.common0(_0, _1,_2,_3, _4,_5, NNN(A.node.touch.tool2.click0), 0);
+
+### touch.tool2.touch.ev
+
+#_ @sys.os;
+_ @os.util2;
+
+_ @sys.touch;
+_ @sys.events;
+
+pressed 0;
+clicked 0;
+moving 0;
+
+x0 0;
+y0 0;
+xs 0;
+ys 0; 
+dx 0;
+dy 0;
+dx.max 3;
+dy.max 3;
+
+
+touch.id 0;
+touch.b0 0;
+
+touch.ev {
+ began {
+  # x,y, gx,gy
+
+  x0:=_2;
+  y0:=_3;
+  xs:=x0;
+  ys:=y0;
+
+  pressed:=1;
+  moving:=0;
+
+  events.push(u0, ui.pool,owner, ui.event.touch.began, x0,y0,0,0);
+ };
+ moved {
+  # x,y, gx,gy
+
+  dx:=_2-x0;
+  dy:=_3-y0;
+
+  # check clicked
+  if ((abs(_3-ys)>dy.max)+(abs(_2-xs)>dx.max)) {
+   moving:=1;
+  };
+  if (moving) {
+   x0:=_2;
+   y0:=_3;
+  };
+  events.push(u0, ui.pool,owner, ui.event.touch.move, x0,y0,dx,dy);
+ };
+ ended {
+  # x,y, gx,gy
+
+  pressed:=0;
+  moving:=0;
+
+  clicked:=1;
+
+  events.push(u0, ui.pool,owner, ui.event.touch.end, o0,o1,o2,o3);
+ };
+};
+
+#node.set.v(X0, x0);
+#node.set.v(Y0, y0);
+#node.set.v(DX, dx);
+#node.set.v(DY, dy);
+
+
+### touch.tool2.touch.process
+
+_ @sys.touch.ev.process.once;
+touch.b0:=1;
+touch.ev.process.multi;
+
+node.set.v(nid, MOVING, moving);
+node.set.v(nid, PRESSED, pressed);
+node.set.v(nid, CLICKED, clicked);
+
+
+### touch.tool2.touch.lock
+
+_ @touch.tool2.touch.ev;
+
+if (TOUCH_NO_ANCHOR!=0,
+ touch.rect2.lock(touch.id, 0,0,w,h),
+ touch.rect2.lock(touch.id, TOUCH_ANCHOR_X,TOUCH_ANCHOR_Y,w,h)
+);
+
+_ @touch.tool2.touch.process;
+
+
+### touch.tool2.touch.nolock 
+
+_ @touch.tool2.touch.ev;
+
+if (TOUCH_NO_ANCHOR!=0,
+ touch.rect2(touch.id, 0,0,w,h),
+ touch.rect2(touch.id, TOUCH_ANCHOR_X,TOUCH_ANCHOR_Y,w,h)
+);
+
+_ @touch.tool2.touch.process;
+
+
+### node.touch.tool2.click0
+
+_ @help.inc1;
+
+touch.owner nid;
+_ @touch.tool2.touch.nolock;
+#_ @touch.tool2.touch.lock;
+
+if (clicked==1) {
+ clicked:=0;
+ events.push(u0, ui.pool,touch.owner, ui.event.touch.clicked, nid,1,0,0);
+};
+
+
+

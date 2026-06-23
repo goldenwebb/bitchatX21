@@ -1,0 +1,83 @@
+### 79500 core.hud.rt0
+# w,h, vsh,fsh
+# extra: 
+#  passes = [{fsh}, ...]
+#  is.once
+#  blend.mode
+#  texture.format
+# p<0> - tex
+
+r0:=k==0;
+
+draw(r0, 79501);
+
+_ @1010;
+_ @sys.node;
+
+w:=p0;
+h:=p1;
+tw w;
+th h;
+
+tex0 r1;
+
+#
+# todo: bug tw,th == 0 -> crash
+#
+
+nid node.ex.this.id(u0);
+
+if (r0) {
+ tex0:=node.ex.texture.create.fmt(r0, tw,th, node.ex.texture.fmt.rgb565, 1);
+ 
+ node.value.s(r0, nid,0, tex0); # v0=tex0
+
+ node.ex.child.draw.s(r0, 0);
+};
+
+#watch(node.value.g(u0, nid, 0));
+
+
+k:=1;
+
+### 79501 core.hud.rt0.draw
+
+_ @1010;
+_ @sys.node;
+_ @sys.display;
+_ @1100;
+_ @util.gl.std;
+_ @core.hud;
+
+tex0 r1;
+
+to.texture {
+ gl.fbo(tex0);
+ gl.clear(0,0,0,0);
+# gl.clear(1,1,1,1);
+
+ node.ex.gl.child.draw(u0);
+
+ gl.fbo(-1);
+};
+
+to.texture;
+
+#fsh p1;
+#vsh p2;
+
+vsh 70014;
+fsh 70015;
+
+gl.draw.texture.rect0 {
+ # tex, x,y, w,h
+ gl.shader.use(vsh,fsh);
+ gl.shader.uniform.texture(0, tex0, 0);
+# gl.blend(u0, 1, 8);
+ gl.rect0(5, 0,0, w,h);
+};
+
+ gl.blend(u0, 2, 2);
+# gl.blend(u0, 3, 5);
+gl.draw.texture.rect0(tex0, 0,0, w,h);
+ gl.blend(u0, 5, 8);

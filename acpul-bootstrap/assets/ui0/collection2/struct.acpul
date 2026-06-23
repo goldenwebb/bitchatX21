@@ -1,0 +1,211 @@
+### struct.def
+
+struct {
+
+ buf0 0;
+
+ alloc {
+  # size
+  size _0;
+
+  if (buf0==0) {
+   buf0:=buffer.new(u0, size,size);
+  };
+ };
+
+ p1 buffer.set(u0, buf0,0,_0, _0);
+ p2 buffer.set2(u0, buf0,0,_0, _1,_2);
+ p4 buffer.set4(u0, buf0,0,_0, _1,_2,_3,_4);
+
+ p8 {
+  buffer.set4(u0, buf0,0,_0+0, _1,_2,_3,_4);
+  buffer.set4(u0, buf0,0,_0+4, _5,_6,_7,_8);
+ };
+
+ pack2 {
+  # vars -> buf
+  alloc(2);
+  p2(0, __);
+  buf0;
+ };
+
+ pack4 {
+  # vars -> buf
+  alloc(4);
+  p4(0, __);
+  buf0;
+ };
+
+ pack8 {
+  # vars -> buf
+  alloc(8);
+  p8(0, __);
+  buf0;
+ };
+
+ pack16 {
+  # vars -> buf
+  alloc(16);
+  p8(0, __);
+  p8(8, _8,_9,_10,_11, _12,_13,_14,_15);
+  buf0;
+ };
+
+ unpack1
+  # buf, vars -> v | -1 - error, todo: review 
+  _1:=buffer.get(u0, _0,0,0);
+
+ unpack2 {
+  # buf, vars -> 0 - success, -1 - error 
+  res=buffer.get2(u0, _0,0,0);
+  if (res==0) {
+   _1:=o0;
+   _2:=o1;
+  };
+  res;
+ };
+
+ unpack4 {
+  # buf, vars -> 0 - success, -1 - error  
+  res=buffer.get4(u0, _0,0,0);
+  if (res==0) {
+   _1:=o0;
+   _2:=o1;
+   _3:=o2;
+   _4:=o3;
+  };
+  res;
+ };
+
+ unpack8 {
+  # buf, vars -> 0 - success, -1 - error 
+  buf _0;
+  res=buffer.get4(u0, buf,0,0); 
+  if (res==0) {
+   _1:=o0; _2:=o1; _3:=o2; _4:=o3;
+   res:=buffer.get4(u0, buf,0,4);
+   if (res==0) {
+    _5:=o0; _6:=o1; _7:=o2; _8:=o3;
+   };
+  };
+  res;
+ };
+
+ # pack :: pack1 pack2 pack4 pack8
+ # serialize/deserialze
+ # to.buffer/from.buffer
+ # wrap/unwrap
+
+};
+ 
+
+
+
+
+### struct.point
+
+# PRIMITIVE struct point [
+
+_ @struct.def;
+
+point { 
+ _ struct;
+ 
+ x 0;
+ y 0;
+ 
+ pack {
+  # -> buf
+  pack2(x,y);
+ };
+ unpack {
+  # buf
+  unpack2(_0,x,y);
+ };
+};
+
+point2 {  _ point; # _ struct;
+ x 0;
+ y 0;
+
+ pack pack2(x,y);
+ unpack unpack2(_0,x,y);
+};
+
+point.test {
+ point.x:=1;
+ point.y:=2;
+
+ point.wrap pack;
+ point.unwrap unpack(__);
+
+ buf=point.wrap; # ready to wrap
+
+ point.x:=11; # update wrong x,y
+ point.y:=12; 
+
+ point.unwrap(buf); # back to realiy
+
+ _ @4;
+ lbl0 0; val0 0; ui.value4(lbl0,val0,0,0,2, Buf, buf);
+ lbl0 0; val0 0; ui.value4(lbl0,val0,0,0+50,2, Point.x, point.x);
+ lbl0 0; val0 0; ui.value4(lbl0,val0,0,0+100,2, Point.y, point.y);
+};
+
+point.test;
+
+# PRIMITIVE struct point ]
+
+### map.util0
+
+_ @sys.obj;
+
+# map util [
+it.key.new.dma {
+ # u0, map,it, id, dma
+ it.key.new(_0, _1,_2, _3);
+ it.dma(_0, _4, _1,_2);
+};
+# map util ]
+
+### dict0
+
+dict {
+ isavar 0;
+
+ new {
+  if (isavar==0) {
+   isavar:=map.new(u0, 10,100000);
+  };
+ };
+ check {
+  # k
+  it.key(u0, isavar,0, _0)==-1;
+ };
+ add {
+  # k, v
+  _ @map.util0;
+  it.key.new.dma(u0, isavar,0, _0, dma0);
+  dma.set(u0, dma0,0, _1);
+  dma.off(u0, dma0);
+ };
+};
+
+### dict
+
+_ @dict0;
+_ dict;
+
+### sys.cpu1
+
+_ @sys.cpu;
+
+cpu.get.formula.name1 {
+ # fname, fid
+ fname0 _0;
+ fid0 _1;
+ if (fname0==0) {
+  fname0:=buffer.new(u0, 100,10000);
+ };
+ fname0:=cpu.get.formula.name(u0, 0, fid0, fname0);
+};

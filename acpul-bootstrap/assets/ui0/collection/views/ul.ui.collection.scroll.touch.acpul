@@ -1,0 +1,141 @@
+### ul.ui.collection.scroll.touch
+
+# events [
+
+_ @sys.events;
+
+
+vx 0; # velocity
+vy 0;
+accx 0; # acceleration
+accy 0;
+
+signx 0;
+signy 0;
+
+lx 0;
+ly 0;
+
+t0 0;
+prevt0 0;
+prevlx 0;
+prevly 0;
+movedt0 0;
+
+# fixed!
+#if (r0) { t0:=0; lx:=0; ly:=0; }; #bugfix compiler issue VAR-1200 - update a:=1 num->vv0, init vv0=0 
+
+tb0=1;
+while(tb0) {
+ tb0:=events.pop(u0, ui.pool,nid);
+
+ if (tb0==ui.event.button.push) {
+  prevt0:=t0;
+  prevlx:=lx;
+  prevly:=ly;
+
+  t0:=0;
+  lx:=0;
+  ly:=0;
+  
+  vx:=0;
+  vy:=0;
+  scrolling:=1;
+ };
+
+ if (tb0==ui.event.collection.cell.moved) {
+  if ((prevt0>max.t0/2)*(t0<0.1)) {
+   prevt0:=0;
+   lx:=prevlx;
+   ly:=prevly;
+  };
+  movedt0:=0;
+
+#  sign if(_0<0,-1,1);
+  
+#  signx 0;
+#  signy 0;
+
+  dx=o2;
+  dy=o3;
+
+  lx+=dx;
+  ly+=dy;
+
+#  vx+=dx/t0;
+#  vy+=dy/t0;
+
+#  lx+=dx/dt;
+#  ly+=dy/dt;
+
+  min.lx 0-10000;
+  min.ly 0-10000;
+  max.lx 10000;
+  max.ly 10000;
+
+#  lx:=if(lx>max.lx,max.lx,lx);
+#  ly:=if(ly>max.ly,max.ly,ly);
+#  lx:=if(lx<min.lx,min.lx,lx);
+#  ly:=if(ly<min.ly,min.ly,ly);
+
+#  ly:=100;
+
+#  lx:=vx;
+#  ly:=vy;
+#  accx:=100;
+#  vx:=10;
+#  vx:=t0;#accx;
+
+  scrolling:=1;
+
+  if (scroll.direction==options.sd.horizontal) {
+   x+=o2;
+  };
+  if (scroll.direction==options.sd.vertical) {
+   y+=o3;
+  };
+  if (scroll.direction==options.sd.both) {
+   x+=o2;
+   y+=o3;
+  };
+ };
+ if (tb0==ui.event.button.pop) {
+#  x:=0;
+#  y:=0;
+  scrolling:=0;
+ };
+
+ ui.event.collection.changed 552834928340;
+ if (tb0==ui.event.collection.changed) {
+  
+ };
+};
+
+max.t0 0.1;
+
+pt0 0;
+
+if (bounce==0) {
+ if (t0>max.t0) {
+  a=(t0-max.t0);
+  pt0:=a/max.t0;
+  t0-=a;
+  lx-=lx*a/2;
+  ly-=ly*a/2;
+  lx:=if(abs(lx)<40,lx/2,lx);
+  ly:=if(abs(ly)<40,ly/2,ly);
+ };
+};
+
+t0+=dt;
+movedt0+=dt;
+
+if (scrolling) {
+ if (movedt0>0.05) {
+  lx:=0;
+  ly:=0;
+ };
+};
+
+# events ]
+

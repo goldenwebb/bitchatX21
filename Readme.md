@@ -12,7 +12,8 @@
 
 1. Install AnimationCPU on your iPhone or iPad
 2. Run AnimationCPU and tap the yellow **Bootloader** button in the left corner at startup.
-3. Insert [bitchat.zip](bitchat.zip) in the url text field
+3. Insert [bitchat.zip](https://github.com/goldenwebb/bitchatX21/releases/download/v1.0.1/bitchatX21-release-1.0.zip
+) in the url text field of Bootloader (an input like ws://...)
 4. Press Connect
 
 ## Development

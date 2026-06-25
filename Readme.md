@@ -2,6 +2,12 @@
 
 ![bitchatX21 demo](doc/output-1.gif)
 
+## Prerequisites
+
+- [Node.js](https://nodejs.org/) 18 or newer
+- npm 9 or newer (included with Node.js)
+- [AnimationCPU](https://acpul.org/quickstart)
+
 ## Run on device
 
 1. Install AnimationCPU on your iPhone or iPad
@@ -24,6 +30,7 @@ https://github.com/goldenwebb/acpu-server
 3. Run acpu-server
 ```
 cd acpu-server
+npm i
 BASE=bitchatX21 node acpu-server.js
 ```
 
@@ -37,12 +44,19 @@ Port: `9077`
 - Add screens
 - Update thanks
 
+## Release Versions
+```
+- v0.0.1 - The First Public Version Release (done)
+- v0.0.2 - New features (in progress)
+```
+
 ## License
 MIT
 
 ## Sponsorship
 
-If you appreciate this project, please star it on GitHub, buy a coffee, support on Patreon, sponsor on GitHub or donate crypto below.
+If you appreciate this project, please star it on GitHub, buy a [coffee](https://ko-fi.com/bitchatx21
+), support on [Patreon](https://www.patreon.com/4171839/join), sponsor on GitHub or donate crypto below.
 
 Looking for sponsors to help fund development, hosting and maintenance.
 
